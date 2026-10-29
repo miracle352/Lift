@@ -85,6 +85,15 @@ export const arenaForecasts = sqliteTable(
     probabilityBps: integer('probability_bps').notNull(),
     forecastJson: text('forecast_json').notNull(),
     batchId: text('batch_id').references(() => arenaBatches.id),
+    /** Human calls are sealed one by one (rcpt1 single seals, docs/PROOF.md) instead of in a round batch. */
+    sealNamespace: text('seal_namespace'),
+    sealStatus: text('seal_status', { enum: ['queued', 'submitted', 'stored', 'verified', 'failed'] }),
+    sealJobId: text('seal_job_id'),
+    walrusBlobId: text('walrus_blob_id'),
+    commitDigest: text('commit_digest'),
+    commitTimestampMs: integer('commit_timestamp_ms'),
+    verificationJson: text('verification_json'),
+    sealAttempts: integer('seal_attempts').notNull().default(0),
   },
   (t) => [uniqueIndex('arena_forecasts_unique_idx').on(t.marketId, t.agentId, t.kind), index('arena_forecasts_batch_idx').on(t.batchId)],
 );
@@ -251,5 +260,13 @@ export const arenaAdvisors = sqliteTable('arena_advisors', {
   consecutiveFailures: integer('consecutive_failures').notNull().default(0),
   lastError: text('last_error'),
   lastSeenAt: integer('last_seen_at', { mode: 'timestamp_ms' }),
+  createdAt: createdAt(),
+});
+
+/** People playing the arena. Auth = bearer token (only its sha256 is stored). */
+export const arenaPlayers = sqliteTable('arena_players', {
+  id: text('id').primaryKey(), // uuid; forecasts use user = "human:<id>"
+  handle: text('handle').notNull().unique(),
+  tokenHash: text('token_hash').notNull(),
   createdAt: createdAt(),
 });

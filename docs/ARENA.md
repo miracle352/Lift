@@ -95,6 +95,15 @@ Guards: https only, no private/loopback addresses (`ARENA_ALLOW_LOCAL_ADVISORS=1
 20 KB response cap, price $0.001–$0.05, max 25 active advisors, a name is bound to its first payout address.
 A complete advisor in 30 lines: `examples/advisor/server.mjs`.
 
+## Humans (`src/arena/humans.ts`)
+People play the same rounds as the agents, between lock (T+6) and the cutoffs (blind T+13, informed T+14):
+`POST /api/arena/players {handle}` → bearer token · `GET /api/arena/play` (markets, no prices) ·
+`POST /api/arena/play/blind {roundId, asset, probabilityBps}` · `POST /api/arena/play/reveal {roundId, asset, advisorId?}`
+(ONE take per market; random advisor = fair test; only after the blind call is stored on Walrus) ·
+`POST /api/arena/play/informed {…}` · `GET /api/arena/me` (who helps you).
+Each human call is its own rcpt1 single seal (docs/PROOF.md), verified with `verifySeal`; episodes, verdicts and lessons
+(`arena1:human:<id>:lessons`) are shared code with the agents. Humans read takes for free; agents pay over MPP.
+
 ## Payments (`src/arena/pay`)
 - MPP (`mppx` 0.4.12 + `@suimpp/mpp` 0.9.0). Paid resource: `GET /api/arena/takes?round=15m:<close ISO>&picks=btc:quant,eth:crowd`.
   Price = sum of the picks. Recipient = the **clearinghouse** (escrow). Replay protection: `arena_pay_digests`.

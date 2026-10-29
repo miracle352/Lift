@@ -1,5 +1,5 @@
 import { and, asc, eq, gte, inArray, isNull, like, lte } from 'drizzle-orm';
-import { arenaEpisodes, arenaForecasts, arenaLessons, arenaMarkets, arenaPurchases, arenaRounds, arenaTakes, tatumCalls } from '@/db/schema';
+import { arenaEpisodes, arenaForecasts, arenaLessons, arenaMarkets, arenaPurchases, arenaPlayers, arenaRounds, arenaTakes, tatumCalls } from '@/db/schema';
 import type { Verdict } from '@/core/scoring';
 import { brier } from '@/core/scoring';
 import { advisorStats, paysAdvisor, type RecalledLesson } from './brain/learner';
@@ -121,7 +121,11 @@ export async function settleDue(deps: ArenaDeps, opts: { resolved?: FastMarket[]
   let lessons = 0;
   const roundForLessons = [...touchedRounds].sort().at(-1) ?? 'n/a';
   for (const agentId of touchedAgents) {
-    const agent = FORECASTER_BY_ID.get(agentId);
+    let agent: { id: string; name: string } | undefined = FORECASTER_BY_ID.get(agentId);
+    if (!agent && agentId.startsWith('human:')) {
+      const [p] = await deps.db.select().from(arenaPlayers).where(eq(arenaPlayers.id, agentId.slice(6)));
+      if (p) agent = { id: agentId, name: `@${p.handle}` };
+    }
     if (!agent) continue;
     const eps = await loadEpisodes(deps, agentId);
     const names = await advisorDirectory(deps.db);

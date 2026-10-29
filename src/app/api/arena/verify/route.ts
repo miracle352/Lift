@@ -3,7 +3,6 @@ import { liveVerify } from '@/arena/verify';
 import { getDb } from '@/db/client';
 import { getSuiClient } from '@/lib/sui';
 
-export const runtime = 'nodejs';
 
 /**
  * GET /api/arena/verify?hash=<forecast hash>[&tamper=<field>:<value>]

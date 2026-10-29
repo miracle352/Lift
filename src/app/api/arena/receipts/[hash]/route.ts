@@ -2,7 +2,6 @@ import { connection } from 'next/server';
 import { receipt } from '@/arena/queries';
 import { getDb } from '@/db/client';
 
-export const runtime = 'nodejs';
 
 /** Receipt for one sealed forecast or take: Merkle proof + Sui commit; the forecast JSON only after the market closes. */
 export async function GET(_req: Request, ctx: RouteContext<'/api/arena/receipts/[hash]'>) {

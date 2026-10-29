@@ -14,7 +14,13 @@ let raw: Client | null = null;
 export function getDb(): Db {
   if (typeof window !== 'undefined') throw new Error('getDb() is server-only');
   if (db) return db;
-  raw = createClient({ url: process.env.DATABASE_URL ?? 'file:./local.db', authToken: process.env.DATABASE_AUTH_TOKEN });
+  const url = process.env.DATABASE_URL ?? 'file:./local.db';
+  raw = createClient({ url, authToken: process.env.DATABASE_AUTH_TOKEN });
+  if (url.startsWith('file:')) {
+    // the worker and the web app share one SQLite file on the server: WAL + a busy timeout avoid "database is locked"
+    void raw.execute('PRAGMA journal_mode = WAL').catch(() => {});
+    void raw.execute('PRAGMA busy_timeout = 5000').catch(() => {});
+  }
   db = drizzle(raw, { schema });
   return db;
 }

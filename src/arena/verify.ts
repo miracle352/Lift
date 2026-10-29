@@ -1,4 +1,5 @@
 import { verifyBatchSeal, type BatchPhase } from '@/core/batch';
+import { verifySeal } from '@/core/evidence';
 import { ForecastV1 } from '@/core/forecast';
 import type { Db } from '@/db/client';
 import type { SuiCoreLike } from '@/lib/seal-evidence';
@@ -15,8 +16,14 @@ export async function liveVerify(db: Db, sui: SuiCoreLike, hash: string, opts: {
   const r = await receipt(db, hash, opts.nowMs);
   if (!r) return { error: 'not found' as const };
   if (!r.revealed || !r.forecast) return { error: 'not revealed yet' as const, closeTime: r.market.closeTime };
-  if (!r.batch?.digest || !r.proof) return { error: 'seal not on chain yet' as const };
   const forecast = ForecastV1.parse({ ...r.forecast, ...(opts.tamper ?? {}) });
+  if (r.seal.type === 'single') {
+    if (!r.seal.digest) return { error: 'seal not on chain yet' as const };
+    const commitTx = await withSuiRetry(() => sui.core.getTransaction({ digest: r.seal.digest!, include: { transaction: true, effects: true } }));
+    const verification = verifySeal({ forecast, commitTx, expectedAccountId: opts.accountId, expectedOwner: opts.owner, closeTime: r.market.closeTime });
+    return { receipt: { ...r, forecast }, verification, tampered: !!opts.tamper };
+  }
+  if (!r.batch?.digest || !r.proof) return { error: 'seal not on chain yet' as const };
   const commitTx = await withSuiRetry(() => sui.core.getTransaction({ digest: r.batch!.digest!, include: { transaction: true, effects: true } }));
   let blindCommitTimestampMs: number | undefined;
   if (r.kind === 'informed') {

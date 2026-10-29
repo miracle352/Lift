@@ -63,12 +63,12 @@ export async function advanceBatches(deps: ArenaDeps): Promise<number> {
   return changed;
 }
 
-/** Finds the Sui Blob objects for stored batches (one owner scan for all of them), then verifies the commits. */
-async function captureEvidence(deps: ArenaDeps, rows: (typeof arenaBatches.$inferSelect)[]): Promise<number> {
-  const targets = new Map(rows.map((r) => [u256FromBlobId(r.walrusBlobId!), r]));
-  const cached = await deps.db.select().from(blobLocator).where(inArray(blobLocator.blobIdU256, [...targets.keys()]));
-  const found = new Map(cached.map((c) => [c.blobIdU256, c]));
-  if (found.size < targets.size) {
+/** Finds Sui Blob objects for Walrus blob ids owned by the Walrus Memory owner (cached; one paged owner scan for all misses). */
+export async function locateBlobs(deps: ArenaDeps, u256s: string[]) {
+  const cached = u256s.length ? await deps.db.select().from(blobLocator).where(inArray(blobLocator.blobIdU256, u256s)) : [];
+  const found = new Map(cached.filter((c) => c.previousTransaction).map((c) => [c.blobIdU256, c]));
+  const want = new Set(u256s);
+  if (found.size < want.size) {
     let cursor: string | null = null;
     for (let page = 0; page < 40; page++) {
       const res = await withSuiRetry(() =>
@@ -79,12 +79,19 @@ async function captureEvidence(deps: ArenaDeps, rows: (typeof arenaBatches.$infe
         if (!json.blob_id) continue;
         const row = { blobIdU256: String(json.blob_id), blobObjectId: normalizeSuiAddress(o.objectId), previousTransaction: o.previousTransaction ?? null, endEpoch: json.storage?.end_epoch == null ? null : Number(json.storage.end_epoch) };
         await deps.db.insert(blobLocator).values(row).onConflictDoUpdate({ target: blobLocator.blobIdU256, set: { previousTransaction: row.previousTransaction, endEpoch: row.endEpoch } });
-        if (targets.has(row.blobIdU256)) found.set(row.blobIdU256, { ...row, seenAt: new Date() });
+        if (want.has(row.blobIdU256)) found.set(row.blobIdU256, { ...row, seenAt: new Date() });
       }
-      if (!res.hasNextPage || !res.cursor || found.size === targets.size) break;
+      if (!res.hasNextPage || !res.cursor || found.size === want.size) break;
       cursor = res.cursor;
     }
   }
+  return found;
+}
+
+/** Finds the Sui Blob objects for stored batches (one owner scan for all of them), then verifies the commits. */
+async function captureEvidence(deps: ArenaDeps, rows: (typeof arenaBatches.$inferSelect)[]): Promise<number> {
+  const targets = new Map(rows.map((r) => [u256FromBlobId(r.walrusBlobId!), r]));
+  const found = await locateBlobs(deps, [...targets.keys()]);
   let changed = 0;
   for (const [u256, b] of targets) {
     const loc = found.get(u256);

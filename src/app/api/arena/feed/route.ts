@@ -2,7 +2,6 @@ import { connection } from 'next/server';
 import { eventsSince } from '@/arena/queries';
 import { getDb } from '@/db/client';
 
-export const runtime = 'nodejs';
 export const maxDuration = 300;
 
 /**

@@ -4,7 +4,6 @@ import { PROTOCOL, registerAdvisor } from '@/arena/external';
 import { leaderboard } from '@/arena/queries';
 import { getDb } from '@/db/client';
 
-export const runtime = 'nodejs';
 
 /** The advisor marketplace: every advisor (built-in + registered), its price and what it has earned under pay-for-lift. */
 export async function GET() {

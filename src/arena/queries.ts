@@ -123,6 +123,22 @@ export async function receipt(db: Db, hash: string, nowMs = Date.now()) {
     who = { advisorId: t.advisorId };
   }
   const [m] = await db.select().from(arenaMarkets).where(eq(arenaMarkets.id, marketId));
+  const revealedSingle = nowMs >= m.closeTime.getTime();
+  if (f?.sealNamespace) {
+    // a person's call: sealed on its own (rcpt1 single seal)
+    return {
+      hash: h,
+      kind,
+      ...who,
+      roundId,
+      market: { id: m.id, asset: m.asset, question: m.question, url: m.url, closeTime: m.closeTime.toISOString(), resolution: m.resolution },
+      seal: { type: 'single' as const, namespace: f.sealNamespace, status: f.sealStatus, digest: f.commitDigest, walrusBlobId: f.walrusBlobId, verification: f.verificationJson ? JSON.parse(f.verificationJson) : null },
+      batch: null,
+      proof: null,
+      revealed: revealedSingle,
+      forecast: revealedSingle ? JSON.parse(forecastJson) : null,
+    };
+  }
   const [b] = await db.select().from(arenaBatches).where(and(eq(arenaBatches.roundId, roundId), eq(arenaBatches.phase, kind)));
   const proof = b ? buildProofs(JSON.parse(b.manifestJson).leaves).proofs.get(h) : undefined;
   const revealed = nowMs >= m.closeTime.getTime();
@@ -132,6 +148,7 @@ export async function receipt(db: Db, hash: string, nowMs = Date.now()) {
     ...who,
     roundId,
     market: { id: m.id, asset: m.asset, question: m.question, url: m.url, closeTime: m.closeTime.toISOString(), resolution: m.resolution },
+    seal: { type: 'batch' as const, namespace: b?.id ?? null, status: b?.status ?? null, digest: b?.commitDigest ?? null, walrusBlobId: b?.walrusBlobId ?? null, verification: null },
     batch: b ? { namespace: b.id, phase: b.phase, root: b.root, status: b.status, digest: b.commitDigest, checkpoint: b.checkpoint, walrusBlobId: b.walrusBlobId, verification: b.verificationJson ? JSON.parse(b.verificationJson) : null } : null,
     proof: proof ? { index: proof.index, leafCount: proof.leafCount, steps: proof.steps } : null,
     revealed,

@@ -3,7 +3,6 @@ import { takesHandler } from '@/arena/pay/takes-server';
 import { USDC, USDC_TESTNET } from '@suimpp/mpp/server';
 import { getDb } from '@/db/client';
 
-export const runtime = 'nodejs';
 
 /**
  * Paid advice over MPP (HTTP 402 → pay USDC on Sui → retry). Any agent with a Sui wallet can buy
