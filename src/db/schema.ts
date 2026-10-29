@@ -246,3 +246,4 @@ export const purchases = sqliteTable(
   },
   (t) => [uniqueIndex('purchases_buyer_take').on(t.buyerId, t.takeId)],
 );
+export * from './arena-schema';
