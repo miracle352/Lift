@@ -33,6 +33,7 @@
     "@suimpp/mpp": "0.9.0",
     "canonicalize": "5.1.0",
     "drizzle-orm": "0.45.3",
+    "hash-wasm": "4.12.0",
     "iron-session": "9.0.1",
     "mppx": "0.4.12",
     "next": "16.4.0",

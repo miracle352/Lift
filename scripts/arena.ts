@@ -56,6 +56,15 @@ if (cmd === 'worker') {
   console.log(`network: sui:${cfg.network}  currency: ${cfg.currency.type}`);
   console.table(await balances(cfg));
   console.log('Fund this address from the faucets:', walletDirectory(cfg).clearinghouse);
+} else if (cmd === 'faucet') {
+  // testnet SUI for gas via the faucet's proof-of-work API (no browser). `pnpm arena faucet [clearinghouse|agents|<address>]`
+  const cfg = payConfigFromEnv();
+  if (!cfg || cfg.network !== 'testnet') throw new Error('faucet is testnet only (set ARENA_WALLET_SEED, PAY_NETWORK=testnet)');
+  const { requestTestnetSui } = await import('../src/arena/pay/faucet');
+  const dir = walletDirectory(cfg);
+  const who = process.argv[3] ?? 'agents';
+  const targets = who === 'agents' ? Object.values(dir.agents) : who === 'clearinghouse' ? [dir.clearinghouse] : [who];
+  for (const t of targets) console.log(t, await requestTestnetSui(t, { log: (m) => deps.log(m) }));
 } else if (cmd === 'fund') {
   const cfg = payConfigFromEnv();
   if (!cfg) throw new Error('Set ARENA_WALLET_SEED first');
