@@ -2,9 +2,11 @@
 # One-time setup for a fresh Ubuntu 24.04 EC2 instance (t3.small or t4g.small).
 # Runs the arena worker + the web app 24/7, with HTTPS via Caddy at https://<public-ip>.sslip.io
 #
-#   1. scp your .env.local to the instance:   scp -i key.pem .env.local ubuntu@<ip>:~/.env.local
-#   2. ssh in and run:   curl -fsSL https://raw.githubusercontent.com/... (or copy this file) | bash
-#      (the repo is private: this script clones with a GitHub token you paste when asked)
+#   1. put your .env.local at ~/.env.local on the instance (nano ~/.env.local, paste, save)
+#   2. read -rsp "GitHub token: " T; echo
+#      curl -fsSL -H "Authorization: Bearer $T" https://raw.githubusercontent.com/miracle352/Receipts/main/deploy/ec2-setup.sh -o setup.sh
+#      GH_TOKEN=$T bash setup.sh
+#   (update.sh pulls with the token stored nowhere: run `git pull` with the token URL if the repo is private)
 set -euo pipefail
 
 REPO_DIR="$HOME/receipts"
@@ -27,9 +29,10 @@ if ! swapon --show | grep -q swapfile; then
 fi
 
 echo "==> code"
+if [ -z "${GH_TOKEN:-}" ]; then read -rsp "GitHub token with read access to miracle352/Receipts: " GH_TOKEN; echo; fi
+AUTH_URL="https://x-access-token:${GH_TOKEN}@github.com/miracle352/Receipts.git"
 if [ ! -d "$REPO_DIR/.git" ]; then
-  read -rsp "GitHub token with read access to miracle352/Receipts: " GH_TOKEN; echo
-  git clone "https://x-access-token:${GH_TOKEN}@github.com/miracle352/Receipts.git" "$REPO_DIR"
+  git clone -q "$AUTH_URL" "$REPO_DIR"
   git -C "$REPO_DIR" remote set-url origin https://github.com/miracle352/Receipts.git
 fi
 cp -n "$HOME/.env.local" "$REPO_DIR/.env.local" || true
@@ -38,9 +41,9 @@ grep -q '^ARENA_ALLOW_LOCAL_ADVISORS=' "$REPO_DIR/.env.local" || echo 'ARENA_ALL
 cd "$REPO_DIR"
 
 echo "==> restore the arena database snapshot (branch arena-data), if there is one and no DB yet"
-if [ ! -f local.db ] && git ls-remote --exit-code --heads origin arena-data >/dev/null 2>&1; then
-  git fetch -q origin arena-data
-  git show origin/arena-data:arena.db.gz | gunzip > local.db
+if [ ! -f local.db ] && git ls-remote --exit-code --heads "$AUTH_URL" arena-data >/dev/null 2>&1; then
+  git fetch -q "$AUTH_URL" arena-data
+  git show FETCH_HEAD:arena.db.gz | gunzip > local.db
   echo "restored $(du -h local.db | cut -f1) database"
 fi
 
