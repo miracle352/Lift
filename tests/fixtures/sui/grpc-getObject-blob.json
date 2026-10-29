@@ -1,0 +1,28 @@
+{
+  "object": {
+    "objectId": "0x37bd39b0ba11aa73fb27f383671b39aff23a114d0666759929e8fb661f2db80e",
+    "version": "1056488240",
+    "digest": "DL9L4jkEc18XtzHpw32TFLAjEEYzmo9QV289P1yktiVz",
+    "owner": {
+      "AddressOwner": "0x7643a4bf08bb984e9c7cf7a2157c7b87d206dccfd9c899f0205e5d77ff8fd451",
+      "$kind": "AddressOwner"
+    },
+    "type": "0xfdc88f7d7cf30afab2f82e8380d11ee8f70efb90e863d1de8616fae1bb09ea77::blob::Blob",
+    "previousTransaction": "4xK2gvv6Gv3BYcbpDFP15pqMxLNxt3zuKsuamiUq9JBJ",
+    "json": {
+      "id": "0x37bd39b0ba11aa73fb27f383671b39aff23a114d0666759929e8fb661f2db80e",
+      "registered_epoch": 42,
+      "size": "405",
+      "storage": {
+        "end_epoch": 57,
+        "id": "0x7f1cf1acb77da9474e988f258a20ccf8a02c1457165705c0f1a0b6a2e1883562",
+        "start_epoch": 42,
+        "storage_size": "66034000"
+      },
+      "blob_id": "60268457844591636911363779994009655821310353820560219356749986020030491605224",
+      "certified_epoch": 42,
+      "deletable": true,
+      "encoding_type": 1
+    }
+  }
+}

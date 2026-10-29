@@ -1,0 +1,18 @@
+# Runs the background worker (seal confirmation, market sync, settlement, memory writes) every 10 minutes.
+# Setup: repo Settings -> Secrets and variables -> Actions: variable APP_URL (https://your-app.vercel.app), secret CRON_SECRET.
+# GitHub may delay scheduled runs; the app also runs a tick right after each lock.
+name: tick
+on:
+  schedule:
+    - cron: '*/10 * * * *'
+  workflow_dispatch:
+jobs:
+  tick:
+    if: ${{ vars.APP_URL != '' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: POST /api/cron/tick
+        run: |
+          curl -fsS -X POST "${{ vars.APP_URL }}/api/cron/tick" \
+            -H "authorization: Bearer ${{ secrets.CRON_SECRET }}" \
+            --max-time 60

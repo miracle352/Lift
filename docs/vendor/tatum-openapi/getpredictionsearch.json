@@ -1,0 +1,856 @@
+{
+  "openapi": "3.1.0",
+  "servers": [
+    {
+      "url": "https://api.tatum.io"
+    }
+  ],
+  "info": {
+    "version": "1.2",
+    "title": "Blockchain Data"
+  },
+  "tags": [
+    {
+      "name": "Prediction API"
+    }
+  ],
+  "paths": {
+    "/v4/data/prediction/search": {
+      "get": {
+        "description": "<p style='display: none'>/v4/data/prediction/search</p>\n<p><b>50 credits per API call</b></p>\n\n<p>Unified search across events, tags and trader profiles. One query returns\nall three result types in a single response \u2014 pick the branches you care\nabout with <code>searchTags</code> and <code>searchProfiles</code>.\nDesigned for discovery surfaces (autocomplete, top-of-page search) where a\nsingle query needs to surface the most relevant entities of any kind.</p>\n\n<p><b>Platform support</b></p>\n<ul>\n<li>Polymarket only.</li>\n</ul>\n\n<p><b>Filtering and pagination</b></p>\n<ul>\n<li><code>q</code> is the required search string \u2014 2..128 characters.\nSingle-character queries are rejected with <code>400</code> because they\nmatch an unhelpfully wide slice of the dataset.</li>\n<li><code>limitPerType</code> caps the number of results returned per\nbranch (events, tags, profiles) \u2014 defaults to 10.</li>\n<li><code>searchTags</code> toggles the <code>tags</code> branch \u2014 defaults\nto <code>true</code>. <code>searchProfiles</code> toggles the\n<code>profiles</code> branch \u2014 defaults to <code>false</code> because most\ncallers don't need it.</li>\n<li><code>eventsStatus</code> narrows the events branch by a free-text\nstatus (e.g. <code>active</code>); <code>eventsTag</code> is a\ncomma-separated list of tag slugs (up to 50 entries).\n<code>keepClosedMarkets</code> overrides the default behaviour of hiding\nclosed markets from the events branch.</li>\n<li><code>sort</code> is a free-text sort key forwarded to the upstream;\n<code>ascending</code> sets sort direction.</li>\n<li>Pagination is page-based (not cursor-based) \u2014 advance via\n<code>?page=N+1</code>. The response body carries\n<code>data.pagination.hasMore</code> and <code>data.pagination.totalResults</code>\nfor paging decisions.</li>\n</ul>\n\n<p><b>Other notes</b></p>\n<ul>\n<li>Branches are populated independently \u2014 an empty <code>tags</code> array\nmeans no tag matches were found, not that the search failed.</li>\n<li><code>events</code> share the same shape as the <code>/events</code>\nlisting endpoint, so the same client-side rendering can be reused.</li>\n<li><code>profiles</code> rows include only <code>proxyWallet</code>,\n<code>name</code> and <code>pseudonym</code> \u2014 additional profile fields\n(image, bio) are not exposed here.</li>\n</ul>\n",
+        "operationId": "GetPredictionSearch",
+        "parameters": [
+          {
+            "description": "Search string (required). 2..128 characters. Single-character queries\nare rejected with `400`.\n",
+            "in": "query",
+            "name": "q",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 2,
+              "maxLength": 128,
+              "example": "election"
+            }
+          },
+          {
+            "description": "1-indexed page number for paging through results. Defaults to 1.\n",
+            "in": "query",
+            "name": "page",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 1000,
+              "default": 1,
+              "example": 1
+            }
+          },
+          {
+            "description": "Maximum number of results per branch (events / tags / profiles).\nDefaults to 10.\n",
+            "in": "query",
+            "name": "limitPerType",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 50,
+              "default": 10,
+              "example": 10
+            }
+          },
+          {
+            "description": "Toggle the `tags` branch. Defaults to `true`.",
+            "in": "query",
+            "name": "searchTags",
+            "schema": {
+              "type": "boolean",
+              "default": true,
+              "example": true
+            }
+          },
+          {
+            "description": "Toggle the `profiles` branch. Defaults to `false` \u2014 most callers don't\nneed profile results.\n",
+            "in": "query",
+            "name": "searchProfiles",
+            "schema": {
+              "type": "boolean",
+              "default": false,
+              "example": false
+            }
+          },
+          {
+            "description": "Narrow the events branch by status (free-text \u2014 accepts any value the\nupstream supports, e.g. `active`).\n",
+            "in": "query",
+            "name": "eventsStatus",
+            "schema": {
+              "type": "string",
+              "maxLength": 32,
+              "example": "active"
+            }
+          },
+          {
+            "description": "Narrow the events branch to a comma-separated list of tag slugs. Up to\n50 entries.\n",
+            "in": "query",
+            "name": "eventsTag",
+            "schema": {
+              "type": "string",
+              "example": "politics,sports"
+            }
+          },
+          {
+            "description": "Include closed markets in the events branch. Defaults to the upstream's\nbehaviour (closed markets are hidden).\n",
+            "in": "query",
+            "name": "keepClosedMarkets",
+            "schema": {
+              "type": "boolean",
+              "example": false
+            }
+          },
+          {
+            "description": "Sort key forwarded to the upstream (free-text \u2014 accepts comma-separated\nfield names).\n",
+            "in": "query",
+            "name": "sort",
+            "schema": {
+              "type": "string",
+              "maxLength": 128,
+              "example": "volume"
+            }
+          },
+          {
+            "description": "Sort direction.",
+            "in": "query",
+            "name": "ascending",
+            "schema": {
+              "type": "boolean",
+              "example": false
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PredictionSearchResponse"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "500": {
+            "$ref": "#/components/responses/Error500"
+          }
+        },
+        "security": [
+          {
+            "X-API-Key": []
+          }
+        ],
+        "x-codeSamples": [],
+        "summary": "Unified search (events / tags / profiles)",
+        "tags": [
+          "Prediction API"
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "X-API-Key": {
+        "type": "apiKey",
+        "name": "x-api-key",
+        "in": "header",
+        "description": "Your **API key** is used to identify your account & your plan, including the number of API calls per second and total monthly calls you have.\n\nEach key is for individual use only.\n\nIf you don't have a key already you can [Sign up for a Free Tatum account](https://co.tatum.io/signup) to get two keys (testnet and mainnet), allowing up to 5 API calls per second and 1,000,000 Credits.\n\nFor testing purposes, you can use the following key which only works inside docs and has limited functionality (e.g. you cannot create virtual accounts or notification subscriptions with it):\n* t-66a730ccccfd17001c479705-2f597d14ad7543f289a03418\n\nFor more details on limits and plans, [click here](https://docs.tatum.io/docs/plans-limits).\n"
+      }
+    },
+    "responses": {
+      "Error400": {
+        "description": "Bad Request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "errorCode": {
+                  "example": "validation.failed",
+                  "description": "validation.failed",
+                  "type": "string"
+                },
+                "message": {
+                  "example": "Request validation failed. Please see data for additional information.",
+                  "description": "Request validation failed. Please see data for additional information.",
+                  "type": "string"
+                },
+                "statusCode": {
+                  "example": 400,
+                  "description": "400",
+                  "type": "number"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "target"
+                    ],
+                    "properties": {
+                      "target": {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "description": "Request object present in the body of the HTTP request",
+                        "example": {
+                          "property": 12345
+                        }
+                      },
+                      "value": {
+                        "type": "number",
+                        "description": "Value of the target object which validation is wrong. Can be of any data type, example here is using type number.",
+                        "example": 12345
+                      },
+                      "property": {
+                        "type": "string",
+                        "description": "Property name of the target object which validation is wrong",
+                        "example": "property1"
+                      },
+                      "constraints": {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "description": "Object of failed constraints for the target object. Key is the constraint, value is detailed description of the failed constraint.",
+                        "example": {
+                          "min": "property1 must not be less than 50000"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "required": [
+                "errorCode",
+                "message",
+                "statusCode",
+                "data"
+              ],
+              "type": "object"
+            }
+          }
+        }
+      },
+      "Error401": {
+        "description": "Unauthorized. Not valid or inactive subscription key present in the HTTP Header.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "oneOf": [
+                {
+                  "properties": {
+                    "errorCode": {
+                      "example": "subscription.not.active",
+                      "description": "subscription.not.active",
+                      "type": "string"
+                    },
+                    "message": {
+                      "example": "Subscription not active anymore.",
+                      "description": "Subscription not active anymore.",
+                      "type": "string"
+                    },
+                    "statusCode": {
+                      "example": 401,
+                      "description": "401",
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "errorCode",
+                    "message",
+                    "statusCode"
+                  ],
+                  "type": "object"
+                },
+                {
+                  "properties": {
+                    "errorCode": {
+                      "example": "subscription.invalid",
+                      "description": "subscription.invalid",
+                      "type": "string"
+                    },
+                    "message": {
+                      "example": "Unable to find valid subscription for '${apiKey}'",
+                      "description": "Unable to find valid subscription for '${apiKey}'",
+                      "type": "string"
+                    },
+                    "statusCode": {
+                      "example": 401,
+                      "description": "401",
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "errorCode",
+                    "message",
+                    "statusCode"
+                  ],
+                  "type": "object"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "Error403": {
+        "description": "Forbidden. The request is authenticated, but it is not possible to perform the operation due to logical error or invalid permissions.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "message": {
+                  "example": "Forbidden",
+                  "description": "Forbidden",
+                  "type": "string"
+                },
+                "statusCode": {
+                  "example": 403,
+                  "description": "403",
+                  "type": "number"
+                }
+              },
+              "required": [
+                "statusCode",
+                "message"
+              ],
+              "type": "object"
+            }
+          }
+        }
+      },
+      "Error500": {
+        "description": "Internal server error. There was an error on the server during the processing of the request.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "message": {
+                  "example": "Internal server error",
+                  "description": "Internal server error",
+                  "type": "string"
+                },
+                "statusCode": {
+                  "example": 500,
+                  "description": "500",
+                  "type": "number"
+                }
+              },
+              "required": [
+                "statusCode",
+                "message"
+              ],
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "PredictionPlatform": {
+        "type": "string",
+        "description": "Prediction-market platform identifier.",
+        "enum": [
+          "polymarket",
+          "kalshi"
+        ],
+        "example": "polymarket"
+      },
+      "PredictionVolumeUnit": {
+        "type": "string",
+        "description": "Unit for `volume` and `totalVolume` fields. `usd` on Polymarket (dollar-denominated\nnotional); `contracts` on Kalshi (contract count \u2014 not USD).\n",
+        "enum": [
+          "usd",
+          "contracts"
+        ],
+        "example": "usd"
+      },
+      "PredictionMarketSource": {
+        "type": "object",
+        "description": "Upstream platform attribution for a market or event row.",
+        "required": [
+          "platform",
+          "platformId",
+          "url"
+        ],
+        "properties": {
+          "platform": {
+            "$ref": "#/components/schemas/PredictionPlatform"
+          },
+          "platformId": {
+            "type": "string",
+            "description": "Platform-native identifier. Polymarket condition id (0x + 64 hex) or numeric\nevent id; Kalshi market or event ticker.\n",
+            "example": "KXELONMARS-99"
+          },
+          "url": {
+            "type": "string",
+            "description": "Canonical public URL on the source platform.",
+            "example": "https://kalshi.com/markets/kxelonmars"
+          }
+        }
+      },
+      "PredictionMarketOutcome": {
+        "type": "object",
+        "description": "One outcome of a market (e.g. YES / NO for a binary market).",
+        "required": [
+          "name",
+          "price",
+          "tokenId"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Outcome label.",
+            "example": "YES"
+          },
+          "price": {
+            "type": "number",
+            "description": "Current probability in [0, 1].",
+            "example": 0.42
+          },
+          "tokenId": {
+            "type": "string",
+            "nullable": true,
+            "description": "Polymarket CTF token id for this outcome (numeric string). `null` on Kalshi \u2014\nKalshi outcomes are not tokenised.\n",
+            "example": "71321045679252212594626385532706912750332728571942612009397583165281712267356"
+          }
+        }
+      },
+      "PredictionMarketResolution": {
+        "type": "object",
+        "description": "Resolution payload populated only after a market has settled. `null` on every\nactive or paused market.\n",
+        "required": [
+          "outcome",
+          "resolvedAt",
+          "txHash",
+          "source"
+        ],
+        "properties": {
+          "outcome": {
+            "type": "string",
+            "description": "Winning outcome name (matches one of the market's `outcomes[].name`).",
+            "example": "YES"
+          },
+          "resolvedAt": {
+            "type": "string",
+            "format": "date-time",
+            "description": "ISO-8601 timestamp the market was resolved at.",
+            "example": "2026-04-12T18:00:00Z"
+          },
+          "txHash": {
+            "type": "string",
+            "nullable": true,
+            "description": "On-chain resolution transaction hash when available. `null` on Kalshi (the\nresolution is recorded off-chain on Kalshi's side).\n",
+            "example": "0x9c1f\u2026"
+          },
+          "source": {
+            "type": "string",
+            "nullable": true,
+            "description": "Resolution source attribution (e.g. `uma`, `kalshi`). `null` when the upstream\ndoes not expose it.\n",
+            "example": "uma"
+          }
+        }
+      },
+      "PredictionEventMarket": {
+        "type": "object",
+        "description": "Market row as nested inside an event. Same shape as the top-level\n`PredictionMarket` minus the `chain` block (which is only surfaced on the\ndedicated markets endpoints).\n",
+        "required": [
+          "id",
+          "platform",
+          "eventId",
+          "question",
+          "description",
+          "category",
+          "tags",
+          "imageUrl",
+          "status",
+          "openTime",
+          "closeTime",
+          "settleTime",
+          "outcomes",
+          "volume",
+          "volumeUnit",
+          "liquidity",
+          "resolution",
+          "createdAt",
+          "source"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Platform-native market identifier (Polymarket condition id or Kalshi market ticker).",
+            "example": "KXELONMARS-99"
+          },
+          "platform": {
+            "$ref": "#/components/schemas/PredictionPlatform"
+          },
+          "eventId": {
+            "type": "string",
+            "nullable": true,
+            "description": "Parent event id. Polymarket numeric event id, or Kalshi event ticker.\n`null` when the upstream does not group this market under an event.\n",
+            "example": "KXELONMARS"
+          },
+          "question": {
+            "type": "string",
+            "description": "Human-readable market question.",
+            "example": "Will Elon Musk land humans on Mars by 2030?"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true,
+            "description": "Long-form description or resolution rules.",
+            "example": "Resolves YES if SpaceX confirms a successful crewed Mars landing by 2030-12-31."
+          },
+          "category": {
+            "type": "string",
+            "nullable": true,
+            "description": "Category label, when available.",
+            "example": "Science"
+          },
+          "tags": {
+            "type": "array",
+            "description": "Free-form tag slugs. May be empty on Kalshi.",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "space",
+              "spacex"
+            ]
+          },
+          "imageUrl": {
+            "type": "string",
+            "nullable": true,
+            "description": "Image / icon URL for the market, when available.",
+            "example": "https://polymarket.com/images/elon-mars.png"
+          },
+          "status": {
+            "type": "string",
+            "description": "Verbatim upstream status string. Richer than the `?status=` filter enum \u2014\nvalues can include `paused`, `archived`, `settled`, `determined`, etc.\n",
+            "example": "active"
+          },
+          "openTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "description": "ISO-8601 timestamp the market opened for trading.",
+            "example": "2024-01-01T00:00:00Z"
+          },
+          "closeTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "description": "ISO-8601 timestamp the market closes / closed for trading.",
+            "example": "2030-12-31T23:59:59Z"
+          },
+          "settleTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "description": "ISO-8601 timestamp the market is expected to settle.",
+            "example": "2031-01-15T00:00:00Z"
+          },
+          "outcomes": {
+            "type": "array",
+            "description": "All outcomes of the market.",
+            "items": {
+              "$ref": "#/components/schemas/PredictionMarketOutcome"
+            }
+          },
+          "volume": {
+            "type": "number",
+            "description": "Total volume in `volumeUnit` units.",
+            "example": 1542300.12
+          },
+          "volumeUnit": {
+            "$ref": "#/components/schemas/PredictionVolumeUnit"
+          },
+          "liquidity": {
+            "type": "number",
+            "nullable": true,
+            "description": "Quoted-resting-orders depth. `null` on Kalshi \u2014 the upstream markets feed\ndoes not populate this; aggregate orderbook depth client-side if you need it.\n",
+            "example": 89400.5
+          },
+          "resolution": {
+            "$ref": "#/components/schemas/PredictionMarketResolution",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "description": "ISO-8601 timestamp the market was created upstream.",
+            "example": "2023-11-21T10:42:00Z"
+          },
+          "source": {
+            "$ref": "#/components/schemas/PredictionMarketSource"
+          }
+        }
+      },
+      "PredictionEvent": {
+        "type": "object",
+        "description": "Top-level event row \u2014 a grouping of one or more markets sharing a question or\noutcome set. Aggregate fields (`marketCount`, `totalVolume`, `totalLiquidity`)\nare server-computed roll-ups over the event's markets.\n",
+        "required": [
+          "id",
+          "platform",
+          "title",
+          "description",
+          "category",
+          "tags",
+          "imageUrl",
+          "status",
+          "openTime",
+          "closeTime",
+          "marketCount",
+          "totalVolume",
+          "volumeUnit",
+          "totalLiquidity",
+          "markets",
+          "source"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Platform-native event identifier (Polymarket numeric id or Kalshi event ticker).",
+            "example": "KXELONMARS"
+          },
+          "platform": {
+            "$ref": "#/components/schemas/PredictionPlatform"
+          },
+          "title": {
+            "type": "string",
+            "nullable": true,
+            "description": "Event title.",
+            "example": "Will Elon Musk land humans on Mars by 2030?"
+          },
+          "description": {
+            "type": "string",
+            "nullable": true,
+            "description": "Long-form event description, when available.",
+            "example": "Outcome resolves on confirmation of a successful crewed Mars landing."
+          },
+          "category": {
+            "type": "string",
+            "nullable": true,
+            "description": "Event category label, when available.",
+            "example": "Science"
+          },
+          "tags": {
+            "type": "array",
+            "description": "Free-form tag slugs. May be empty on Kalshi.",
+            "items": {
+              "type": "string"
+            },
+            "example": [
+              "space",
+              "spacex"
+            ]
+          },
+          "imageUrl": {
+            "type": "string",
+            "nullable": true,
+            "description": "Image / icon URL for the event, when available.",
+            "example": "https://polymarket.com/images/elon-mars-event.png"
+          },
+          "status": {
+            "type": "string",
+            "description": "Verbatim upstream status string. Richer than the `?status=` filter enum.\n",
+            "example": "active"
+          },
+          "openTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2024-01-01T00:00:00Z"
+          },
+          "closeTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true,
+            "example": "2030-12-31T23:59:59Z"
+          },
+          "marketCount": {
+            "type": "integer",
+            "description": "Number of markets attached to this event.",
+            "example": 3
+          },
+          "totalVolume": {
+            "type": "number",
+            "description": "Sum of nested-market volume, in `volumeUnit` units.",
+            "example": 4823100.5
+          },
+          "volumeUnit": {
+            "$ref": "#/components/schemas/PredictionVolumeUnit"
+          },
+          "totalLiquidity": {
+            "type": "number",
+            "nullable": true,
+            "description": "Sum of nested-market quoted liquidity. `null` on Kalshi events because the\nunderlying market liquidity is not exposed there.\n",
+            "example": 271800.3
+          },
+          "markets": {
+            "type": "array",
+            "description": "The event's markets. **Never null.**\n- When the request passes `includeMarkets=true`, each entry is a full market object.\n- Otherwise (default, `includeMarkets=false`), each entry is a **market ID string**.\n  The id is exactly what the get-market-by-id endpoint accepts \u2014 copy an id and call\n  `GET /v4/data/prediction/markets/{id}` to fetch that market's full details.\n",
+            "items": {
+              "oneOf": [
+                {
+                  "type": "string",
+                  "description": "Market ID \u2014 pass to `GET /v4/data/prediction/markets/{id}`."
+                },
+                {
+                  "$ref": "#/components/schemas/PredictionEventMarket"
+                }
+              ]
+            },
+            "example": [
+              "KXELONMARS-99"
+            ]
+          },
+          "source": {
+            "$ref": "#/components/schemas/PredictionMarketSource"
+          }
+        }
+      },
+      "PredictionSearchTag": {
+        "type": "object",
+        "description": "One tag row inside the unified-search response.",
+        "required": [
+          "id",
+          "slug",
+          "label",
+          "eventCount"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "nullable": true,
+            "description": "Tag identifier, when the upstream populates it.",
+            "example": "101"
+          },
+          "slug": {
+            "type": "string",
+            "nullable": true,
+            "description": "URL-friendly tag slug.",
+            "example": "us-elections"
+          },
+          "label": {
+            "type": "string",
+            "nullable": true,
+            "description": "Human-readable tag label.",
+            "example": "US Elections"
+          },
+          "eventCount": {
+            "type": "integer",
+            "description": "Authoritative count of events this tag is attached to.",
+            "example": 42
+          }
+        }
+      },
+      "PredictionSearchProfile": {
+        "type": "object",
+        "description": "One profile row inside the unified-search response. Includes only\nidentity-relevant fields \u2014 image and bio are not surfaced.\n",
+        "required": [
+          "proxyWallet",
+          "name",
+          "pseudonym"
+        ],
+        "properties": {
+          "proxyWallet": {
+            "type": "string",
+            "description": "Profile wallet (0x + 40 hex, lowercased).",
+            "example": "0x56687bf447db6ffa42ffe2204a05edaa20f55839"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true,
+            "description": "Profile display name, when set.",
+            "example": "JaneDoe"
+          },
+          "pseudonym": {
+            "type": "string",
+            "nullable": true,
+            "description": "Profile pseudonym, when set.",
+            "example": "WitnessProtection"
+          }
+        }
+      },
+      "PredictionSearchPagination": {
+        "type": "object",
+        "description": "Page-based pagination metadata used by the search endpoint. Caller advances\nwith `?page=N+1` and stops when `hasMore` is `false`.\n",
+        "required": [
+          "hasMore",
+          "totalResults"
+        ],
+        "properties": {
+          "hasMore": {
+            "type": "boolean",
+            "description": "Whether a subsequent page exists.",
+            "example": true
+          },
+          "totalResults": {
+            "type": "integer",
+            "description": "Total number of results across all pages.",
+            "example": 184
+          }
+        }
+      },
+      "PredictionSearchResult": {
+        "type": "object",
+        "description": "Unified-search payload \u2014 events, tags and trader profiles for a single\nquery, with native page-based pagination.\n",
+        "required": [
+          "events",
+          "tags",
+          "profiles",
+          "pagination"
+        ],
+        "properties": {
+          "events": {
+            "type": "array",
+            "description": "Matching events. Same shape as the rows returned by `/events`. Empty\nwhen no event matches are found.\n",
+            "items": {
+              "$ref": "#/components/schemas/PredictionEvent"
+            }
+          },
+          "tags": {
+            "type": "array",
+            "description": "Matching tags. Empty when `searchTags=false` or no tag matches are\nfound.\n",
+            "items": {
+              "$ref": "#/components/schemas/PredictionSearchTag"
+            }
+          },
+          "profiles": {
+            "type": "array",
+            "description": "Matching trader profiles. Empty when `searchProfiles=false` (default)\nor no profile matches are found.\n",
+            "items": {
+              "$ref": "#/components/schemas/PredictionSearchProfile"
+            }
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/PredictionSearchPagination"
+          }
+        }
+      },
+      "PredictionSearchResponse": {
+        "type": "object",
+        "description": "Unified-search response.",
+        "required": [
+          "data"
+        ],
+        "properties": {
+          "data": {
+            "$ref": "#/components/schemas/PredictionSearchResult"
+          }
+        }
+      }
+    }
+  }
+}

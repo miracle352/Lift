@@ -1,0 +1,451 @@
+{
+  "openapi": "3.1.0",
+  "servers": [
+    {
+      "url": "https://api.tatum.io"
+    }
+  ],
+  "info": {
+    "version": "1.2",
+    "title": "Blockchain Data"
+  },
+  "tags": [
+    {
+      "name": "Prediction API"
+    }
+  ],
+  "paths": {
+    "/v4/data/prediction/markets/{id}/trades": {
+      "get": {
+        "description": "<p style='display: none'>/v4/data/prediction/markets/{id}/trades</p>\n<p><b>100 credits per API call</b></p>\n\n<p>Recent trades feed for a single market. Each row is one fill \u2014 outcome side,\nbuy/sell direction, price, size and notional value \u2014 with the taker wallet\nattribution when the upstream exposes it.</p>\n\n<p><b>Filtering and pagination</b></p>\n<ul>\n<li><code>after</code> and <code>before</code> are ISO-8601 timestamps that\ndefine an inclusive time window. They are honoured by Kalshi natively. On\nPolymarket the upstream <code>/trades</code> feed has no time-window filter, so\npassing <code>after</code> or <code>before</code> against a Polymarket market\nreturns <code>400</code> \u2014 set the platform via the path id rather than\nattempting cross-platform time queries.</li>\n<li>Pagination is cursor-based. The first call returns a\n<code>pagination.cursor</code>; pass it back verbatim as <code>?cursor=\u2026</code>\non the next call. Cursors are fingerprint-bound to the time-window filter set.</li>\n</ul>\n\n<p><b>Other notes</b></p>\n<ul>\n<li><code>taker</code> is the wallet that crossed the spread on this fill.\nPopulated on Polymarket; <code>null</code> on Kalshi (the public trades feed\ndoes not expose per-trade wallet attribution there).</li>\n<li><code>txHash</code> is the on-chain settlement transaction hash where one\nexists. Populated on Polymarket and <code>null</code> on Kalshi.</li>\n<li><code>side</code> is the outcome side (<code>yes</code> / <code>no</code>);\n<code>direction</code> is the order side (<code>buy</code> / <code>sell</code>)\n\u2014 both are surfaced because they answer different questions.</li>\n</ul>\n",
+        "operationId": "GetPredictionMarketTrades",
+        "parameters": [
+          {
+            "description": "Platform-native market identifier.",
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "example": "KXELONMARS-99"
+            }
+          },
+          {
+            "description": "Inclusive lower bound on the trade timestamp (ISO-8601). Kalshi-only \u2014\npassing this against a Polymarket market returns `400`.\n",
+            "in": "query",
+            "name": "after",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": "2026-05-01T00:00:00Z"
+            }
+          },
+          {
+            "description": "Inclusive upper bound on the trade timestamp (ISO-8601). Kalshi-only \u2014\npassing this against a Polymarket market returns `400`. Must be later than\n`after` when both are provided.\n",
+            "in": "query",
+            "name": "before",
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "example": "2026-05-15T00:00:00Z"
+            }
+          },
+          {
+            "description": "Opaque cursor returned by the previous response's `pagination.cursor`.\nOmit on the first call.\n",
+            "in": "query",
+            "name": "cursor",
+            "schema": {
+              "$ref": "#/components/schemas/PredictionCursor"
+            }
+          },
+          {
+            "description": "Page size. Defaults to 50 when omitted.",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100,
+              "default": 50,
+              "example": 50
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PredictionTradesListResponse"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "404": {
+            "description": "Market not found on any supported platform."
+          },
+          "500": {
+            "$ref": "#/components/responses/Error500"
+          }
+        },
+        "security": [
+          {
+            "X-API-Key": []
+          }
+        ],
+        "x-codeSamples": [],
+        "summary": "Get recent market trades",
+        "tags": [
+          "Prediction API"
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "X-API-Key": {
+        "type": "apiKey",
+        "name": "x-api-key",
+        "in": "header",
+        "description": "Your **API key** is used to identify your account & your plan, including the number of API calls per second and total monthly calls you have.\n\nEach key is for individual use only.\n\nIf you don't have a key already you can [Sign up for a Free Tatum account](https://co.tatum.io/signup) to get two keys (testnet and mainnet), allowing up to 5 API calls per second and 1,000,000 Credits.\n\nFor testing purposes, you can use the following key which only works inside docs and has limited functionality (e.g. you cannot create virtual accounts or notification subscriptions with it):\n* t-66a730ccccfd17001c479705-2f597d14ad7543f289a03418\n\nFor more details on limits and plans, [click here](https://docs.tatum.io/docs/plans-limits).\n"
+      }
+    },
+    "responses": {
+      "Error400": {
+        "description": "Bad Request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "errorCode": {
+                  "example": "validation.failed",
+                  "description": "validation.failed",
+                  "type": "string"
+                },
+                "message": {
+                  "example": "Request validation failed. Please see data for additional information.",
+                  "description": "Request validation failed. Please see data for additional information.",
+                  "type": "string"
+                },
+                "statusCode": {
+                  "example": 400,
+                  "description": "400",
+                  "type": "number"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "target"
+                    ],
+                    "properties": {
+                      "target": {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "description": "Request object present in the body of the HTTP request",
+                        "example": {
+                          "property": 12345
+                        }
+                      },
+                      "value": {
+                        "type": "number",
+                        "description": "Value of the target object which validation is wrong. Can be of any data type, example here is using type number.",
+                        "example": 12345
+                      },
+                      "property": {
+                        "type": "string",
+                        "description": "Property name of the target object which validation is wrong",
+                        "example": "property1"
+                      },
+                      "constraints": {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "description": "Object of failed constraints for the target object. Key is the constraint, value is detailed description of the failed constraint.",
+                        "example": {
+                          "min": "property1 must not be less than 50000"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "required": [
+                "errorCode",
+                "message",
+                "statusCode",
+                "data"
+              ],
+              "type": "object"
+            }
+          }
+        }
+      },
+      "Error401": {
+        "description": "Unauthorized. Not valid or inactive subscription key present in the HTTP Header.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "oneOf": [
+                {
+                  "properties": {
+                    "errorCode": {
+                      "example": "subscription.not.active",
+                      "description": "subscription.not.active",
+                      "type": "string"
+                    },
+                    "message": {
+                      "example": "Subscription not active anymore.",
+                      "description": "Subscription not active anymore.",
+                      "type": "string"
+                    },
+                    "statusCode": {
+                      "example": 401,
+                      "description": "401",
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "errorCode",
+                    "message",
+                    "statusCode"
+                  ],
+                  "type": "object"
+                },
+                {
+                  "properties": {
+                    "errorCode": {
+                      "example": "subscription.invalid",
+                      "description": "subscription.invalid",
+                      "type": "string"
+                    },
+                    "message": {
+                      "example": "Unable to find valid subscription for '${apiKey}'",
+                      "description": "Unable to find valid subscription for '${apiKey}'",
+                      "type": "string"
+                    },
+                    "statusCode": {
+                      "example": 401,
+                      "description": "401",
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "errorCode",
+                    "message",
+                    "statusCode"
+                  ],
+                  "type": "object"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "Error403": {
+        "description": "Forbidden. The request is authenticated, but it is not possible to perform the operation due to logical error or invalid permissions.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "message": {
+                  "example": "Forbidden",
+                  "description": "Forbidden",
+                  "type": "string"
+                },
+                "statusCode": {
+                  "example": 403,
+                  "description": "403",
+                  "type": "number"
+                }
+              },
+              "required": [
+                "statusCode",
+                "message"
+              ],
+              "type": "object"
+            }
+          }
+        }
+      },
+      "Error500": {
+        "description": "Internal server error. There was an error on the server during the processing of the request.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "message": {
+                  "example": "Internal server error",
+                  "description": "Internal server error",
+                  "type": "string"
+                },
+                "statusCode": {
+                  "example": 500,
+                  "description": "500",
+                  "type": "number"
+                }
+              },
+              "required": [
+                "statusCode",
+                "message"
+              ],
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "PredictionPlatform": {
+        "type": "string",
+        "description": "Prediction-market platform identifier.",
+        "enum": [
+          "polymarket",
+          "kalshi"
+        ],
+        "example": "polymarket"
+      },
+      "PredictionCursor": {
+        "type": "string",
+        "description": "Opaque base64-encoded pagination token. Returned in `pagination.cursor` on\nresponses that have more pages. Pass back verbatim as `?cursor=\u2026` to fetch the\nnext page. Cursors are fingerprint-bound to the filter set \u2014 modifying any\nfilter between calls invalidates the cursor and returns `400`. The field is\nomitted from `pagination` on the last page.\n",
+        "maxLength": 1024,
+        "example": "eyJwbUV2dEN1cnNvciI6IjIwMjUtMTEtMDFUMTI6MzQ6NTZaIn0="
+      },
+      "PredictionCursorPagination": {
+        "type": "object",
+        "description": "Cursor-based pagination wrapper. The `cursor` field is omitted on the last\npage; `pageSize` reflects the page size of the call that produced this response.\n",
+        "required": [
+          "pageSize"
+        ],
+        "properties": {
+          "cursor": {
+            "$ref": "#/components/schemas/PredictionCursor"
+          },
+          "pageSize": {
+            "type": "integer",
+            "description": "Page size of the page that produced this response.",
+            "example": 20
+          }
+        }
+      },
+      "PredictionOutcomeSide": {
+        "type": "string",
+        "description": "Which outcome of a binary market a row refers to.",
+        "enum": [
+          "yes",
+          "no"
+        ],
+        "example": "yes"
+      },
+      "PredictionTradeDirection": {
+        "type": "string",
+        "description": "Order side \u2014 whether the taker bought or sold the outcome.",
+        "enum": [
+          "buy",
+          "sell"
+        ],
+        "example": "buy"
+      },
+      "PredictionTrade": {
+        "type": "object",
+        "description": "A single market trade fill.",
+        "required": [
+          "tradeId",
+          "marketId",
+          "platform",
+          "side",
+          "direction",
+          "price",
+          "size",
+          "notionalValue",
+          "taker",
+          "txHash",
+          "timestamp"
+        ],
+        "properties": {
+          "tradeId": {
+            "type": "string",
+            "description": "Platform-native trade identifier.",
+            "example": "0x9c1f3a7b\u2026"
+          },
+          "marketId": {
+            "type": "string",
+            "description": "Platform-native market identifier.",
+            "example": "KXELONMARS-99"
+          },
+          "platform": {
+            "$ref": "#/components/schemas/PredictionPlatform"
+          },
+          "side": {
+            "$ref": "#/components/schemas/PredictionOutcomeSide"
+          },
+          "direction": {
+            "$ref": "#/components/schemas/PredictionTradeDirection"
+          },
+          "price": {
+            "type": "number",
+            "description": "Fill price in [0, 1].",
+            "example": 0.42
+          },
+          "size": {
+            "type": "number",
+            "description": "Fill size (outcome tokens / contracts).",
+            "example": 250
+          },
+          "notionalValue": {
+            "type": "number",
+            "description": "Fill notional in the market's quote currency (price \u00d7 size).\n",
+            "example": 105
+          },
+          "taker": {
+            "type": "string",
+            "nullable": true,
+            "description": "Wallet that crossed the spread. Populated on Polymarket; `null` on Kalshi\n(the public trades feed does not expose per-trade wallet attribution there).\n",
+            "example": "0x56687bf447db6ffa42ffe2204a05edaa20f55839"
+          },
+          "txHash": {
+            "type": "string",
+            "nullable": true,
+            "description": "On-chain settlement transaction hash where one exists. Populated on\nPolymarket; `null` on Kalshi.\n",
+            "example": "0xabc123\u2026"
+          },
+          "timestamp": {
+            "type": "string",
+            "format": "date-time",
+            "description": "ISO-8601 timestamp the trade settled at.",
+            "example": "2026-05-18T12:34:00Z"
+          }
+        }
+      },
+      "PredictionTradesListResponse": {
+        "type": "object",
+        "description": "Paginated list of market trades.",
+        "required": [
+          "data",
+          "pagination"
+        ],
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PredictionTrade"
+            }
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/PredictionCursorPagination"
+          }
+        }
+      }
+    }
+  }
+}

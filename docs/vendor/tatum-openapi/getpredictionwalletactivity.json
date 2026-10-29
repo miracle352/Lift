@@ -1,0 +1,578 @@
+{
+  "openapi": "3.1.0",
+  "servers": [
+    {
+      "url": "https://api.tatum.io"
+    }
+  ],
+  "info": {
+    "version": "1.2",
+    "title": "Blockchain Data"
+  },
+  "tags": [
+    {
+      "name": "Prediction API"
+    }
+  ],
+  "paths": {
+    "/v4/data/prediction/wallets/{address}/activity": {
+      "get": {
+        "description": "<p style='display: none'>/v4/data/prediction/wallets/{address}/activity</p>\n<p><b>100 credits per API call</b></p>\n\n<p>Full wallet event feed \u2014 covers every event type the upstream emits:\n<code>TRADE</code>, <code>SPLIT</code>, <code>MERGE</code>, <code>REDEEM</code>,\n<code>REWARD</code>, <code>CONVERSION</code>, <code>MAKER_REBATE</code> and\n<code>REFERRAL_REWARD</code>. Unlike <code>/wallets/{address}/trades</code>,\nthis endpoint includes non-trade events and supports a native time-range\nfilter \u2014 useful for activity logs, audit trails and tax exports.</p>\n\n<p><b>Platform support</b></p>\n<ul>\n<li>Polymarket only. Kalshi wallets return <code>400</code>.</li>\n</ul>\n\n<p><b>Filtering, sorting and pagination</b></p>\n<ul>\n<li><code>market</code> / <code>eventId</code> scope the response (mutually\nexclusive, up to 50 entries each).</li>\n<li><code>type</code> is a comma-separated list of event types \u2014 up to 8\nentries from the enum.</li>\n<li><code>side</code> filters to <code>BUY</code> or <code>SELL</code>\n(relevant for trade-type rows; null on non-trade rows).</li>\n<li><code>start</code> / <code>end</code> are unix-<strong>seconds</strong>\n(not milliseconds) \u2014 values that look like millisecond timestamps\n(~13 digits) are rejected with <code>400</code>. <code>end</code> must be\ngreater than or equal to <code>start</code>.</li>\n<li><code>sortBy</code> accepts <code>TIMESTAMP</code>, <code>TOKENS</code>,\n<code>CASH</code>. Defaults to <code>TIMESTAMP</code>. Combine with\n<code>sortDirection</code> (defaults to <code>DESC</code>).</li>\n<li>Pagination is offset-based \u2014 <code>limit</code> (1..500, default 100) and\n<code>offset</code> (0..10000, default 0).</li>\n</ul>\n\n<p><b>Other notes</b></p>\n<ul>\n<li><code>side</code> is <code>null</code> on non-trade rows (e.g.\n<code>REWARD</code>, <code>SPLIT</code>, <code>MERGE</code>,\n<code>REDEEM</code>) \u2014 direction is undefined there.</li>\n<li><code>outcomeIndex</code> can be <code>null</code> for rows that don't map\nto a position side. A sentinel value of <code>999</code> is occasionally\nemitted by the upstream for the same case.</li>\n<li><code>conditionId</code> and <code>asset</code> can be <code>null</code> on\nrows that aren't market-scoped (e.g. some reward / referral rows).</li>\n<li><code>address</code> is normalised to lowercase before being echoed in the\nresponse.</li>\n</ul>\n",
+        "operationId": "GetPredictionWalletActivity",
+        "parameters": [
+          {
+            "description": "Wallet address (0x + 40 hex). Kalshi addresses return `400`.",
+            "in": "path",
+            "name": "address",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/PredictionWalletAddress"
+            }
+          },
+          {
+            "description": "Comma-separated list of condition ids (0x + 64 hex). Up to 50 entries.\nMutually exclusive with `eventId`.\n",
+            "in": "query",
+            "name": "market",
+            "schema": {
+              "type": "string",
+              "example": "0xdd22472e552920b8438158ea7238bfadfa4f736aa4cee91a6b86c39ead110917"
+            }
+          },
+          {
+            "description": "Comma-separated list of Polymarket numeric event ids. Up to 50 entries.\nMutually exclusive with `market`.\n",
+            "in": "query",
+            "name": "eventId",
+            "schema": {
+              "type": "string",
+              "example": "12345,67890"
+            }
+          },
+          {
+            "description": "Comma-separated list of event types to include. Up to 8 entries from the\n`PredictionActivityType` enum.\n",
+            "in": "query",
+            "name": "type",
+            "schema": {
+              "type": "string",
+              "example": "TRADE,REDEEM"
+            }
+          },
+          {
+            "description": "Filter trade-type rows by direction. Non-trade rows always have\n`side = null` and are unaffected.\n",
+            "in": "query",
+            "name": "side",
+            "schema": {
+              "$ref": "#/components/schemas/PredictionTradeSide"
+            }
+          },
+          {
+            "description": "Inclusive lower bound on event timestamp, in unix-**seconds**. Values that\nlook like milliseconds (~13 digits) are rejected with `400`.\n",
+            "in": "query",
+            "name": "start",
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4102444800,
+              "example": 1747569600
+            }
+          },
+          {
+            "description": "Inclusive upper bound on event timestamp, in unix-**seconds**. Must be\n\u2265 `start` when both are provided.\n",
+            "in": "query",
+            "name": "end",
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 4102444800,
+              "example": 1748174400
+            }
+          },
+          {
+            "description": "Sort key. Defaults to `TIMESTAMP`.",
+            "in": "query",
+            "name": "sortBy",
+            "schema": {
+              "$ref": "#/components/schemas/PredictionActivitySortBy"
+            }
+          },
+          {
+            "description": "Sort direction. Defaults to `DESC`.",
+            "in": "query",
+            "name": "sortDirection",
+            "schema": {
+              "$ref": "#/components/schemas/PredictionSortDirection"
+            }
+          },
+          {
+            "description": "Page size. Defaults to 100.",
+            "in": "query",
+            "name": "limit",
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 500,
+              "default": 100,
+              "example": 100
+            }
+          },
+          {
+            "description": "Page offset. Defaults to 0.",
+            "in": "query",
+            "name": "offset",
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 10000,
+              "default": 0,
+              "example": 0
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PredictionWalletActivityResponse"
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "$ref": "#/components/responses/Error400"
+          },
+          "401": {
+            "$ref": "#/components/responses/Error401"
+          },
+          "403": {
+            "$ref": "#/components/responses/Error403"
+          },
+          "500": {
+            "$ref": "#/components/responses/Error500"
+          }
+        },
+        "security": [
+          {
+            "X-API-Key": []
+          }
+        ],
+        "x-codeSamples": [],
+        "summary": "Get wallet activity feed",
+        "tags": [
+          "Prediction API"
+        ]
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "X-API-Key": {
+        "type": "apiKey",
+        "name": "x-api-key",
+        "in": "header",
+        "description": "Your **API key** is used to identify your account & your plan, including the number of API calls per second and total monthly calls you have.\n\nEach key is for individual use only.\n\nIf you don't have a key already you can [Sign up for a Free Tatum account](https://co.tatum.io/signup) to get two keys (testnet and mainnet), allowing up to 5 API calls per second and 1,000,000 Credits.\n\nFor testing purposes, you can use the following key which only works inside docs and has limited functionality (e.g. you cannot create virtual accounts or notification subscriptions with it):\n* t-66a730ccccfd17001c479705-2f597d14ad7543f289a03418\n\nFor more details on limits and plans, [click here](https://docs.tatum.io/docs/plans-limits).\n"
+      }
+    },
+    "responses": {
+      "Error400": {
+        "description": "Bad Request",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "errorCode": {
+                  "example": "validation.failed",
+                  "description": "validation.failed",
+                  "type": "string"
+                },
+                "message": {
+                  "example": "Request validation failed. Please see data for additional information.",
+                  "description": "Request validation failed. Please see data for additional information.",
+                  "type": "string"
+                },
+                "statusCode": {
+                  "example": 400,
+                  "description": "400",
+                  "type": "number"
+                },
+                "data": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "required": [
+                      "target"
+                    ],
+                    "properties": {
+                      "target": {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "description": "Request object present in the body of the HTTP request",
+                        "example": {
+                          "property": 12345
+                        }
+                      },
+                      "value": {
+                        "type": "number",
+                        "description": "Value of the target object which validation is wrong. Can be of any data type, example here is using type number.",
+                        "example": 12345
+                      },
+                      "property": {
+                        "type": "string",
+                        "description": "Property name of the target object which validation is wrong",
+                        "example": "property1"
+                      },
+                      "constraints": {
+                        "type": "object",
+                        "additionalProperties": true,
+                        "description": "Object of failed constraints for the target object. Key is the constraint, value is detailed description of the failed constraint.",
+                        "example": {
+                          "min": "property1 must not be less than 50000"
+                        }
+                      }
+                    }
+                  }
+                }
+              },
+              "required": [
+                "errorCode",
+                "message",
+                "statusCode",
+                "data"
+              ],
+              "type": "object"
+            }
+          }
+        }
+      },
+      "Error401": {
+        "description": "Unauthorized. Not valid or inactive subscription key present in the HTTP Header.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "oneOf": [
+                {
+                  "properties": {
+                    "errorCode": {
+                      "example": "subscription.not.active",
+                      "description": "subscription.not.active",
+                      "type": "string"
+                    },
+                    "message": {
+                      "example": "Subscription not active anymore.",
+                      "description": "Subscription not active anymore.",
+                      "type": "string"
+                    },
+                    "statusCode": {
+                      "example": 401,
+                      "description": "401",
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "errorCode",
+                    "message",
+                    "statusCode"
+                  ],
+                  "type": "object"
+                },
+                {
+                  "properties": {
+                    "errorCode": {
+                      "example": "subscription.invalid",
+                      "description": "subscription.invalid",
+                      "type": "string"
+                    },
+                    "message": {
+                      "example": "Unable to find valid subscription for '${apiKey}'",
+                      "description": "Unable to find valid subscription for '${apiKey}'",
+                      "type": "string"
+                    },
+                    "statusCode": {
+                      "example": 401,
+                      "description": "401",
+                      "type": "number"
+                    }
+                  },
+                  "required": [
+                    "errorCode",
+                    "message",
+                    "statusCode"
+                  ],
+                  "type": "object"
+                }
+              ]
+            }
+          }
+        }
+      },
+      "Error403": {
+        "description": "Forbidden. The request is authenticated, but it is not possible to perform the operation due to logical error or invalid permissions.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "message": {
+                  "example": "Forbidden",
+                  "description": "Forbidden",
+                  "type": "string"
+                },
+                "statusCode": {
+                  "example": 403,
+                  "description": "403",
+                  "type": "number"
+                }
+              },
+              "required": [
+                "statusCode",
+                "message"
+              ],
+              "type": "object"
+            }
+          }
+        }
+      },
+      "Error500": {
+        "description": "Internal server error. There was an error on the server during the processing of the request.",
+        "content": {
+          "application/json": {
+            "schema": {
+              "properties": {
+                "message": {
+                  "example": "Internal server error",
+                  "description": "Internal server error",
+                  "type": "string"
+                },
+                "statusCode": {
+                  "example": 500,
+                  "description": "500",
+                  "type": "number"
+                }
+              },
+              "required": [
+                "statusCode",
+                "message"
+              ],
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "schemas": {
+      "PredictionSortDirection": {
+        "type": "string",
+        "description": "Sort direction.",
+        "enum": [
+          "ASC",
+          "DESC"
+        ],
+        "example": "DESC"
+      },
+      "PredictionOffsetPagination": {
+        "type": "object",
+        "description": "Offset-based pagination metadata, returned by every wallet endpoint and by\n`/markets/{id}/positions`. `pageNumber` is the zero-indexed page derived from\n`offset / limit` on the request.\n",
+        "required": [
+          "pageSize",
+          "pageNumber"
+        ],
+        "properties": {
+          "pageSize": {
+            "type": "integer",
+            "description": "Page size of the call that produced this response.",
+            "example": 100
+          },
+          "pageNumber": {
+            "type": "integer",
+            "description": "Zero-indexed page number (`offset / limit`).",
+            "example": 0
+          }
+        }
+      },
+      "PredictionWalletAddress": {
+        "type": "string",
+        "description": "EVM wallet address \u2014 `0x`-prefixed, 40 hex characters. Returned lowercased\nin response payloads. Non-EVM inputs (e.g. Kalshi user identifiers) return\n`400` from every wallets endpoint.\n",
+        "pattern": "^0x[a-fA-F0-9]{40}$",
+        "example": "0x56687bf447db6ffa42ffe2204a05edaa20f55839"
+      },
+      "PredictionTradeSide": {
+        "type": "string",
+        "description": "Order direction (buy / sell). Distinct from the outcome-side enum.",
+        "enum": [
+          "BUY",
+          "SELL"
+        ],
+        "example": "BUY"
+      },
+      "PredictionActivityType": {
+        "type": "string",
+        "description": "Event type emitted in the wallet activity feed. Covers every category the\nupstream surfaces \u2014 not just trades.\n",
+        "enum": [
+          "TRADE",
+          "SPLIT",
+          "MERGE",
+          "REDEEM",
+          "REWARD",
+          "CONVERSION",
+          "MAKER_REBATE",
+          "REFERRAL_REWARD"
+        ],
+        "example": "TRADE"
+      },
+      "PredictionActivitySortBy": {
+        "type": "string",
+        "description": "Sort key for `/wallets/{address}/activity`.",
+        "enum": [
+          "TIMESTAMP",
+          "TOKENS",
+          "CASH"
+        ],
+        "example": "TIMESTAMP"
+      },
+      "PredictionWalletActivity": {
+        "type": "object",
+        "description": "One activity-row on `/wallets/{address}/activity`.",
+        "required": [
+          "proxyWallet",
+          "timestamp",
+          "conditionId",
+          "type",
+          "size",
+          "usdcSize",
+          "transactionHash",
+          "price",
+          "asset",
+          "side",
+          "outcomeIndex",
+          "title",
+          "slug",
+          "icon",
+          "eventSlug",
+          "outcome",
+          "name",
+          "pseudonym",
+          "bio",
+          "profileImage",
+          "profileImageOptimized"
+        ],
+        "properties": {
+          "proxyWallet": {
+            "type": "string",
+            "description": "Wallet address (0x + 40 hex, lowercased).",
+            "example": "0x56687bf447db6ffa42ffe2204a05edaa20f55839"
+          },
+          "timestamp": {
+            "type": "integer",
+            "description": "Event time (unix-seconds).",
+            "example": 1747569600
+          },
+          "conditionId": {
+            "type": "string",
+            "nullable": true,
+            "description": "Market condition id (0x + 64 hex). `null` on rows that aren't\nmarket-scoped (e.g. some reward / referral rows).\n",
+            "example": "0xdd22472e552920b8438158ea7238bfadfa4f736aa4cee91a6b86c39ead110917"
+          },
+          "type": {
+            "$ref": "#/components/schemas/PredictionActivityType"
+          },
+          "size": {
+            "type": "number",
+            "description": "Token-count delta \u2014 outcome tokens moved by this event.",
+            "example": 250
+          },
+          "usdcSize": {
+            "type": "number",
+            "description": "USDC notional delta \u2014 USDC moved by this event.",
+            "example": 105
+          },
+          "transactionHash": {
+            "type": "string",
+            "nullable": true,
+            "description": "On-chain transaction hash, when one exists.",
+            "example": "0xabc123\u2026"
+          },
+          "price": {
+            "type": "number",
+            "description": "Price associated with the event. `0` on non-trade events (e.g.\n`REWARD`, `REDEEM`) where price is undefined.\n",
+            "example": 0.42
+          },
+          "asset": {
+            "type": "string",
+            "nullable": true,
+            "description": "Outcome-token asset id. `null` on rows that aren't market-scoped.\n",
+            "example": "71321045679252212594626385532706912750332728571942612009397583165281712267356"
+          },
+          "side": {
+            "$ref": "#/components/schemas/PredictionTradeSide",
+            "nullable": true,
+            "description": "Order direction on trade-type rows. `null` on non-trade events (e.g.\n`REWARD`, `SPLIT`, `MERGE`, `REDEEM`, `CONVERSION`).\n"
+          },
+          "outcomeIndex": {
+            "type": "integer",
+            "nullable": true,
+            "description": "Outcome index (0 / 1 on binary markets). `null` when the upstream omits\nit; the upstream occasionally emits a sentinel value of `999` for rows\nthat don't map to a position side.\n",
+            "example": 0
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "slug": {
+            "type": "string",
+            "nullable": true
+          },
+          "icon": {
+            "type": "string",
+            "nullable": true
+          },
+          "eventSlug": {
+            "type": "string",
+            "nullable": true
+          },
+          "outcome": {
+            "type": "string",
+            "nullable": true
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "pseudonym": {
+            "type": "string",
+            "nullable": true
+          },
+          "bio": {
+            "type": "string",
+            "nullable": true
+          },
+          "profileImage": {
+            "type": "string",
+            "nullable": true
+          },
+          "profileImageOptimized": {
+            "type": "string",
+            "nullable": true
+          }
+        }
+      },
+      "PredictionWalletActivityResponse": {
+        "type": "object",
+        "description": "Paginated wallet activity-feed response.",
+        "required": [
+          "data",
+          "pagination"
+        ],
+        "properties": {
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PredictionWalletActivity"
+            }
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/PredictionOffsetPagination"
+          }
+        }
+      }
+    }
+  }
+}

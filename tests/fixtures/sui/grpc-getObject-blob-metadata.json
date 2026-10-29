@@ -1,0 +1,43 @@
+{
+  "object": {
+    "objectId": "0xbade5098e19e997b5dfa4d32e0549a601be15eae178696c9b934b3ee506b5390",
+    "version": "1056488240",
+    "digest": "94zfEJPRsdGDkfhAkWTcQf9E2dk6yFjVGBodQ46DWb5d",
+    "owner": {
+      "$kind": "ObjectOwner",
+      "ObjectOwner": "0x37bd39b0ba11aa73fb27f383671b39aff23a114d0666759929e8fb661f2db80e"
+    },
+    "type": "0x0000000000000000000000000000000000000000000000000000000000000002::dynamic_field::Field<vector<u8>,0xfdc88f7d7cf30afab2f82e8380d11ee8f70efb90e863d1de8616fae1bb09ea77::metadata::Metadata>",
+    "previousTransaction": "4xK2gvv6Gv3BYcbpDFP15pqMxLNxt3zuKsuamiUq9JBJ",
+    "json": {
+      "id": "0xbade5098e19e997b5dfa4d32e0549a601be15eae178696c9b934b3ee506b5390",
+      "name": "bWV0YWRhdGE=",
+      "value": {
+        "metadata": {
+          "contents": [
+            {
+              "key": "memwal_job_id",
+              "value": "a1127911-fd1e-4190-80f7-3b6e3ecb75b5"
+            },
+            {
+              "key": "memwal_namespace",
+              "value": "pb-wallie"
+            },
+            {
+              "key": "memwal_owner",
+              "value": "0x7643a4bf08bb984e9c7cf7a2157c7b87d206dccfd9c899f0205e5d77ff8fd451"
+            },
+            {
+              "key": "memwal_package_id",
+              "value": "0xe7c16fbea0560e7057e2bf7422feaa4fb313749fc69c9e9092fac7a33b81d7f5"
+            },
+            {
+              "key": "memwal_agent_id",
+              "value": "7e84521f69d3918662df4d51d12830dc5188d4540669c8a7acb63626016625c5"
+            }
+          ]
+        }
+      }
+    }
+  }
+}

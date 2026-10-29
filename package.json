@@ -1,0 +1,66 @@
+{
+  "name": "receipts",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "eslint",
+    "typecheck": "next typegen && tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "check": "pnpm lint && pnpm typecheck && pnpm test",
+    "db:generate": "drizzle-kit generate",
+    "db:migrate": "drizzle-kit migrate",
+    "db:studio": "drizzle-kit studio",
+    "smoke:sui": "tsx --env-file-if-exists=.env.local scripts/smoke-sui.ts",
+    "smoke:tatum": "tsx --env-file-if-exists=.env.local scripts/smoke-tatum.ts",
+    "smoke:memwal": "tsx --env-file-if-exists=.env.local scripts/smoke-memwal.ts",
+    "fixtures:synthetic": "tsx tests/fixtures/sui/make-synthetic.ts"
+  },
+  "dependencies": {
+    "@grpc/grpc-js": "1.13.6",
+    "@libsql/client": "0.18.0",
+    "@mysten-incubation/memwal": "0.1.8",
+    "@mysten/seal": "1.4.19",
+    "@mysten/sui": "2.35.0",
+    "@noble/hashes": "2.4.0",
+    "@protobuf-ts/grpc-transport": "2.11.1",
+    "@suimpp/mpp": "0.9.0",
+    "canonicalize": "5.1.0",
+    "drizzle-orm": "0.45.3",
+    "iron-session": "9.0.1",
+    "mppx": "0.4.12",
+    "next": "16.4.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "server-only": "0.0.1",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@tailwindcss/turbopack": "4.3.3",
+    "@types/node": "22.20.5",
+    "@types/react": "19.3.0",
+    "@types/react-dom": "19.3.0",
+    "drizzle-kit": "0.31.11",
+    "eslint": "9.39.5",
+    "eslint-config-next": "16.4.0",
+    "tailwindcss": "4.3.3",
+    "tsx": "4.23.15",
+    "typescript": "5.9.3",
+    "vitest": "5.0.3"
+  },
+  "packageManager": "pnpm@10.28.0",
+  "description": "Receipts — find out whose advice actually makes your forecasts better. Tatum x Walrus Total Recall hackathon entry.",
+  "engines": {
+    "node": ">=22.11"
+  },
+  "browserslist": [
+    "chrome >= 111",
+    "edge >= 111",
+    "firefox >= 128",
+    "safari >= 16.4",
+    "ios_saf >= 16.4"
+  ]
+}
