@@ -34,7 +34,16 @@ if [ ! -d "$REPO_DIR/.git" ]; then
 fi
 cp -n "$HOME/.env.local" "$REPO_DIR/.env.local" || true
 chmod 600 "$REPO_DIR/.env.local"
+grep -q '^ARENA_ALLOW_LOCAL_ADVISORS=' "$REPO_DIR/.env.local" || echo 'ARENA_ALLOW_LOCAL_ADVISORS=1' >> "$REPO_DIR/.env.local"
 cd "$REPO_DIR"
+
+echo "==> restore the arena database snapshot (branch arena-data), if there is one and no DB yet"
+if [ ! -f local.db ] && git ls-remote --exit-code --heads origin arena-data >/dev/null 2>&1; then
+  git fetch -q origin arena-data
+  git show origin/arena-data:arena.db.gz | gunzip > local.db
+  echo "restored $(du -h local.db | cut -f1) database"
+fi
+
 pnpm install --frozen-lockfile
 pnpm build
 
@@ -68,6 +77,21 @@ Environment=NODE_ENV=production
 WantedBy=multi-user.target
 UNIT
 
+sudo tee /etc/systemd/system/receipts-advisor.service >/dev/null <<UNIT
+[Unit]
+Description=Receipts example marketplace advisor (Crowd Plus)
+After=network-online.target
+[Service]
+User=$USER
+WorkingDirectory=$REPO_DIR
+ExecStart=$(command -v node) examples/advisor/server.mjs
+Environment=PORT=8790
+Restart=always
+RestartSec=5
+[Install]
+WantedBy=multi-user.target
+UNIT
+
 echo "==> Caddy (HTTPS)"
 if ! command -v caddy >/dev/null; then
   curl -1sLf 'https://dl.cloudsmith.io/public/caddy/stable/gpg.key' | sudo gpg --dearmor -o /usr/share/keyrings/caddy-stable-archive-keyring.gpg
@@ -83,7 +107,7 @@ ${IP}.sslip.io {
 CADDY
 
 sudo systemctl daemon-reload
-sudo systemctl enable --now receipts-worker receipts-web
+sudo systemctl enable --now receipts-advisor receipts-worker receipts-web
 sudo systemctl restart caddy
 echo
 echo "Done. Site: https://${IP}.sslip.io   Logs: journalctl -u receipts-worker -f"

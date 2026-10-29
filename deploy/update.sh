@@ -5,5 +5,5 @@ cd "$HOME/receipts"
 git pull --ff-only
 pnpm install --frozen-lockfile
 pnpm build
-sudo systemctl restart receipts-worker receipts-web
+sudo systemctl restart receipts-advisor receipts-worker receipts-web
 echo "updated to $(git rev-parse --short HEAD)"
