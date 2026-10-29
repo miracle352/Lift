@@ -1,0 +1,3000 @@
+{
+ "data": [
+  {
+   "id": "796388",
+   "platform": "polymarket",
+   "title": "Solana Up or Down - August 5, 10:45AM-11:00AM ET",
+   "description": "This market will resolve to \"Up\" if the Solana price at the end of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the SOL/USD data stream available at https://data.chain.link/streams/sol-usd.\nPlease note that this market is about the price according to Chainlink data stream SOL/USD, not according to other sources or spot markets.",
+   "category": "Up or Down",
+   "tags": [
+    "up-or-down",
+    "crypto-prices",
+    "hide-from-new",
+    "recurring",
+    "crypto",
+    "solana",
+    "15M"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/SOL+fullsize.png",
+   "status": "active",
+   "openTime": "2026-08-04T14:53:00.769Z",
+   "closeTime": "2026-08-05T15:00:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 14994.197420999999,
+   "volumeUnit": "usd",
+   "totalLiquidity": 1083.44904,
+   "markets": [
+    {
+     "id": "0x2e9c2f3598332269a93ba394e3e002800f641f7d3e8cae6f34336154d7c122c0",
+     "platform": "polymarket",
+     "eventId": "796388",
+     "question": "Solana Up or Down - August 5, 10:45AM-11:00AM ET",
+     "description": "This market will resolve to \"Up\" if the Solana price at the end of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the SOL/USD data stream available at https://data.chain.link/streams/sol-usd.\nPlease note that this market is about the price according to Chainlink data stream SOL/USD, not according to other sources or spot markets.",
+     "category": "Up or Down",
+     "tags": [
+      "up-or-down",
+      "crypto-prices",
+      "hide-from-new",
+      "recurring",
+      "crypto",
+      "solana",
+      "15M"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/SOL+fullsize.png",
+     "status": "active",
+     "openTime": "2026-08-04T00:00:00.000Z",
+     "closeTime": "2026-08-05T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.9995,
+       "tokenId": "42395379317838771443994913781957119343594604346122360828392579077212777926189"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.0005,
+       "tokenId": "80475084872732158638233497686940243393008934004472558583519912395292497086369"
+      }
+     ],
+     "volume": 14994.197420999999,
+     "volumeUnit": "usd",
+     "liquidity": 1083.44904,
+     "resolution": null,
+     "createdAt": "2026-08-04T14:52:08.361Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0x2e9c2f3598332269a93ba394e3e002800f641f7d3e8cae6f34336154d7c122c0",
+      "url": "https://polymarket.com/event/sol-updown-15m-1785941100"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "sol-updown-15m-1785941100",
+    "url": "https://polymarket.com/event/sol-updown-15m-1785941100"
+   }
+  },
+  {
+   "id": "796396",
+   "platform": "polymarket",
+   "title": "Hyperliquid Up or Down - August 5, 10:45AM-11:00AM ET",
+   "description": "This market will resolve to \"Up\" if the Hyperliquid price at the end of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the HYPE/USD data stream available at https://data.chain.link/streams/hype-usd.\nPlease note that this market is about the price according to Chainlink data stream HYPE/USD, not according to other sources or spot markets.",
+   "category": "Up or Down",
+   "tags": [
+    "up-or-down",
+    "crypto-prices",
+    "hide-from-new",
+    "recurring",
+    "crypto",
+    "hype",
+    "15M"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/hyperliquid-16f0eafaeb.png",
+   "status": "active",
+   "openTime": "2026-08-04T14:53:15.874Z",
+   "closeTime": "2026-08-05T15:00:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 997.6700000000001,
+   "volumeUnit": "usd",
+   "totalLiquidity": 772.35,
+   "markets": [
+    {
+     "id": "0xbc1edd7daa5ed9a6626864b2f9064483dc3b583ec2c23ad1a73a66ac0a09c797",
+     "platform": "polymarket",
+     "eventId": "796396",
+     "question": "Hyperliquid Up or Down - August 5, 10:45AM-11:00AM ET",
+     "description": "This market will resolve to \"Up\" if the Hyperliquid price at the end of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the HYPE/USD data stream available at https://data.chain.link/streams/hype-usd.\nPlease note that this market is about the price according to Chainlink data stream HYPE/USD, not according to other sources or spot markets.",
+     "category": "Up or Down",
+     "tags": [
+      "up-or-down",
+      "crypto-prices",
+      "hide-from-new",
+      "recurring",
+      "crypto",
+      "hype",
+      "15M"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/hyperliquid-16f0eafaeb.png",
+     "status": "active",
+     "openTime": "2026-08-04T00:00:00.000Z",
+     "closeTime": "2026-08-05T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.005,
+       "tokenId": "51892641292242594305129600010384343441360270328113415624231456354704855845009"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.995,
+       "tokenId": "22437963838291317033821323815738013461189350276364229201442403474331218360725"
+      }
+     ],
+     "volume": 997.6700000000001,
+     "volumeUnit": "usd",
+     "liquidity": 772.35,
+     "resolution": null,
+     "createdAt": "2026-08-04T14:52:09.678Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0xbc1edd7daa5ed9a6626864b2f9064483dc3b583ec2c23ad1a73a66ac0a09c797",
+      "url": "https://polymarket.com/event/hype-updown-15m-1785941100"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "hype-updown-15m-1785941100",
+    "url": "https://polymarket.com/event/hype-updown-15m-1785941100"
+   }
+  },
+  {
+   "id": "796398",
+   "platform": "polymarket",
+   "title": "BNB Up or Down - August 5, 10:45AM-11:00AM ET",
+   "description": "This market will resolve to \"Up\" if the BNB price at the end of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the BNB/USD data stream available at https://data.chain.link/streams/bnb-usd.\nPlease note that this market is about the price according to Chainlink data stream BNB/USD, not according to other sources or spot markets.",
+   "category": "Up or Down",
+   "tags": [
+    "up-or-down",
+    "crypto-prices",
+    "hide-from-new",
+    "recurring",
+    "crypto",
+    "bnb",
+    "15M"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/bnb%20logo-247a9f7a39.png",
+   "status": "active",
+   "openTime": "2026-08-04T14:53:18.758Z",
+   "closeTime": "2026-08-05T15:00:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 189.30664,
+   "volumeUnit": "usd",
+   "totalLiquidity": 17117.5706,
+   "markets": [
+    {
+     "id": "0xf4738fbde87091ddd8cb0429fa68212d6c6f08fbb18a06838eb5408a0f325877",
+     "platform": "polymarket",
+     "eventId": "796398",
+     "question": "BNB Up or Down - August 5, 10:45AM-11:00AM ET",
+     "description": "This market will resolve to \"Up\" if the BNB price at the end of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the BNB/USD data stream available at https://data.chain.link/streams/bnb-usd.\nPlease note that this market is about the price according to Chainlink data stream BNB/USD, not according to other sources or spot markets.",
+     "category": "Up or Down",
+     "tags": [
+      "up-or-down",
+      "crypto-prices",
+      "hide-from-new",
+      "recurring",
+      "crypto",
+      "bnb",
+      "15M"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/bnb%20logo-247a9f7a39.png",
+     "status": "active",
+     "openTime": "2026-08-04T00:00:00.000Z",
+     "closeTime": "2026-08-05T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.9995,
+       "tokenId": "87395226485676930505103277344060252898366297624982002859936608947358764086833"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.0005,
+       "tokenId": "26248531873361065145969104880073990061341714350093843635419692470494731080199"
+      }
+     ],
+     "volume": 189.30664,
+     "volumeUnit": "usd",
+     "liquidity": 17117.5706,
+     "resolution": null,
+     "createdAt": "2026-08-04T14:52:09.727Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0xf4738fbde87091ddd8cb0429fa68212d6c6f08fbb18a06838eb5408a0f325877",
+      "url": "https://polymarket.com/event/bnb-updown-15m-1785941100"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "bnb-updown-15m-1785941100",
+    "url": "https://polymarket.com/event/bnb-updown-15m-1785941100"
+   }
+  },
+  {
+   "id": "798731",
+   "platform": "polymarket",
+   "title": "ZCash Up or Down - August 5, 10:45AM-11:00AM ET",
+   "description": "This market will resolve to \"Up\" if the ZCash price at the end of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the ZEC/USD data stream available at https://data.chain.link/streams/zec-usd.\nPlease note that this market is about the price according to Chainlink data stream ZEC/USD, not according to other sources or spot markets.",
+   "category": "Up or Down",
+   "tags": [
+    "up-or-down",
+    "crypto-prices",
+    "hide-from-new",
+    "recurring",
+    "crypto",
+    "zcash",
+    "15M"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/zcash-yellow-588d52bdd6.png",
+   "status": "active",
+   "openTime": "2026-08-05T00:05:05.287Z",
+   "closeTime": "2026-08-05T15:00:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 0,
+   "volumeUnit": "usd",
+   "totalLiquidity": 0,
+   "markets": [
+    {
+     "id": "0x4093fdcc9fe39c779c3ad1d1e0cb5d0fb40f23869213484ba6f3e4a78b2f3f7c",
+     "platform": "polymarket",
+     "eventId": "798731",
+     "question": "ZCash Up or Down - August 5, 10:45AM-11:00AM ET",
+     "description": "This market will resolve to \"Up\" if the ZCash price at the end of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the ZEC/USD data stream available at https://data.chain.link/streams/zec-usd.\nPlease note that this market is about the price according to Chainlink data stream ZEC/USD, not according to other sources or spot markets.",
+     "category": "Up or Down",
+     "tags": [
+      "up-or-down",
+      "crypto-prices",
+      "hide-from-new",
+      "recurring",
+      "crypto",
+      "zcash",
+      "15M"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/zcash-yellow-588d52bdd6.png",
+     "status": "active",
+     "openTime": "2026-08-05T00:00:00.000Z",
+     "closeTime": "2026-08-05T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.5,
+       "tokenId": "11842626379768851970982182690289047797718587787970784837033363035117699715405"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.5,
+       "tokenId": "20179305814416480816377556773386247917959413182881380294447714748524825349161"
+      }
+     ],
+     "volume": 0,
+     "volumeUnit": "usd",
+     "liquidity": 0,
+     "resolution": null,
+     "createdAt": "2026-08-05T00:04:11.888Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0x4093fdcc9fe39c779c3ad1d1e0cb5d0fb40f23869213484ba6f3e4a78b2f3f7c",
+      "url": "https://polymarket.com/event/zec-updown-15m-1785941100"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "zec-updown-15m-1785941100",
+    "url": "https://polymarket.com/event/zec-updown-15m-1785941100"
+   }
+  },
+  {
+   "id": "1271303",
+   "platform": "polymarket",
+   "title": "Gold Up or Down - October 29, 6:45AM-7:00AM ET",
+   "description": "This market will resolve to \"Up\" if the Gold price at the end of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the XAU/USD data stream available at https://data.chain.link/streams/xau-usd-forexprice-streams.\nPlease note that this market is about the price according to Chainlink data stream XAU/USD, not according to other sources or spot markets.",
+   "category": "Finance",
+   "tags": [
+    "finance",
+    "gold",
+    "15M",
+    "up-or-down",
+    "hide-from-new",
+    "recurring"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/gold-logo-0d00c80498.png",
+   "status": "active",
+   "openTime": "2026-10-28T10:45:30.000Z",
+   "closeTime": "2026-10-29T11:00:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 0,
+   "volumeUnit": "usd",
+   "totalLiquidity": 358.2,
+   "markets": [
+    {
+     "id": "0x96c1b0c91f8ef89185ec83c040283711121086ae5bae5eab013a0ee48cd7299c",
+     "platform": "polymarket",
+     "eventId": "1271303",
+     "question": "Gold Up or Down - October 29, 6:45AM-7:00AM ET",
+     "description": "This market will resolve to \"Up\" if the Gold price at the end of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the XAU/USD data stream available at https://data.chain.link/streams/xau-usd-forexprice-streams.\nPlease note that this market is about the price according to Chainlink data stream XAU/USD, not according to other sources or spot markets.",
+     "category": "Finance",
+     "tags": [
+      "finance",
+      "gold",
+      "15M",
+      "up-or-down",
+      "hide-from-new",
+      "recurring"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/gold-logo-0d00c80498.png",
+     "status": "active",
+     "openTime": "2026-10-28T00:00:00.000Z",
+     "closeTime": "2026-10-29T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.515,
+       "tokenId": "112908057847430340590548736489359061314236352030734773040652420887423308999183"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.485,
+       "tokenId": "41222216972625951155794627104679905044114372270863448994711913259191819781399"
+      }
+     ],
+     "volume": 0,
+     "volumeUnit": "usd",
+     "liquidity": 358.2,
+     "resolution": null,
+     "createdAt": "2026-10-28T10:45:21.345Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0x96c1b0c91f8ef89185ec83c040283711121086ae5bae5eab013a0ee48cd7299c",
+      "url": "https://polymarket.com/event/xau-updown-15m-1793270700"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "xau-updown-15m-1793270700",
+    "url": "https://polymarket.com/event/xau-updown-15m-1793270700"
+   }
+  },
+  {
+   "id": "1271304",
+   "platform": "polymarket",
+   "title": "Silver Up or Down - October 29, 6:45AM-7:00AM ET",
+   "description": "This market will resolve to \"Up\" if the Silver price at the end of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the XAG/USD data stream available at https://data.chain.link/streams/xag-usd-forexprice-streams.\nPlease note that this market is about the price according to Chainlink data stream XAG/USD, not according to other sources or spot markets.",
+   "category": "Finance",
+   "tags": [
+    "finance",
+    "silver",
+    "15M",
+    "up-or-down",
+    "hide-from-new",
+    "recurring"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/silver-3d81e98448.png",
+   "status": "active",
+   "openTime": "2026-10-28T10:45:31.000Z",
+   "closeTime": "2026-10-29T11:00:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 0,
+   "volumeUnit": "usd",
+   "totalLiquidity": 232.6,
+   "markets": [
+    {
+     "id": "0x7cb71634d51032af3e7cd47b1383986c32a30aa34097efbca944c3f68556c295",
+     "platform": "polymarket",
+     "eventId": "1271304",
+     "question": "Silver Up or Down - October 29, 6:45AM-7:00AM ET",
+     "description": "This market will resolve to \"Up\" if the Silver price at the end of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the XAG/USD data stream available at https://data.chain.link/streams/xag-usd-forexprice-streams.\nPlease note that this market is about the price according to Chainlink data stream XAG/USD, not according to other sources or spot markets.",
+     "category": "Finance",
+     "tags": [
+      "finance",
+      "silver",
+      "15M",
+      "up-or-down",
+      "hide-from-new",
+      "recurring"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/silver-3d81e98448.png",
+     "status": "active",
+     "openTime": "2026-10-28T00:00:00.000Z",
+     "closeTime": "2026-10-29T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.885,
+       "tokenId": "99919725316156622925256790731812409924837074914193868254689301112843632527662"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.115,
+       "tokenId": "35798189022354966021255445582338106557046104804009714955196992605450536435215"
+      }
+     ],
+     "volume": 0,
+     "volumeUnit": "usd",
+     "liquidity": 232.6,
+     "resolution": null,
+     "createdAt": "2026-10-28T10:45:21.339Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0x7cb71634d51032af3e7cd47b1383986c32a30aa34097efbca944c3f68556c295",
+      "url": "https://polymarket.com/event/xag-updown-15m-1793270700"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "xag-updown-15m-1793270700",
+    "url": "https://polymarket.com/event/xag-updown-15m-1793270700"
+   }
+  },
+  {
+   "id": "1271323",
+   "platform": "polymarket",
+   "title": "Dogecoin Up or Down - October 29, 6:45AM-7:00AM ET",
+   "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Dogecoin, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the DOGE/USD TWAP data stream available at https://data.chain.link/streams/doge-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair DOGE/USD, not according to any other sources or spot markets.",
+   "category": "Up or Down",
+   "tags": [
+    "up-or-down",
+    "crypto-prices",
+    "hide-from-new",
+    "recurring",
+    "crypto",
+    "dogecoin",
+    "15M"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/dogecoin-9ae840dfa3.png",
+   "status": "active",
+   "openTime": "2026-10-28T10:53:35.823Z",
+   "closeTime": "2026-10-29T11:00:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 0,
+   "volumeUnit": "usd",
+   "totalLiquidity": 1251.4609,
+   "markets": [
+    {
+     "id": "0x7d8fb004fb797fa73f1d915463927542e72233548676ad5adae9203355ebc270",
+     "platform": "polymarket",
+     "eventId": "1271323",
+     "question": "Dogecoin Up or Down - October 29, 6:45AM-7:00AM ET",
+     "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Dogecoin, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the DOGE/USD TWAP data stream available at https://data.chain.link/streams/doge-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair DOGE/USD, not according to any other sources or spot markets.",
+     "category": "Up or Down",
+     "tags": [
+      "up-or-down",
+      "crypto-prices",
+      "hide-from-new",
+      "recurring",
+      "crypto",
+      "dogecoin",
+      "15M"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/dogecoin-9ae840dfa3.png",
+     "status": "active",
+     "openTime": "2026-10-28T00:00:00.000Z",
+     "closeTime": "2026-10-29T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.9845,
+       "tokenId": "93622742184956760294519466453058750174785995082385159053581684691739127667312"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.0155,
+       "tokenId": "90771454778602675908514607751492203791033637807905785982306192988340465823460"
+      }
+     ],
+     "volume": 0,
+     "volumeUnit": "usd",
+     "liquidity": 1251.4609,
+     "resolution": null,
+     "createdAt": "2026-10-28T10:52:28.430Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0x7d8fb004fb797fa73f1d915463927542e72233548676ad5adae9203355ebc270",
+      "url": "https://polymarket.com/event/doge-updown-15m-1793270700"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "doge-updown-15m-1793270700",
+    "url": "https://polymarket.com/event/doge-updown-15m-1793270700"
+   }
+  },
+  {
+   "id": "1271324",
+   "platform": "polymarket",
+   "title": "Bitcoin Up or Down - October 29, 6:45AM-7:00AM ET",
+   "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Bitcoin, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the BTC/USD TWAP data stream available at https://data.chain.link/streams/btc-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair BTC/USD, not according to any other sources or spot markets.",
+   "category": "Up or Down",
+   "tags": [
+    "up-or-down",
+    "crypto-prices",
+    "hide-from-new",
+    "recurring",
+    "crypto",
+    "bitcoin",
+    "15M"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/BTC+fullsize.png",
+   "status": "active",
+   "openTime": "2026-10-28T10:53:39.841Z",
+   "closeTime": "2026-10-29T11:00:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 10,
+   "volumeUnit": "usd",
+   "totalLiquidity": 23120.8416,
+   "markets": [
+    {
+     "id": "0x4ec8124cc08f82d2e8018dc6a518deed3f03fa8818b9bdf4eb5f2329d35b7023",
+     "platform": "polymarket",
+     "eventId": "1271324",
+     "question": "Bitcoin Up or Down - October 29, 6:45AM-7:00AM ET",
+     "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Bitcoin, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the BTC/USD TWAP data stream available at https://data.chain.link/streams/btc-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair BTC/USD, not according to any other sources or spot markets.",
+     "category": "Up or Down",
+     "tags": [
+      "up-or-down",
+      "crypto-prices",
+      "hide-from-new",
+      "recurring",
+      "crypto",
+      "bitcoin",
+      "15M"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/BTC+fullsize.png",
+     "status": "active",
+     "openTime": "2026-10-28T00:00:00.000Z",
+     "closeTime": "2026-10-29T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.965,
+       "tokenId": "25997426697684350622692418300677550923417807932091849654987995396400440168997"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.035,
+       "tokenId": "36335533225574488302895916082685170764481313962359384975666654366091591667058"
+      }
+     ],
+     "volume": 10,
+     "volumeUnit": "usd",
+     "liquidity": 23120.8416,
+     "resolution": null,
+     "createdAt": "2026-10-28T10:52:28.438Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0x4ec8124cc08f82d2e8018dc6a518deed3f03fa8818b9bdf4eb5f2329d35b7023",
+      "url": "https://polymarket.com/event/btc-updown-15m-1793270700"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "btc-updown-15m-1793270700",
+    "url": "https://polymarket.com/event/btc-updown-15m-1793270700"
+   }
+  },
+  {
+   "id": "1271326",
+   "platform": "polymarket",
+   "title": "Ethereum Up or Down - October 29, 6:45AM-7:00AM ET",
+   "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Ethereum, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the ETH/USD TWAP data stream available at https://data.chain.link/streams/eth-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair ETH/USD, not according to any other sources or spot markets.",
+   "category": "Up or Down",
+   "tags": [
+    "up-or-down",
+    "crypto-prices",
+    "hide-from-new",
+    "recurring",
+    "crypto",
+    "ethereum",
+    "15M"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/ETH+fullsize.jpg",
+   "status": "active",
+   "openTime": "2026-10-28T10:53:52.747Z",
+   "closeTime": "2026-10-29T11:00:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 0,
+   "volumeUnit": "usd",
+   "totalLiquidity": 6510.9034,
+   "markets": [
+    {
+     "id": "0x1e5727ad3e08d90cd432712c62906f918265f919f570cc507aee2f62bc0f1523",
+     "platform": "polymarket",
+     "eventId": "1271326",
+     "question": "Ethereum Up or Down - October 29, 6:45AM-7:00AM ET",
+     "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Ethereum, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the ETH/USD TWAP data stream available at https://data.chain.link/streams/eth-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair ETH/USD, not according to any other sources or spot markets.",
+     "category": "Up or Down",
+     "tags": [
+      "up-or-down",
+      "crypto-prices",
+      "hide-from-new",
+      "recurring",
+      "crypto",
+      "ethereum",
+      "15M"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/ETH+fullsize.jpg",
+     "status": "active",
+     "openTime": "2026-10-28T00:00:00.000Z",
+     "closeTime": "2026-10-29T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.985,
+       "tokenId": "104820307185726828385747123520695191200737793210207675643049115584285664402342"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.015,
+       "tokenId": "2143362986081546761328660589328480559409694461239508908866562440596084427876"
+      }
+     ],
+     "volume": 0,
+     "volumeUnit": "usd",
+     "liquidity": 6510.9034,
+     "resolution": null,
+     "createdAt": "2026-10-28T10:52:29.200Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0x1e5727ad3e08d90cd432712c62906f918265f919f570cc507aee2f62bc0f1523",
+      "url": "https://polymarket.com/event/eth-updown-15m-1793270700"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "eth-updown-15m-1793270700",
+    "url": "https://polymarket.com/event/eth-updown-15m-1793270700"
+   }
+  },
+  {
+   "id": "1271327",
+   "platform": "polymarket",
+   "title": "Solana Up or Down - October 29, 6:45AM-7:00AM ET",
+   "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Solana, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the SOL/USD TWAP data stream available at https://data.chain.link/streams/sol-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair SOL/USD, not according to any other sources or spot markets.",
+   "category": "Up or Down",
+   "tags": [
+    "up-or-down",
+    "crypto-prices",
+    "hide-from-new",
+    "recurring",
+    "crypto",
+    "solana",
+    "15M"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/SOL+fullsize.png",
+   "status": "active",
+   "openTime": "2026-10-28T10:54:06.055Z",
+   "closeTime": "2026-10-29T11:00:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 0,
+   "volumeUnit": "usd",
+   "totalLiquidity": 1853.4306,
+   "markets": [
+    {
+     "id": "0x28774f5b944568c66f4a477f23527305472a2fa1d2e2aaf8aff428d403b4c4aa",
+     "platform": "polymarket",
+     "eventId": "1271327",
+     "question": "Solana Up or Down - October 29, 6:45AM-7:00AM ET",
+     "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Solana, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the SOL/USD TWAP data stream available at https://data.chain.link/streams/sol-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair SOL/USD, not according to any other sources or spot markets.",
+     "category": "Up or Down",
+     "tags": [
+      "up-or-down",
+      "crypto-prices",
+      "hide-from-new",
+      "recurring",
+      "crypto",
+      "solana",
+      "15M"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/SOL+fullsize.png",
+     "status": "active",
+     "openTime": "2026-10-28T00:00:00.000Z",
+     "closeTime": "2026-10-29T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.985,
+       "tokenId": "63255254579331784744307334279040834455300891907228028766538854980582690901285"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.015,
+       "tokenId": "91335966828551900042098463741646067242865345773947261601960944731090374545812"
+      }
+     ],
+     "volume": 0,
+     "volumeUnit": "usd",
+     "liquidity": 1853.4306,
+     "resolution": null,
+     "createdAt": "2026-10-28T10:52:29.226Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0x28774f5b944568c66f4a477f23527305472a2fa1d2e2aaf8aff428d403b4c4aa",
+      "url": "https://polymarket.com/event/sol-updown-15m-1793270700"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "sol-updown-15m-1793270700",
+    "url": "https://polymarket.com/event/sol-updown-15m-1793270700"
+   }
+  },
+  {
+   "id": "1271329",
+   "platform": "polymarket",
+   "title": "Hyperliquid Up or Down - October 29, 6:45AM-7:00AM ET",
+   "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Hyperliquid, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the HYPE/USD TWAP data stream available at https://data.chain.link/streams/hype-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair HYPE/USD, not according to any other sources or spot markets.",
+   "category": "Up or Down",
+   "tags": [
+    "up-or-down",
+    "crypto-prices",
+    "hide-from-new",
+    "recurring",
+    "crypto",
+    "hype",
+    "15M"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/hyperliquid-16f0eafaeb.png",
+   "status": "active",
+   "openTime": "2026-10-28T10:54:01.883Z",
+   "closeTime": "2026-10-29T11:00:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 0,
+   "volumeUnit": "usd",
+   "totalLiquidity": 517.62,
+   "markets": [
+    {
+     "id": "0xb2c53e7a9f991c0221525499caa097404e102346f741e72ac979b5a6ef8a37f2",
+     "platform": "polymarket",
+     "eventId": "1271329",
+     "question": "Hyperliquid Up or Down - October 29, 6:45AM-7:00AM ET",
+     "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Hyperliquid, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the HYPE/USD TWAP data stream available at https://data.chain.link/streams/hype-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair HYPE/USD, not according to any other sources or spot markets.",
+     "category": "Up or Down",
+     "tags": [
+      "up-or-down",
+      "crypto-prices",
+      "hide-from-new",
+      "recurring",
+      "crypto",
+      "hype",
+      "15M"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/hyperliquid-16f0eafaeb.png",
+     "status": "active",
+     "openTime": "2026-10-28T00:00:00.000Z",
+     "closeTime": "2026-10-29T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.9965,
+       "tokenId": "103706351586810598547118597813630975749783921002802378746429478429586611463557"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.0035,
+       "tokenId": "59860886581767676926370973032689678583079085020560450887301524546851462463877"
+      }
+     ],
+     "volume": 0,
+     "volumeUnit": "usd",
+     "liquidity": 517.62,
+     "resolution": null,
+     "createdAt": "2026-10-28T10:52:29.332Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0xb2c53e7a9f991c0221525499caa097404e102346f741e72ac979b5a6ef8a37f2",
+      "url": "https://polymarket.com/event/hype-updown-15m-1793270700"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "hype-updown-15m-1793270700",
+    "url": "https://polymarket.com/event/hype-updown-15m-1793270700"
+   }
+  },
+  {
+   "id": "1271330",
+   "platform": "polymarket",
+   "title": "BNB Up or Down - October 29, 6:45AM-7:00AM ET",
+   "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of BNB, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the BNB/USD TWAP data stream available at https://data.chain.link/streams/bnb-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair BNB/USD, not according to any other sources or spot markets.",
+   "category": "Up or Down",
+   "tags": [
+    "up-or-down",
+    "crypto-prices",
+    "hide-from-new",
+    "recurring",
+    "crypto",
+    "bnb",
+    "15M"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/bnb%20logo-247a9f7a39.png",
+   "status": "active",
+   "openTime": "2026-10-28T10:54:12.530Z",
+   "closeTime": "2026-10-29T11:00:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 0,
+   "volumeUnit": "usd",
+   "totalLiquidity": 454.49,
+   "markets": [
+    {
+     "id": "0xd9a6bc01714583f87499de2b40f897e7e43af7fa0316fb06f5ce7514ce31085d",
+     "platform": "polymarket",
+     "eventId": "1271330",
+     "question": "BNB Up or Down - October 29, 6:45AM-7:00AM ET",
+     "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of BNB, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the BNB/USD TWAP data stream available at https://data.chain.link/streams/bnb-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair BNB/USD, not according to any other sources or spot markets.",
+     "category": "Up or Down",
+     "tags": [
+      "up-or-down",
+      "crypto-prices",
+      "hide-from-new",
+      "recurring",
+      "crypto",
+      "bnb",
+      "15M"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/bnb%20logo-247a9f7a39.png",
+     "status": "active",
+     "openTime": "2026-10-28T00:00:00.000Z",
+     "closeTime": "2026-10-29T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.725,
+       "tokenId": "74027458550318200974288893099512666815472901307987987195452304694444216218338"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.275,
+       "tokenId": "65912289777366042153604666884776642169853291939441848589949979228820846411652"
+      }
+     ],
+     "volume": 0,
+     "volumeUnit": "usd",
+     "liquidity": 454.49,
+     "resolution": null,
+     "createdAt": "2026-10-28T10:52:30.407Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0xd9a6bc01714583f87499de2b40f897e7e43af7fa0316fb06f5ce7514ce31085d",
+      "url": "https://polymarket.com/event/bnb-updown-15m-1793270700"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "bnb-updown-15m-1793270700",
+    "url": "https://polymarket.com/event/bnb-updown-15m-1793270700"
+   }
+  },
+  {
+   "id": "1271331",
+   "platform": "polymarket",
+   "title": "ZCash Up or Down - October 29, 6:45AM-7:00AM ET",
+   "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of ZCash, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the ZEC/USD TWAP data stream available at https://data.chain.link/streams/zec-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair ZEC/USD, not according to any other sources or spot markets.",
+   "category": "Up or Down",
+   "tags": [
+    "up-or-down",
+    "crypto-prices",
+    "hide-from-new",
+    "recurring",
+    "crypto",
+    "zcash",
+    "15M"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/zcash-yellow-588d52bdd6.png",
+   "status": "active",
+   "openTime": "2026-10-28T10:54:09.187Z",
+   "closeTime": "2026-10-29T11:00:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 0,
+   "volumeUnit": "usd",
+   "totalLiquidity": 40.81,
+   "markets": [
+    {
+     "id": "0xb835441d6a185e54636b556180fcae4fb505571ac20fc6aed0d88eee839b7b9d",
+     "platform": "polymarket",
+     "eventId": "1271331",
+     "question": "ZCash Up or Down - October 29, 6:45AM-7:00AM ET",
+     "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of ZCash, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the ZEC/USD TWAP data stream available at https://data.chain.link/streams/zec-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair ZEC/USD, not according to any other sources or spot markets.",
+     "category": "Up or Down",
+     "tags": [
+      "up-or-down",
+      "crypto-prices",
+      "hide-from-new",
+      "recurring",
+      "crypto",
+      "zcash",
+      "15M"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/zcash-yellow-588d52bdd6.png",
+     "status": "active",
+     "openTime": "2026-10-28T00:00:00.000Z",
+     "closeTime": "2026-10-29T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.8,
+       "tokenId": "88604967034104008479771061819848920792514076251137324117530748976739320015310"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.2,
+       "tokenId": "40918479016380840521342560068029235962786147646625582739858898181212696652065"
+      }
+     ],
+     "volume": 0,
+     "volumeUnit": "usd",
+     "liquidity": 40.81,
+     "resolution": null,
+     "createdAt": "2026-10-28T10:52:30.400Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0xb835441d6a185e54636b556180fcae4fb505571ac20fc6aed0d88eee839b7b9d",
+      "url": "https://polymarket.com/event/zec-updown-15m-1793270700"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "zec-updown-15m-1793270700",
+    "url": "https://polymarket.com/event/zec-updown-15m-1793270700"
+   }
+  },
+  {
+   "id": "1271333",
+   "platform": "polymarket",
+   "title": "XRP Up or Down - October 29, 6:45AM-7:00AM ET",
+   "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of XRP, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the XRP/USD TWAP data stream available at https://data.chain.link/streams/xrp-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair XRP/USD, not according to any other sources or spot markets.",
+   "category": "Up or Down",
+   "tags": [
+    "up-or-down",
+    "crypto-prices",
+    "hide-from-new",
+    "recurring",
+    "crypto",
+    "xrp",
+    "ripple",
+    "15M"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/XRP-logo.png",
+   "status": "active",
+   "openTime": "2026-10-28T10:53:49.873Z",
+   "closeTime": "2026-10-29T11:00:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 0,
+   "volumeUnit": "usd",
+   "totalLiquidity": 3379.7207,
+   "markets": [
+    {
+     "id": "0xfd20c243f4c73b0bf7dcde69ce3de45c2768017978bf3b0ea7e0dbac4471fe72",
+     "platform": "polymarket",
+     "eventId": "1271333",
+     "question": "XRP Up or Down - October 29, 6:45AM-7:00AM ET",
+     "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of XRP, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the XRP/USD TWAP data stream available at https://data.chain.link/streams/xrp-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair XRP/USD, not according to any other sources or spot markets.",
+     "category": "Up or Down",
+     "tags": [
+      "up-or-down",
+      "crypto-prices",
+      "hide-from-new",
+      "recurring",
+      "crypto",
+      "xrp",
+      "ripple",
+      "15M"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/XRP-logo.png",
+     "status": "active",
+     "openTime": "2026-10-28T00:00:00.000Z",
+     "closeTime": "2026-10-29T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.99,
+       "tokenId": "45836680021612420143551276579061340654144737935725961662534350039619601965141"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.01,
+       "tokenId": "32922945930807896282608274201817836687622568117211528055161921445356513202478"
+      }
+     ],
+     "volume": 0,
+     "volumeUnit": "usd",
+     "liquidity": 3379.7207,
+     "resolution": null,
+     "createdAt": "2026-10-28T10:52:30.499Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0xfd20c243f4c73b0bf7dcde69ce3de45c2768017978bf3b0ea7e0dbac4471fe72",
+      "url": "https://polymarket.com/event/xrp-updown-15m-1793270700"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "xrp-updown-15m-1793270700",
+    "url": "https://polymarket.com/event/xrp-updown-15m-1793270700"
+   }
+  },
+  {
+   "id": "1271353",
+   "platform": "polymarket",
+   "title": "Silver Up or Down - October 29, 7:00AM-7:15AM ET",
+   "description": "This market will resolve to \"Up\" if the Silver price at the end of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the XAG/USD data stream available at https://data.chain.link/streams/xag-usd-forexprice-streams.\nPlease note that this market is about the price according to Chainlink data stream XAG/USD, not according to other sources or spot markets.",
+   "category": "Finance",
+   "tags": [
+    "finance",
+    "silver",
+    "15M",
+    "up-or-down",
+    "hide-from-new",
+    "recurring"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/silver-3d81e98448.png",
+   "status": "active",
+   "openTime": "2026-10-28T11:00:30.000Z",
+   "closeTime": "2026-10-29T11:15:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 0,
+   "volumeUnit": "usd",
+   "totalLiquidity": 0,
+   "markets": [
+    {
+     "id": "0x96ed8740431ab886b88ff9f37bf29cda99eb8c17c145b80eed36fb6636ce7318",
+     "platform": "polymarket",
+     "eventId": "1271353",
+     "question": "Silver Up or Down - October 29, 7:00AM-7:15AM ET",
+     "description": "This market will resolve to \"Up\" if the Silver price at the end of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the XAG/USD data stream available at https://data.chain.link/streams/xag-usd-forexprice-streams.\nPlease note that this market is about the price according to Chainlink data stream XAG/USD, not according to other sources or spot markets.",
+     "category": "Finance",
+     "tags": [
+      "finance",
+      "silver",
+      "15M",
+      "up-or-down",
+      "hide-from-new",
+      "recurring"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/silver-3d81e98448.png",
+     "status": "active",
+     "openTime": "2026-10-28T00:00:00.000Z",
+     "closeTime": "2026-10-29T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.5,
+       "tokenId": "11258845695839916254044423468456795114075463885504341173694642294355512619542"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.5,
+       "tokenId": "1709782232743905257359575498844934521998996844182730265923544001881940930556"
+      }
+     ],
+     "volume": 0,
+     "volumeUnit": "usd",
+     "liquidity": 0,
+     "resolution": null,
+     "createdAt": "2026-10-28T11:00:22.048Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0x96ed8740431ab886b88ff9f37bf29cda99eb8c17c145b80eed36fb6636ce7318",
+      "url": "https://polymarket.com/event/xag-updown-15m-1793271600"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "xag-updown-15m-1793271600",
+    "url": "https://polymarket.com/event/xag-updown-15m-1793271600"
+   }
+  },
+  {
+   "id": "1271356",
+   "platform": "polymarket",
+   "title": "Gold Up or Down - October 29, 7:00AM-7:15AM ET",
+   "description": "This market will resolve to \"Up\" if the Gold price at the end of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the XAU/USD data stream available at https://data.chain.link/streams/xau-usd-forexprice-streams.\nPlease note that this market is about the price according to Chainlink data stream XAU/USD, not according to other sources or spot markets.",
+   "category": "Finance",
+   "tags": [
+    "finance",
+    "gold",
+    "15M",
+    "up-or-down",
+    "hide-from-new",
+    "recurring"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/gold-logo-0d00c80498.png",
+   "status": "active",
+   "openTime": "2026-10-28T11:00:30.000Z",
+   "closeTime": "2026-10-29T11:15:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 0,
+   "volumeUnit": "usd",
+   "totalLiquidity": 441.406,
+   "markets": [
+    {
+     "id": "0x8ab1e16cf3aba1dd259e5e783214e7f3522c9d2ae1d274b58311ee3701be47de",
+     "platform": "polymarket",
+     "eventId": "1271356",
+     "question": "Gold Up or Down - October 29, 7:00AM-7:15AM ET",
+     "description": "This market will resolve to \"Up\" if the Gold price at the end of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the XAU/USD data stream available at https://data.chain.link/streams/xau-usd-forexprice-streams.\nPlease note that this market is about the price according to Chainlink data stream XAU/USD, not according to other sources or spot markets.",
+     "category": "Finance",
+     "tags": [
+      "finance",
+      "gold",
+      "15M",
+      "up-or-down",
+      "hide-from-new",
+      "recurring"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/gold-logo-0d00c80498.png",
+     "status": "active",
+     "openTime": "2026-10-28T00:00:00.000Z",
+     "closeTime": "2026-10-29T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.5,
+       "tokenId": "80779549057734567581317430332661671517424031945844444502304923002765510907545"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.5,
+       "tokenId": "77615813702167173138054715879610765060350118928256843051800605203781809525659"
+      }
+     ],
+     "volume": 0,
+     "volumeUnit": "usd",
+     "liquidity": 441.406,
+     "resolution": null,
+     "createdAt": "2026-10-28T11:00:22.160Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0x8ab1e16cf3aba1dd259e5e783214e7f3522c9d2ae1d274b58311ee3701be47de",
+      "url": "https://polymarket.com/event/xau-updown-15m-1793271600"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "xau-updown-15m-1793271600",
+    "url": "https://polymarket.com/event/xau-updown-15m-1793271600"
+   }
+  },
+  {
+   "id": "1271371",
+   "platform": "polymarket",
+   "title": "XRP Up or Down - October 29, 7:00AM-7:15AM ET",
+   "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of XRP, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the XRP/USD TWAP data stream available at https://data.chain.link/streams/xrp-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair XRP/USD, not according to any other sources or spot markets.",
+   "category": "Up or Down",
+   "tags": [
+    "up-or-down",
+    "crypto-prices",
+    "hide-from-new",
+    "recurring",
+    "crypto",
+    "xrp",
+    "ripple",
+    "15M"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/XRP-logo.png",
+   "status": "active",
+   "openTime": "2026-10-28T11:08:42.228Z",
+   "closeTime": "2026-10-29T11:15:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 0,
+   "volumeUnit": "usd",
+   "totalLiquidity": 1191.5805,
+   "markets": [
+    {
+     "id": "0xb2fd1ffff388612645adb47c77ece7cb7152890d1e58ddec55cc92ddbd28312c",
+     "platform": "polymarket",
+     "eventId": "1271371",
+     "question": "XRP Up or Down - October 29, 7:00AM-7:15AM ET",
+     "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of XRP, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the XRP/USD TWAP data stream available at https://data.chain.link/streams/xrp-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair XRP/USD, not according to any other sources or spot markets.",
+     "category": "Up or Down",
+     "tags": [
+      "up-or-down",
+      "crypto-prices",
+      "hide-from-new",
+      "recurring",
+      "crypto",
+      "xrp",
+      "ripple",
+      "15M"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/XRP-logo.png",
+     "status": "active",
+     "openTime": "2026-10-28T00:00:00.000Z",
+     "closeTime": "2026-10-29T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.5,
+       "tokenId": "100035923390798682049522457364750098786709388901482946993075449575575308438451"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.5,
+       "tokenId": "95407457456074446798357515681193916375911644697762599239763294572898822151800"
+      }
+     ],
+     "volume": 0,
+     "volumeUnit": "usd",
+     "liquidity": 1191.5805,
+     "resolution": null,
+     "createdAt": "2026-10-28T11:07:31.791Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0xb2fd1ffff388612645adb47c77ece7cb7152890d1e58ddec55cc92ddbd28312c",
+      "url": "https://polymarket.com/event/xrp-updown-15m-1793271600"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "xrp-updown-15m-1793271600",
+    "url": "https://polymarket.com/event/xrp-updown-15m-1793271600"
+   }
+  },
+  {
+   "id": "1271373",
+   "platform": "polymarket",
+   "title": "Dogecoin Up or Down - October 29, 7:00AM-7:15AM ET",
+   "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Dogecoin, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the DOGE/USD TWAP data stream available at https://data.chain.link/streams/doge-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair DOGE/USD, not according to any other sources or spot markets.",
+   "category": "Up or Down",
+   "tags": [
+    "up-or-down",
+    "crypto-prices",
+    "hide-from-new",
+    "recurring",
+    "crypto",
+    "dogecoin",
+    "15M"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/dogecoin-9ae840dfa3.png",
+   "status": "active",
+   "openTime": "2026-10-28T11:08:39.280Z",
+   "closeTime": "2026-10-29T11:15:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 0,
+   "volumeUnit": "usd",
+   "totalLiquidity": 661.161,
+   "markets": [
+    {
+     "id": "0x8a77530036beceddef910fdd4b0ec0ff9e877dcd4de1bd4fd1b57f80f69ba1ab",
+     "platform": "polymarket",
+     "eventId": "1271373",
+     "question": "Dogecoin Up or Down - October 29, 7:00AM-7:15AM ET",
+     "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Dogecoin, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the DOGE/USD TWAP data stream available at https://data.chain.link/streams/doge-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair DOGE/USD, not according to any other sources or spot markets.",
+     "category": "Up or Down",
+     "tags": [
+      "up-or-down",
+      "crypto-prices",
+      "hide-from-new",
+      "recurring",
+      "crypto",
+      "dogecoin",
+      "15M"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/dogecoin-9ae840dfa3.png",
+     "status": "active",
+     "openTime": "2026-10-28T00:00:00.000Z",
+     "closeTime": "2026-10-29T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.5,
+       "tokenId": "23327107631896802690917539416790330192422607190003858558226862401481603443770"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.5,
+       "tokenId": "87120709930306253432163613723579610535180919610481096120912742108581340420757"
+      }
+     ],
+     "volume": 0,
+     "volumeUnit": "usd",
+     "liquidity": 661.161,
+     "resolution": null,
+     "createdAt": "2026-10-28T11:07:31.793Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0x8a77530036beceddef910fdd4b0ec0ff9e877dcd4de1bd4fd1b57f80f69ba1ab",
+      "url": "https://polymarket.com/event/doge-updown-15m-1793271600"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "doge-updown-15m-1793271600",
+    "url": "https://polymarket.com/event/doge-updown-15m-1793271600"
+   }
+  },
+  {
+   "id": "1271377",
+   "platform": "polymarket",
+   "title": "BNB Up or Down - October 29, 7:00AM-7:15AM ET",
+   "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of BNB, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the BNB/USD TWAP data stream available at https://data.chain.link/streams/bnb-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair BNB/USD, not according to any other sources or spot markets.",
+   "category": "Up or Down",
+   "tags": [
+    "up-or-down",
+    "crypto-prices",
+    "hide-from-new",
+    "recurring",
+    "crypto",
+    "bnb",
+    "15M"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/bnb%20logo-247a9f7a39.png",
+   "status": "active",
+   "openTime": "2026-10-28T11:09:10.038Z",
+   "closeTime": "2026-10-29T11:15:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 0,
+   "volumeUnit": "usd",
+   "totalLiquidity": 669.2326,
+   "markets": [
+    {
+     "id": "0xc247dd512d11015292c443868c4c7079d57bf934b2c99800304cd857f949c887",
+     "platform": "polymarket",
+     "eventId": "1271377",
+     "question": "BNB Up or Down - October 29, 7:00AM-7:15AM ET",
+     "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of BNB, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the BNB/USD TWAP data stream available at https://data.chain.link/streams/bnb-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair BNB/USD, not according to any other sources or spot markets.",
+     "category": "Up or Down",
+     "tags": [
+      "up-or-down",
+      "crypto-prices",
+      "hide-from-new",
+      "recurring",
+      "crypto",
+      "bnb",
+      "15M"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/bnb%20logo-247a9f7a39.png",
+     "status": "active",
+     "openTime": "2026-10-28T00:00:00.000Z",
+     "closeTime": "2026-10-29T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.5,
+       "tokenId": "40218234578351100195048559893651794097572428644964705435762318701899319010032"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.5,
+       "tokenId": "9483067650656283003189874527918819689783213686767422878451798526388580672921"
+      }
+     ],
+     "volume": 0,
+     "volumeUnit": "usd",
+     "liquidity": 669.2326,
+     "resolution": null,
+     "createdAt": "2026-10-28T11:07:32.182Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0xc247dd512d11015292c443868c4c7079d57bf934b2c99800304cd857f949c887",
+      "url": "https://polymarket.com/event/bnb-updown-15m-1793271600"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "bnb-updown-15m-1793271600",
+    "url": "https://polymarket.com/event/bnb-updown-15m-1793271600"
+   }
+  },
+  {
+   "id": "1271380",
+   "platform": "polymarket",
+   "title": "Solana Up or Down - October 29, 7:00AM-7:15AM ET",
+   "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Solana, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the SOL/USD TWAP data stream available at https://data.chain.link/streams/sol-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair SOL/USD, not according to any other sources or spot markets.",
+   "category": "Up or Down",
+   "tags": [
+    "up-or-down",
+    "crypto-prices",
+    "hide-from-new",
+    "recurring",
+    "crypto",
+    "solana",
+    "15M"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/SOL+fullsize.png",
+   "status": "active",
+   "openTime": "2026-10-28T11:09:21.233Z",
+   "closeTime": "2026-10-29T11:15:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 0,
+   "volumeUnit": "usd",
+   "totalLiquidity": 1410.0305,
+   "markets": [
+    {
+     "id": "0xb5a5cca70813c7f5f692ba6209cc0d6f0a5e8b16eb491b2aec3c76c4b7e020cc",
+     "platform": "polymarket",
+     "eventId": "1271380",
+     "question": "Solana Up or Down - October 29, 7:00AM-7:15AM ET",
+     "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Solana, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the SOL/USD TWAP data stream available at https://data.chain.link/streams/sol-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair SOL/USD, not according to any other sources or spot markets.",
+     "category": "Up or Down",
+     "tags": [
+      "up-or-down",
+      "crypto-prices",
+      "hide-from-new",
+      "recurring",
+      "crypto",
+      "solana",
+      "15M"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/SOL+fullsize.png",
+     "status": "active",
+     "openTime": "2026-10-28T00:00:00.000Z",
+     "closeTime": "2026-10-29T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.5,
+       "tokenId": "3433290416019125274890509833325305386023273466740251014015335599184861068486"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.5,
+       "tokenId": "83055225737924170096369576587284737849044635975441961780583060496348983075459"
+      }
+     ],
+     "volume": 0,
+     "volumeUnit": "usd",
+     "liquidity": 1410.0305,
+     "resolution": null,
+     "createdAt": "2026-10-28T11:07:32.880Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0xb5a5cca70813c7f5f692ba6209cc0d6f0a5e8b16eb491b2aec3c76c4b7e020cc",
+      "url": "https://polymarket.com/event/sol-updown-15m-1793271600"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "sol-updown-15m-1793271600",
+    "url": "https://polymarket.com/event/sol-updown-15m-1793271600"
+   }
+  },
+  {
+   "id": "1271381",
+   "platform": "polymarket",
+   "title": "Bitcoin Up or Down - October 29, 7:00AM-7:15AM ET",
+   "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Bitcoin, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the BTC/USD TWAP data stream available at https://data.chain.link/streams/btc-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair BTC/USD, not according to any other sources or spot markets.",
+   "category": "Up or Down",
+   "tags": [
+    "up-or-down",
+    "crypto-prices",
+    "hide-from-new",
+    "recurring",
+    "crypto",
+    "bitcoin",
+    "15M"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/BTC+fullsize.png",
+   "status": "active",
+   "openTime": "2026-10-28T11:09:14.171Z",
+   "closeTime": "2026-10-29T11:15:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 0,
+   "volumeUnit": "usd",
+   "totalLiquidity": 4967.8444,
+   "markets": [
+    {
+     "id": "0xe9bb0313bc1760366756997d5e1ade1e386ecedc19090b883634b3c82860897e",
+     "platform": "polymarket",
+     "eventId": "1271381",
+     "question": "Bitcoin Up or Down - October 29, 7:00AM-7:15AM ET",
+     "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Bitcoin, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the BTC/USD TWAP data stream available at https://data.chain.link/streams/btc-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair BTC/USD, not according to any other sources or spot markets.",
+     "category": "Up or Down",
+     "tags": [
+      "up-or-down",
+      "crypto-prices",
+      "hide-from-new",
+      "recurring",
+      "crypto",
+      "bitcoin",
+      "15M"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/BTC+fullsize.png",
+     "status": "active",
+     "openTime": "2026-10-28T00:00:00.000Z",
+     "closeTime": "2026-10-29T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.505,
+       "tokenId": "47003228163705240074331898984080660371474146992254412308619026440351817249837"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.495,
+       "tokenId": "62637753537856579982876878947493961276787491062551005757662905289498420134392"
+      }
+     ],
+     "volume": 0,
+     "volumeUnit": "usd",
+     "liquidity": 4967.8444,
+     "resolution": null,
+     "createdAt": "2026-10-28T11:07:32.896Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0xe9bb0313bc1760366756997d5e1ade1e386ecedc19090b883634b3c82860897e",
+      "url": "https://polymarket.com/event/btc-updown-15m-1793271600"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "btc-updown-15m-1793271600",
+    "url": "https://polymarket.com/event/btc-updown-15m-1793271600"
+   }
+  },
+  {
+   "id": "1271382",
+   "platform": "polymarket",
+   "title": "Ethereum Up or Down - October 29, 7:00AM-7:15AM ET",
+   "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Ethereum, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the ETH/USD TWAP data stream available at https://data.chain.link/streams/eth-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair ETH/USD, not according to any other sources or spot markets.",
+   "category": "Up or Down",
+   "tags": [
+    "up-or-down",
+    "crypto-prices",
+    "hide-from-new",
+    "recurring",
+    "crypto",
+    "ethereum",
+    "15M"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/ETH+fullsize.jpg",
+   "status": "active",
+   "openTime": "2026-10-28T11:09:20.289Z",
+   "closeTime": "2026-10-29T11:15:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 0,
+   "volumeUnit": "usd",
+   "totalLiquidity": 1489.09,
+   "markets": [
+    {
+     "id": "0xbf9dd07698af9f0af926e49717a28eca631fdc2916193c944a379a22fb6ec767",
+     "platform": "polymarket",
+     "eventId": "1271382",
+     "question": "Ethereum Up or Down - October 29, 7:00AM-7:15AM ET",
+     "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Ethereum, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the ETH/USD TWAP data stream available at https://data.chain.link/streams/eth-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair ETH/USD, not according to any other sources or spot markets.",
+     "category": "Up or Down",
+     "tags": [
+      "up-or-down",
+      "crypto-prices",
+      "hide-from-new",
+      "recurring",
+      "crypto",
+      "ethereum",
+      "15M"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/ETH+fullsize.jpg",
+     "status": "active",
+     "openTime": "2026-10-28T00:00:00.000Z",
+     "closeTime": "2026-10-29T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.495,
+       "tokenId": "104859882587615273249716079838531025570358820987060186860783218923240439028339"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.505,
+       "tokenId": "68952413229607180846120191360058892400805436062555658125557683869705360694696"
+      }
+     ],
+     "volume": 0,
+     "volumeUnit": "usd",
+     "liquidity": 1489.09,
+     "resolution": null,
+     "createdAt": "2026-10-28T11:07:33.043Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0xbf9dd07698af9f0af926e49717a28eca631fdc2916193c944a379a22fb6ec767",
+      "url": "https://polymarket.com/event/eth-updown-15m-1793271600"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "eth-updown-15m-1793271600",
+    "url": "https://polymarket.com/event/eth-updown-15m-1793271600"
+   }
+  },
+  {
+   "id": "1271385",
+   "platform": "polymarket",
+   "title": "ZCash Up or Down - October 29, 7:00AM-7:15AM ET",
+   "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of ZCash, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the ZEC/USD TWAP data stream available at https://data.chain.link/streams/zec-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair ZEC/USD, not according to any other sources or spot markets.",
+   "category": "Up or Down",
+   "tags": [
+    "up-or-down",
+    "crypto-prices",
+    "hide-from-new",
+    "recurring",
+    "crypto",
+    "zcash",
+    "15M"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/zcash-yellow-588d52bdd6.png",
+   "status": "active",
+   "openTime": "2026-10-28T11:09:11.011Z",
+   "closeTime": "2026-10-29T11:15:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 0,
+   "volumeUnit": "usd",
+   "totalLiquidity": 13,
+   "markets": [
+    {
+     "id": "0x8d621b07b74adbd895aee7474e5b95d24c452b3a4c22afb507e7b8524da3a678",
+     "platform": "polymarket",
+     "eventId": "1271385",
+     "question": "ZCash Up or Down - October 29, 7:00AM-7:15AM ET",
+     "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of ZCash, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the ZEC/USD TWAP data stream available at https://data.chain.link/streams/zec-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair ZEC/USD, not according to any other sources or spot markets.",
+     "category": "Up or Down",
+     "tags": [
+      "up-or-down",
+      "crypto-prices",
+      "hide-from-new",
+      "recurring",
+      "crypto",
+      "zcash",
+      "15M"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/zcash-yellow-588d52bdd6.png",
+     "status": "active",
+     "openTime": "2026-10-28T00:00:00.000Z",
+     "closeTime": "2026-10-29T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.74,
+       "tokenId": "69534620312423421005793942123893857007249941209162415372301119139307006274214"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.49,
+       "tokenId": "64289121516935770635827734579001076490583911957120606021426357716579265333407"
+      }
+     ],
+     "volume": 0,
+     "volumeUnit": "usd",
+     "liquidity": 13,
+     "resolution": null,
+     "createdAt": "2026-10-28T11:07:33.682Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0x8d621b07b74adbd895aee7474e5b95d24c452b3a4c22afb507e7b8524da3a678",
+      "url": "https://polymarket.com/event/zec-updown-15m-1793271600"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "zec-updown-15m-1793271600",
+    "url": "https://polymarket.com/event/zec-updown-15m-1793271600"
+   }
+  },
+  {
+   "id": "1271389",
+   "platform": "polymarket",
+   "title": "Hyperliquid Up or Down - October 29, 7:00AM-7:15AM ET",
+   "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Hyperliquid, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the HYPE/USD TWAP data stream available at https://data.chain.link/streams/hype-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair HYPE/USD, not according to any other sources or spot markets.",
+   "category": "Up or Down",
+   "tags": [
+    "up-or-down",
+    "crypto-prices",
+    "hide-from-new",
+    "recurring",
+    "crypto",
+    "hype",
+    "15M"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/hyperliquid-16f0eafaeb.png",
+   "status": "active",
+   "openTime": "2026-10-28T11:09:35.143Z",
+   "closeTime": "2026-10-29T11:15:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 0,
+   "volumeUnit": "usd",
+   "totalLiquidity": 516.2126,
+   "markets": [
+    {
+     "id": "0x9952c36021e5e0dd5361ccf050c70de61a548be7616ec728ca212d4ad9a43401",
+     "platform": "polymarket",
+     "eventId": "1271389",
+     "question": "Hyperliquid Up or Down - October 29, 7:00AM-7:15AM ET",
+     "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Hyperliquid, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the HYPE/USD TWAP data stream available at https://data.chain.link/streams/hype-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair HYPE/USD, not according to any other sources or spot markets.",
+     "category": "Up or Down",
+     "tags": [
+      "up-or-down",
+      "crypto-prices",
+      "hide-from-new",
+      "recurring",
+      "crypto",
+      "hype",
+      "15M"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/hyperliquid-16f0eafaeb.png",
+     "status": "active",
+     "openTime": "2026-10-28T00:00:00.000Z",
+     "closeTime": "2026-10-29T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.5,
+       "tokenId": "41257168356348910889749297826676705516746597435855300906253338940311011523661"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.5,
+       "tokenId": "1160913542965557667968488099426834047257882958954651990235830723095376240470"
+      }
+     ],
+     "volume": 0,
+     "volumeUnit": "usd",
+     "liquidity": 516.2126,
+     "resolution": null,
+     "createdAt": "2026-10-28T11:07:34.404Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0x9952c36021e5e0dd5361ccf050c70de61a548be7616ec728ca212d4ad9a43401",
+      "url": "https://polymarket.com/event/hype-updown-15m-1793271600"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "hype-updown-15m-1793271600",
+    "url": "https://polymarket.com/event/hype-updown-15m-1793271600"
+   }
+  },
+  {
+   "id": "1271404",
+   "platform": "polymarket",
+   "title": "Gold Up or Down - October 29, 7:15AM-7:30AM ET",
+   "description": "This market will resolve to \"Up\" if the Gold price at the end of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the XAU/USD data stream available at https://data.chain.link/streams/xau-usd-forexprice-streams.\nPlease note that this market is about the price according to Chainlink data stream XAU/USD, not according to other sources or spot markets.",
+   "category": "Finance",
+   "tags": [
+    "finance",
+    "gold",
+    "15M",
+    "up-or-down",
+    "hide-from-new",
+    "recurring"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/gold-logo-0d00c80498.png",
+   "status": "active",
+   "openTime": "2026-10-28T11:15:30.000Z",
+   "closeTime": "2026-10-29T11:30:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 0,
+   "volumeUnit": "usd",
+   "totalLiquidity": 0,
+   "markets": [
+    {
+     "id": "0x43d55bca18a1bce0c82c07e40c5358140692d9ad0a15d41f1f4baaa923c817da",
+     "platform": "polymarket",
+     "eventId": "1271404",
+     "question": "Gold Up or Down - October 29, 7:15AM-7:30AM ET",
+     "description": "This market will resolve to \"Up\" if the Gold price at the end of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the XAU/USD data stream available at https://data.chain.link/streams/xau-usd-forexprice-streams.\nPlease note that this market is about the price according to Chainlink data stream XAU/USD, not according to other sources or spot markets.",
+     "category": "Finance",
+     "tags": [
+      "finance",
+      "gold",
+      "15M",
+      "up-or-down",
+      "hide-from-new",
+      "recurring"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/gold-logo-0d00c80498.png",
+     "status": "active",
+     "openTime": "2026-10-28T00:00:00.000Z",
+     "closeTime": "2026-10-29T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.5,
+       "tokenId": "113703351045244042220560093985801451888431920352677592874601007591398011007351"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.5,
+       "tokenId": "61722755520180804546977400188915206671316940038997769857023047092008294635363"
+      }
+     ],
+     "volume": 0,
+     "volumeUnit": "usd",
+     "liquidity": 0,
+     "resolution": null,
+     "createdAt": "2026-10-28T11:15:22.722Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0x43d55bca18a1bce0c82c07e40c5358140692d9ad0a15d41f1f4baaa923c817da",
+      "url": "https://polymarket.com/event/xau-updown-15m-1793272500"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "xau-updown-15m-1793272500",
+    "url": "https://polymarket.com/event/xau-updown-15m-1793272500"
+   }
+  },
+  {
+   "id": "1271405",
+   "platform": "polymarket",
+   "title": "Silver Up or Down - October 29, 7:15AM-7:30AM ET",
+   "description": "This market will resolve to \"Up\" if the Silver price at the end of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the XAG/USD data stream available at https://data.chain.link/streams/xag-usd-forexprice-streams.\nPlease note that this market is about the price according to Chainlink data stream XAG/USD, not according to other sources or spot markets.",
+   "category": "Finance",
+   "tags": [
+    "finance",
+    "silver",
+    "15M",
+    "up-or-down",
+    "hide-from-new",
+    "recurring"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/silver-3d81e98448.png",
+   "status": "active",
+   "openTime": "2026-10-28T11:15:30.000Z",
+   "closeTime": "2026-10-29T11:30:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 0,
+   "volumeUnit": "usd",
+   "totalLiquidity": 0,
+   "markets": [
+    {
+     "id": "0xd5495b393dd875031497f62bb8ea36ed7ceeeddbf5547b4b22a24ef6282e2d2c",
+     "platform": "polymarket",
+     "eventId": "1271405",
+     "question": "Silver Up or Down - October 29, 7:15AM-7:30AM ET",
+     "description": "This market will resolve to \"Up\" if the Silver price at the end of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the XAG/USD data stream available at https://data.chain.link/streams/xag-usd-forexprice-streams.\nPlease note that this market is about the price according to Chainlink data stream XAG/USD, not according to other sources or spot markets.",
+     "category": "Finance",
+     "tags": [
+      "finance",
+      "silver",
+      "15M",
+      "up-or-down",
+      "hide-from-new",
+      "recurring"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/silver-3d81e98448.png",
+     "status": "active",
+     "openTime": "2026-10-28T00:00:00.000Z",
+     "closeTime": "2026-10-29T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.5,
+       "tokenId": "22254348164763856602779261223976179449566604145591864400890552254776315909930"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.5,
+       "tokenId": "46429154134587779368958756215226041712063681938225042102881212307389706708200"
+      }
+     ],
+     "volume": 0,
+     "volumeUnit": "usd",
+     "liquidity": 0,
+     "resolution": null,
+     "createdAt": "2026-10-28T11:15:22.720Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0xd5495b393dd875031497f62bb8ea36ed7ceeeddbf5547b4b22a24ef6282e2d2c",
+      "url": "https://polymarket.com/event/xag-updown-15m-1793272500"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "xag-updown-15m-1793272500",
+    "url": "https://polymarket.com/event/xag-updown-15m-1793272500"
+   }
+  },
+  {
+   "id": "1271424",
+   "platform": "polymarket",
+   "title": "Bitcoin Up or Down - October 29, 7:15AM-7:30AM ET",
+   "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Bitcoin, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the BTC/USD TWAP data stream available at https://data.chain.link/streams/btc-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair BTC/USD, not according to any other sources or spot markets.",
+   "category": "Up or Down",
+   "tags": [
+    "up-or-down",
+    "crypto-prices",
+    "hide-from-new",
+    "recurring",
+    "crypto",
+    "bitcoin",
+    "15M"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/BTC+fullsize.png",
+   "status": "active",
+   "openTime": "2026-10-28T11:24:08.012Z",
+   "closeTime": "2026-10-29T11:30:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 0,
+   "volumeUnit": "usd",
+   "totalLiquidity": 6688.2824,
+   "markets": [
+    {
+     "id": "0x272701303a2daa95277d28aa7f5351a4d456d938226d7dda0deceb07f585c1b4",
+     "platform": "polymarket",
+     "eventId": "1271424",
+     "question": "Bitcoin Up or Down - October 29, 7:15AM-7:30AM ET",
+     "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Bitcoin, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the BTC/USD TWAP data stream available at https://data.chain.link/streams/btc-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair BTC/USD, not according to any other sources or spot markets.",
+     "category": "Up or Down",
+     "tags": [
+      "up-or-down",
+      "crypto-prices",
+      "hide-from-new",
+      "recurring",
+      "crypto",
+      "bitcoin",
+      "15M"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/BTC+fullsize.png",
+     "status": "active",
+     "openTime": "2026-10-28T00:00:00.000Z",
+     "closeTime": "2026-10-29T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.505,
+       "tokenId": "68165734091350632809973177037939447691563097904491062395840785258762784465822"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.495,
+       "tokenId": "19970599121467836099213021196143460008285809761706941677921328854909401470202"
+      }
+     ],
+     "volume": 0,
+     "volumeUnit": "usd",
+     "liquidity": 6688.2824,
+     "resolution": null,
+     "createdAt": "2026-10-28T11:22:31.892Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0x272701303a2daa95277d28aa7f5351a4d456d938226d7dda0deceb07f585c1b4",
+      "url": "https://polymarket.com/event/btc-updown-15m-1793272500"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "btc-updown-15m-1793272500",
+    "url": "https://polymarket.com/event/btc-updown-15m-1793272500"
+   }
+  },
+  {
+   "id": "1271425",
+   "platform": "polymarket",
+   "title": "Dogecoin Up or Down - October 29, 7:15AM-7:30AM ET",
+   "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Dogecoin, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the DOGE/USD TWAP data stream available at https://data.chain.link/streams/doge-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair DOGE/USD, not according to any other sources or spot markets.",
+   "category": "Up or Down",
+   "tags": [
+    "up-or-down",
+    "crypto-prices",
+    "hide-from-new",
+    "recurring",
+    "crypto",
+    "dogecoin",
+    "15M"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/dogecoin-9ae840dfa3.png",
+   "status": "active",
+   "openTime": "2026-10-28T11:23:41.114Z",
+   "closeTime": "2026-10-29T11:30:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 0,
+   "volumeUnit": "usd",
+   "totalLiquidity": 283.341,
+   "markets": [
+    {
+     "id": "0x83db19814845747b299e2e05f5498c0e27f6ea5574ce680f8b8eb56d7326ce8d",
+     "platform": "polymarket",
+     "eventId": "1271425",
+     "question": "Dogecoin Up or Down - October 29, 7:15AM-7:30AM ET",
+     "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Dogecoin, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the DOGE/USD TWAP data stream available at https://data.chain.link/streams/doge-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair DOGE/USD, not according to any other sources or spot markets.",
+     "category": "Up or Down",
+     "tags": [
+      "up-or-down",
+      "crypto-prices",
+      "hide-from-new",
+      "recurring",
+      "crypto",
+      "dogecoin",
+      "15M"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/dogecoin-9ae840dfa3.png",
+     "status": "active",
+     "openTime": "2026-10-28T00:00:00.000Z",
+     "closeTime": "2026-10-29T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.5,
+       "tokenId": "62023959997200534710667618355131369169136587482951994322246279737379627104893"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.5,
+       "tokenId": "107107942172637565259708745103298709233627060753938038275974961599977732691354"
+      }
+     ],
+     "volume": 0,
+     "volumeUnit": "usd",
+     "liquidity": 283.341,
+     "resolution": null,
+     "createdAt": "2026-10-28T11:22:31.797Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0x83db19814845747b299e2e05f5498c0e27f6ea5574ce680f8b8eb56d7326ce8d",
+      "url": "https://polymarket.com/event/doge-updown-15m-1793272500"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "doge-updown-15m-1793272500",
+    "url": "https://polymarket.com/event/doge-updown-15m-1793272500"
+   }
+  },
+  {
+   "id": "1271427",
+   "platform": "polymarket",
+   "title": "XRP Up or Down - October 29, 7:15AM-7:30AM ET",
+   "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of XRP, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the XRP/USD TWAP data stream available at https://data.chain.link/streams/xrp-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair XRP/USD, not according to any other sources or spot markets.",
+   "category": "Up or Down",
+   "tags": [
+    "up-or-down",
+    "crypto-prices",
+    "hide-from-new",
+    "recurring",
+    "crypto",
+    "xrp",
+    "ripple",
+    "15M"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/XRP-logo.png",
+   "status": "active",
+   "openTime": "2026-10-28T11:24:10.334Z",
+   "closeTime": "2026-10-29T11:30:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 0,
+   "volumeUnit": "usd",
+   "totalLiquidity": 914.0339,
+   "markets": [
+    {
+     "id": "0x7796ac1e0d0e01b3f62d7ea75e0a381ec23f9fdf8a02d71e53249adee6987cf5",
+     "platform": "polymarket",
+     "eventId": "1271427",
+     "question": "XRP Up or Down - October 29, 7:15AM-7:30AM ET",
+     "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of XRP, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the XRP/USD TWAP data stream available at https://data.chain.link/streams/xrp-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair XRP/USD, not according to any other sources or spot markets.",
+     "category": "Up or Down",
+     "tags": [
+      "up-or-down",
+      "crypto-prices",
+      "hide-from-new",
+      "recurring",
+      "crypto",
+      "xrp",
+      "ripple",
+      "15M"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/XRP-logo.png",
+     "status": "active",
+     "openTime": "2026-10-28T00:00:00.000Z",
+     "closeTime": "2026-10-29T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.505,
+       "tokenId": "89416506543851093656497856920819212411902382469791767274790322207245300353035"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.495,
+       "tokenId": "26180139684395217801428622313917826083147248705359106802250420562783038753828"
+      }
+     ],
+     "volume": 0,
+     "volumeUnit": "usd",
+     "liquidity": 914.0339,
+     "resolution": null,
+     "createdAt": "2026-10-28T11:22:32.215Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0x7796ac1e0d0e01b3f62d7ea75e0a381ec23f9fdf8a02d71e53249adee6987cf5",
+      "url": "https://polymarket.com/event/xrp-updown-15m-1793272500"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "xrp-updown-15m-1793272500",
+    "url": "https://polymarket.com/event/xrp-updown-15m-1793272500"
+   }
+  },
+  {
+   "id": "1271428",
+   "platform": "polymarket",
+   "title": "ZCash Up or Down - October 29, 7:15AM-7:30AM ET",
+   "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of ZCash, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the ZEC/USD TWAP data stream available at https://data.chain.link/streams/zec-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair ZEC/USD, not according to any other sources or spot markets.",
+   "category": "Up or Down",
+   "tags": [
+    "up-or-down",
+    "crypto-prices",
+    "hide-from-new",
+    "recurring",
+    "crypto",
+    "zcash",
+    "15M"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/zcash-yellow-588d52bdd6.png",
+   "status": "active",
+   "openTime": "2026-10-28T11:23:59.579Z",
+   "closeTime": "2026-10-29T11:30:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 0,
+   "volumeUnit": "usd",
+   "totalLiquidity": 13,
+   "markets": [
+    {
+     "id": "0xd9a3653359fe9f2c6bed09b4af6e9ace0b701b1a1e5d3333df5be737b7150e65",
+     "platform": "polymarket",
+     "eventId": "1271428",
+     "question": "ZCash Up or Down - October 29, 7:15AM-7:30AM ET",
+     "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of ZCash, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the ZEC/USD TWAP data stream available at https://data.chain.link/streams/zec-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair ZEC/USD, not according to any other sources or spot markets.",
+     "category": "Up or Down",
+     "tags": [
+      "up-or-down",
+      "crypto-prices",
+      "hide-from-new",
+      "recurring",
+      "crypto",
+      "zcash",
+      "15M"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/zcash-yellow-588d52bdd6.png",
+     "status": "active",
+     "openTime": "2026-10-28T00:00:00.000Z",
+     "closeTime": "2026-10-29T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.495,
+       "tokenId": "102579592811579637225765262882625638263807506990613566108771441016681128747211"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.5,
+       "tokenId": "61635314196964534375059587726137458525701553212849428263738452415612755256066"
+      }
+     ],
+     "volume": 0,
+     "volumeUnit": "usd",
+     "liquidity": 13,
+     "resolution": null,
+     "createdAt": "2026-10-28T11:22:32.264Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0xd9a3653359fe9f2c6bed09b4af6e9ace0b701b1a1e5d3333df5be737b7150e65",
+      "url": "https://polymarket.com/event/zec-updown-15m-1793272500"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "zec-updown-15m-1793272500",
+    "url": "https://polymarket.com/event/zec-updown-15m-1793272500"
+   }
+  },
+  {
+   "id": "1271431",
+   "platform": "polymarket",
+   "title": "BNB Up or Down - October 29, 7:15AM-7:30AM ET",
+   "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of BNB, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the BNB/USD TWAP data stream available at https://data.chain.link/streams/bnb-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair BNB/USD, not according to any other sources or spot markets.",
+   "category": "Up or Down",
+   "tags": [
+    "up-or-down",
+    "crypto-prices",
+    "hide-from-new",
+    "recurring",
+    "crypto",
+    "bnb",
+    "15M"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/bnb%20logo-247a9f7a39.png",
+   "status": "active",
+   "openTime": "2026-10-28T11:23:50.797Z",
+   "closeTime": "2026-10-29T11:30:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 0,
+   "volumeUnit": "usd",
+   "totalLiquidity": 503.1464,
+   "markets": [
+    {
+     "id": "0xe16687a4b6f793a1dc82965b0de234d6d21e60c429bd34b6a09a691bd40a95d0",
+     "platform": "polymarket",
+     "eventId": "1271431",
+     "question": "BNB Up or Down - October 29, 7:15AM-7:30AM ET",
+     "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of BNB, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the BNB/USD TWAP data stream available at https://data.chain.link/streams/bnb-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair BNB/USD, not according to any other sources or spot markets.",
+     "category": "Up or Down",
+     "tags": [
+      "up-or-down",
+      "crypto-prices",
+      "hide-from-new",
+      "recurring",
+      "crypto",
+      "bnb",
+      "15M"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/bnb%20logo-247a9f7a39.png",
+     "status": "active",
+     "openTime": "2026-10-28T00:00:00.000Z",
+     "closeTime": "2026-10-29T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.505,
+       "tokenId": "107451626563333114016282814610804044663281075014636697992336315850977044161631"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.495,
+       "tokenId": "77033823765840847009507054815347291593616664670534994562009135421625299036718"
+      }
+     ],
+     "volume": 0,
+     "volumeUnit": "usd",
+     "liquidity": 503.1464,
+     "resolution": null,
+     "createdAt": "2026-10-28T11:22:32.424Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0xe16687a4b6f793a1dc82965b0de234d6d21e60c429bd34b6a09a691bd40a95d0",
+      "url": "https://polymarket.com/event/bnb-updown-15m-1793272500"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "bnb-updown-15m-1793272500",
+    "url": "https://polymarket.com/event/bnb-updown-15m-1793272500"
+   }
+  },
+  {
+   "id": "1271432",
+   "platform": "polymarket",
+   "title": "Ethereum Up or Down - October 29, 7:15AM-7:30AM ET",
+   "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Ethereum, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the ETH/USD TWAP data stream available at https://data.chain.link/streams/eth-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair ETH/USD, not according to any other sources or spot markets.",
+   "category": "Up or Down",
+   "tags": [
+    "up-or-down",
+    "crypto-prices",
+    "hide-from-new",
+    "recurring",
+    "crypto",
+    "ethereum",
+    "15M"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/ETH+fullsize.jpg",
+   "status": "active",
+   "openTime": "2026-10-28T11:23:55.113Z",
+   "closeTime": "2026-10-29T11:30:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 0,
+   "volumeUnit": "usd",
+   "totalLiquidity": 1491.3105,
+   "markets": [
+    {
+     "id": "0x2bebb9c005fd2334d3ba6c9de2caac09b9fffc949dd45e7c9ccfbc84efcb049b",
+     "platform": "polymarket",
+     "eventId": "1271432",
+     "question": "Ethereum Up or Down - October 29, 7:15AM-7:30AM ET",
+     "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Ethereum, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the ETH/USD TWAP data stream available at https://data.chain.link/streams/eth-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair ETH/USD, not according to any other sources or spot markets.",
+     "category": "Up or Down",
+     "tags": [
+      "up-or-down",
+      "crypto-prices",
+      "hide-from-new",
+      "recurring",
+      "crypto",
+      "ethereum",
+      "15M"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/ETH+fullsize.jpg",
+     "status": "active",
+     "openTime": "2026-10-28T00:00:00.000Z",
+     "closeTime": "2026-10-29T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.505,
+       "tokenId": "83647421155258531628484754829904485587293616302325400545911843907762757930288"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.495,
+       "tokenId": "111866160755773617307275871955303007599455072344412039540730687225372337720180"
+      }
+     ],
+     "volume": 0,
+     "volumeUnit": "usd",
+     "liquidity": 1491.3105,
+     "resolution": null,
+     "createdAt": "2026-10-28T11:22:32.780Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0x2bebb9c005fd2334d3ba6c9de2caac09b9fffc949dd45e7c9ccfbc84efcb049b",
+      "url": "https://polymarket.com/event/eth-updown-15m-1793272500"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "eth-updown-15m-1793272500",
+    "url": "https://polymarket.com/event/eth-updown-15m-1793272500"
+   }
+  },
+  {
+   "id": "1271433",
+   "platform": "polymarket",
+   "title": "Solana Up or Down - October 29, 7:15AM-7:30AM ET",
+   "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Solana, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the SOL/USD TWAP data stream available at https://data.chain.link/streams/sol-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair SOL/USD, not according to any other sources or spot markets.",
+   "category": "Up or Down",
+   "tags": [
+    "up-or-down",
+    "crypto-prices",
+    "hide-from-new",
+    "recurring",
+    "crypto",
+    "solana",
+    "15M"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/SOL+fullsize.png",
+   "status": "active",
+   "openTime": "2026-10-28T11:24:04.187Z",
+   "closeTime": "2026-10-29T11:30:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 0,
+   "volumeUnit": "usd",
+   "totalLiquidity": 1533.7897,
+   "markets": [
+    {
+     "id": "0x77c67558c1d120535870758595ed2da7bfab5ab9f766e2c5d8729d0f21122bb6",
+     "platform": "polymarket",
+     "eventId": "1271433",
+     "question": "Solana Up or Down - October 29, 7:15AM-7:30AM ET",
+     "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Solana, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the SOL/USD TWAP data stream available at https://data.chain.link/streams/sol-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair SOL/USD, not according to any other sources or spot markets.",
+     "category": "Up or Down",
+     "tags": [
+      "up-or-down",
+      "crypto-prices",
+      "hide-from-new",
+      "recurring",
+      "crypto",
+      "solana",
+      "15M"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/SOL+fullsize.png",
+     "status": "active",
+     "openTime": "2026-10-28T00:00:00.000Z",
+     "closeTime": "2026-10-29T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.505,
+       "tokenId": "104406666744042069488391908314104034427856437038356566265217725410769479494100"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.495,
+       "tokenId": "68695779944758445583642838478731416479795468090387157434257428932655725199942"
+      }
+     ],
+     "volume": 0,
+     "volumeUnit": "usd",
+     "liquidity": 1533.7897,
+     "resolution": null,
+     "createdAt": "2026-10-28T11:22:32.777Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0x77c67558c1d120535870758595ed2da7bfab5ab9f766e2c5d8729d0f21122bb6",
+      "url": "https://polymarket.com/event/sol-updown-15m-1793272500"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "sol-updown-15m-1793272500",
+    "url": "https://polymarket.com/event/sol-updown-15m-1793272500"
+   }
+  },
+  {
+   "id": "1271436",
+   "platform": "polymarket",
+   "title": "Hyperliquid Up or Down - October 29, 7:15AM-7:30AM ET",
+   "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Hyperliquid, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the HYPE/USD TWAP data stream available at https://data.chain.link/streams/hype-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair HYPE/USD, not according to any other sources or spot markets.",
+   "category": "Up or Down",
+   "tags": [
+    "up-or-down",
+    "crypto-prices",
+    "hide-from-new",
+    "recurring",
+    "crypto",
+    "hype",
+    "15M"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/hyperliquid-16f0eafaeb.png",
+   "status": "active",
+   "openTime": "2026-10-28T11:24:22.814Z",
+   "closeTime": "2026-10-29T11:30:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 0,
+   "volumeUnit": "usd",
+   "totalLiquidity": 380.1398,
+   "markets": [
+    {
+     "id": "0xac6c21e721ca34a85952e63ba8128a9f975d5e895046254879a97a31034683e5",
+     "platform": "polymarket",
+     "eventId": "1271436",
+     "question": "Hyperliquid Up or Down - October 29, 7:15AM-7:30AM ET",
+     "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Hyperliquid, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the HYPE/USD TWAP data stream available at https://data.chain.link/streams/hype-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair HYPE/USD, not according to any other sources or spot markets.",
+     "category": "Up or Down",
+     "tags": [
+      "up-or-down",
+      "crypto-prices",
+      "hide-from-new",
+      "recurring",
+      "crypto",
+      "hype",
+      "15M"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/hyperliquid-16f0eafaeb.png",
+     "status": "active",
+     "openTime": "2026-10-28T00:00:00.000Z",
+     "closeTime": "2026-10-29T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.505,
+       "tokenId": "108229215121093535572442745695805516009466885218644551966138080720772364492240"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.495,
+       "tokenId": "96068325971441516387733037290531485916153147016843795083816767444453926463834"
+      }
+     ],
+     "volume": 0,
+     "volumeUnit": "usd",
+     "liquidity": 380.1398,
+     "resolution": null,
+     "createdAt": "2026-10-28T11:22:32.898Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0xac6c21e721ca34a85952e63ba8128a9f975d5e895046254879a97a31034683e5",
+      "url": "https://polymarket.com/event/hype-updown-15m-1793272500"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "hype-updown-15m-1793272500",
+    "url": "https://polymarket.com/event/hype-updown-15m-1793272500"
+   }
+  },
+  {
+   "id": "1271466",
+   "platform": "polymarket",
+   "title": "Silver Up or Down - October 29, 7:30AM-7:45AM ET",
+   "description": "This market will resolve to \"Up\" if the Silver price at the end of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the XAG/USD data stream available at https://data.chain.link/streams/xag-usd-forexprice-streams.\nPlease note that this market is about the price according to Chainlink data stream XAG/USD, not according to other sources or spot markets.",
+   "category": "Finance",
+   "tags": [
+    "finance",
+    "silver",
+    "15M",
+    "up-or-down",
+    "hide-from-new",
+    "recurring"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/silver-3d81e98448.png",
+   "status": "active",
+   "openTime": "2026-10-28T11:30:29.000Z",
+   "closeTime": "2026-10-29T11:45:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 0,
+   "volumeUnit": "usd",
+   "totalLiquidity": 0,
+   "markets": [
+    {
+     "id": "0xcc62311791e5febcb5b17cad2d73e8a1efdf734af456313f3e997076a83bda96",
+     "platform": "polymarket",
+     "eventId": "1271466",
+     "question": "Silver Up or Down - October 29, 7:30AM-7:45AM ET",
+     "description": "This market will resolve to \"Up\" if the Silver price at the end of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the XAG/USD data stream available at https://data.chain.link/streams/xag-usd-forexprice-streams.\nPlease note that this market is about the price according to Chainlink data stream XAG/USD, not according to other sources or spot markets.",
+     "category": "Finance",
+     "tags": [
+      "finance",
+      "silver",
+      "15M",
+      "up-or-down",
+      "hide-from-new",
+      "recurring"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/silver-3d81e98448.png",
+     "status": "active",
+     "openTime": "2026-10-28T00:00:00.000Z",
+     "closeTime": "2026-10-29T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.5,
+       "tokenId": "40929938356420382919104168229526468844491916995528810695265714382230695684964"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.5,
+       "tokenId": "85398399097121446759406297337248972267453538769602374338526336685021462355613"
+      }
+     ],
+     "volume": 0,
+     "volumeUnit": "usd",
+     "liquidity": 0,
+     "resolution": null,
+     "createdAt": "2026-10-28T11:30:23.500Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0xcc62311791e5febcb5b17cad2d73e8a1efdf734af456313f3e997076a83bda96",
+      "url": "https://polymarket.com/event/xag-updown-15m-1793273400"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "xag-updown-15m-1793273400",
+    "url": "https://polymarket.com/event/xag-updown-15m-1793273400"
+   }
+  },
+  {
+   "id": "1271467",
+   "platform": "polymarket",
+   "title": "Gold Up or Down - October 29, 7:30AM-7:45AM ET",
+   "description": "This market will resolve to \"Up\" if the Gold price at the end of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the XAU/USD data stream available at https://data.chain.link/streams/xau-usd-forexprice-streams.\nPlease note that this market is about the price according to Chainlink data stream XAU/USD, not according to other sources or spot markets.",
+   "category": "Finance",
+   "tags": [
+    "finance",
+    "gold",
+    "15M",
+    "up-or-down",
+    "hide-from-new",
+    "recurring"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/gold-logo-0d00c80498.png",
+   "status": "active",
+   "openTime": "2026-10-28T11:30:30.000Z",
+   "closeTime": "2026-10-29T11:45:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 0,
+   "volumeUnit": "usd",
+   "totalLiquidity": 0,
+   "markets": [
+    {
+     "id": "0x4d49529e77defb29393af4320d90eeb7cb9561b5f39162b507a0400801254057",
+     "platform": "polymarket",
+     "eventId": "1271467",
+     "question": "Gold Up or Down - October 29, 7:30AM-7:45AM ET",
+     "description": "This market will resolve to \"Up\" if the Gold price at the end of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the XAU/USD data stream available at https://data.chain.link/streams/xau-usd-forexprice-streams.\nPlease note that this market is about the price according to Chainlink data stream XAU/USD, not according to other sources or spot markets.",
+     "category": "Finance",
+     "tags": [
+      "finance",
+      "gold",
+      "15M",
+      "up-or-down",
+      "hide-from-new",
+      "recurring"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/gold-logo-0d00c80498.png",
+     "status": "active",
+     "openTime": "2026-10-28T00:00:00.000Z",
+     "closeTime": "2026-10-29T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.5,
+       "tokenId": "94934554649774443611530485732251930593856000601799291380623099567762617537221"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.5,
+       "tokenId": "98749789983463474365837435133292730015661233257115358932168865916743897967834"
+      }
+     ],
+     "volume": 0,
+     "volumeUnit": "usd",
+     "liquidity": 0,
+     "resolution": null,
+     "createdAt": "2026-10-28T11:30:23.503Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0x4d49529e77defb29393af4320d90eeb7cb9561b5f39162b507a0400801254057",
+      "url": "https://polymarket.com/event/xau-updown-15m-1793273400"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "xau-updown-15m-1793273400",
+    "url": "https://polymarket.com/event/xau-updown-15m-1793273400"
+   }
+  },
+  {
+   "id": "1271479",
+   "platform": "polymarket",
+   "title": "BNB Up or Down - October 29, 7:30AM-7:45AM ET",
+   "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of BNB, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the BNB/USD TWAP data stream available at https://data.chain.link/streams/bnb-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair BNB/USD, not according to any other sources or spot markets.",
+   "category": "Up or Down",
+   "tags": [
+    "up-or-down",
+    "crypto-prices",
+    "hide-from-new",
+    "recurring",
+    "crypto",
+    "bnb",
+    "15M"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/bnb%20logo-247a9f7a39.png",
+   "status": "active",
+   "openTime": "2026-10-28T11:38:52.069Z",
+   "closeTime": "2026-10-29T11:45:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 0,
+   "volumeUnit": "usd",
+   "totalLiquidity": 623.9464,
+   "markets": [
+    {
+     "id": "0x65b98b6fc582c3c0424295beb0895312f053d36a16efcce858eeb270c8f53998",
+     "platform": "polymarket",
+     "eventId": "1271479",
+     "question": "BNB Up or Down - October 29, 7:30AM-7:45AM ET",
+     "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of BNB, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the BNB/USD TWAP data stream available at https://data.chain.link/streams/bnb-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair BNB/USD, not according to any other sources or spot markets.",
+     "category": "Up or Down",
+     "tags": [
+      "up-or-down",
+      "crypto-prices",
+      "hide-from-new",
+      "recurring",
+      "crypto",
+      "bnb",
+      "15M"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/bnb%20logo-247a9f7a39.png",
+     "status": "active",
+     "openTime": "2026-10-28T00:00:00.000Z",
+     "closeTime": "2026-10-29T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.505,
+       "tokenId": "31682517145372095436704669148687117734428257231175165302798200418087088968386"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.495,
+       "tokenId": "40178995936307644756505263835298810860207609544892522383108508253067999099938"
+      }
+     ],
+     "volume": 0,
+     "volumeUnit": "usd",
+     "liquidity": 623.9464,
+     "resolution": null,
+     "createdAt": "2026-10-28T11:37:31.518Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0x65b98b6fc582c3c0424295beb0895312f053d36a16efcce858eeb270c8f53998",
+      "url": "https://polymarket.com/event/bnb-updown-15m-1793273400"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "bnb-updown-15m-1793273400",
+    "url": "https://polymarket.com/event/bnb-updown-15m-1793273400"
+   }
+  },
+  {
+   "id": "1271480",
+   "platform": "polymarket",
+   "title": "Bitcoin Up or Down - October 29, 7:30AM-7:45AM ET",
+   "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Bitcoin, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the BTC/USD TWAP data stream available at https://data.chain.link/streams/btc-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair BTC/USD, not according to any other sources or spot markets.",
+   "category": "Up or Down",
+   "tags": [
+    "up-or-down",
+    "crypto-prices",
+    "hide-from-new",
+    "recurring",
+    "crypto",
+    "bitcoin",
+    "15M"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/BTC+fullsize.png",
+   "status": "active",
+   "openTime": "2026-10-28T11:39:00.859Z",
+   "closeTime": "2026-10-29T11:45:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 0,
+   "volumeUnit": "usd",
+   "totalLiquidity": 7556.0794,
+   "markets": [
+    {
+     "id": "0x6dfe216dbaa11ef34fe9ee84ab29e58d3062b3e94ef3a0d5b6982af65f946eaa",
+     "platform": "polymarket",
+     "eventId": "1271480",
+     "question": "Bitcoin Up or Down - October 29, 7:30AM-7:45AM ET",
+     "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Bitcoin, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the BTC/USD TWAP data stream available at https://data.chain.link/streams/btc-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair BTC/USD, not according to any other sources or spot markets.",
+     "category": "Up or Down",
+     "tags": [
+      "up-or-down",
+      "crypto-prices",
+      "hide-from-new",
+      "recurring",
+      "crypto",
+      "bitcoin",
+      "15M"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/BTC+fullsize.png",
+     "status": "active",
+     "openTime": "2026-10-28T00:00:00.000Z",
+     "closeTime": "2026-10-29T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.505,
+       "tokenId": "25624713718555082409709570537400798211490147888738255192269016855540220729064"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.495,
+       "tokenId": "13845838799311243425046760415219868074263487772405225762004376833298082032785"
+      }
+     ],
+     "volume": 0,
+     "volumeUnit": "usd",
+     "liquidity": 7556.0794,
+     "resolution": null,
+     "createdAt": "2026-10-28T11:37:31.590Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0x6dfe216dbaa11ef34fe9ee84ab29e58d3062b3e94ef3a0d5b6982af65f946eaa",
+      "url": "https://polymarket.com/event/btc-updown-15m-1793273400"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "btc-updown-15m-1793273400",
+    "url": "https://polymarket.com/event/btc-updown-15m-1793273400"
+   }
+  },
+  {
+   "id": "1271481",
+   "platform": "polymarket",
+   "title": "XRP Up or Down - October 29, 7:30AM-7:45AM ET",
+   "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of XRP, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the XRP/USD TWAP data stream available at https://data.chain.link/streams/xrp-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair XRP/USD, not according to any other sources or spot markets.",
+   "category": "Up or Down",
+   "tags": [
+    "up-or-down",
+    "crypto-prices",
+    "hide-from-new",
+    "recurring",
+    "crypto",
+    "xrp",
+    "ripple",
+    "15M"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/XRP-logo.png",
+   "status": "active",
+   "openTime": "2026-10-28T11:39:05.517Z",
+   "closeTime": "2026-10-29T11:45:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 0,
+   "volumeUnit": "usd",
+   "totalLiquidity": 1034.8339,
+   "markets": [
+    {
+     "id": "0xe7c010b66b3524fcd7a393cdf11325e9f7c64276edbd328692731220e59a89ae",
+     "platform": "polymarket",
+     "eventId": "1271481",
+     "question": "XRP Up or Down - October 29, 7:30AM-7:45AM ET",
+     "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of XRP, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the XRP/USD TWAP data stream available at https://data.chain.link/streams/xrp-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair XRP/USD, not according to any other sources or spot markets.",
+     "category": "Up or Down",
+     "tags": [
+      "up-or-down",
+      "crypto-prices",
+      "hide-from-new",
+      "recurring",
+      "crypto",
+      "xrp",
+      "ripple",
+      "15M"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/XRP-logo.png",
+     "status": "active",
+     "openTime": "2026-10-28T00:00:00.000Z",
+     "closeTime": "2026-10-29T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.505,
+       "tokenId": "68505524147845613326552947604254193731630048308211292907545911046730898943509"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.495,
+       "tokenId": "82918347795197278536008434040572491624782338573393737481576590947450095354824"
+      }
+     ],
+     "volume": 0,
+     "volumeUnit": "usd",
+     "liquidity": 1034.8339,
+     "resolution": null,
+     "createdAt": "2026-10-28T11:37:31.596Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0xe7c010b66b3524fcd7a393cdf11325e9f7c64276edbd328692731220e59a89ae",
+      "url": "https://polymarket.com/event/xrp-updown-15m-1793273400"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "xrp-updown-15m-1793273400",
+    "url": "https://polymarket.com/event/xrp-updown-15m-1793273400"
+   }
+  },
+  {
+   "id": "1271487",
+   "platform": "polymarket",
+   "title": "Solana Up or Down - October 29, 7:30AM-7:45AM ET",
+   "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Solana, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the SOL/USD TWAP data stream available at https://data.chain.link/streams/sol-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair SOL/USD, not according to any other sources or spot markets.",
+   "category": "Up or Down",
+   "tags": [
+    "up-or-down",
+    "crypto-prices",
+    "hide-from-new",
+    "recurring",
+    "crypto",
+    "solana",
+    "15M"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/SOL+fullsize.png",
+   "status": "active",
+   "openTime": "2026-10-28T11:38:50.908Z",
+   "closeTime": "2026-10-29T11:45:00.000Z",
+   "marketCount": 1,
+   "totalVolume": 0,
+   "volumeUnit": "usd",
+   "totalLiquidity": 1664.3897,
+   "markets": [
+    {
+     "id": "0x8ad24b1009dc4a24c27bc23ff6f5605a6d58ac429982ce9237c24363b67313b3",
+     "platform": "polymarket",
+     "eventId": "1271487",
+     "question": "Solana Up or Down - October 29, 7:30AM-7:45AM ET",
+     "description": "This market will resolve to \"Up\" if the time-weighted average price (TWAP) of Solana, generated by Chainlink, of the time range specified in the title is greater than or equal to the price at the beginning of that range. Otherwise, it will resolve to \"Down\".\nThe resolution source for this market is information from Chainlink, specifically the SOL/USD TWAP data stream available at https://data.chain.link/streams/sol-usd-twap-60s-streams.\nPlease note that this market is about the price according to the TWAP Chainlink data stream for the asset pair SOL/USD, not according to any other sources or spot markets.",
+     "category": "Up or Down",
+     "tags": [
+      "up-or-down",
+      "crypto-prices",
+      "hide-from-new",
+      "recurring",
+      "crypto",
+      "solana",
+      "15M"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/SOL+fullsize.png",
+     "status": "active",
+     "openTime": "2026-10-28T00:00:00.000Z",
+     "closeTime": "2026-10-29T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "UP",
+       "price": 0.505,
+       "tokenId": "102108806593478386204334580260228280841427096408798892284818430986931055430911"
+      },
+      {
+       "name": "DOWN",
+       "price": 0.495,
+       "tokenId": "65178963600738856765949259842801632892829575074008072737338933279310413346491"
+      }
+     ],
+     "volume": 0,
+     "volumeUnit": "usd",
+     "liquidity": 1664.3897,
+     "resolution": null,
+     "createdAt": "2026-10-28T11:37:32.055Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0x8ad24b1009dc4a24c27bc23ff6f5605a6d58ac429982ce9237c24363b67313b3",
+      "url": "https://polymarket.com/event/sol-updown-15m-1793273400"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "sol-updown-15m-1793273400",
+    "url": "https://polymarket.com/event/sol-updown-15m-1793273400"
+   }
+  }
+ ],
+ "pagination": {
+  "cursor": "eyJwbUV2dEN1cnNvciI6IjROZG8ySi1yQW5IanY3YzR1R3dMeS1zT2hSdWhVbDhSek5rM1dMYVJUd3g3SW5ZaU9qRXNJbXNpT2lKbGRtVnVkSE1pTENKdmFDSTZJamszTldJMVpUTXdaV1V6T1RrMFlqYzNPVGd3WVdNMk0ySXhPR0ZtTjJRelpHVTFaV1EwTVRBMVpUZG1OMlZqTlRFMU1qZGtNV1ZqWkRGallqTXlZek1pTENKclpYbHpJanBiZXlKMElqb2lkR2x0WlNJc0luWWlPaUl5TURJMkxURXdMVEk1VkRFek9qRTFPakF3V2lKOUxIc2lkQ0k2SW5OMGNtbHVaeUlzSW5ZaU9pSXhNamN4T0RVMUluMWRmUSIsImZwIjoiNDgxMjY5Nzk4NjhlODBlZiJ9",
+  "pageSize": 100
+ }
+}

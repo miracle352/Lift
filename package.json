@@ -18,6 +18,7 @@
     "smoke:sui": "tsx --env-file-if-exists=.env.local scripts/smoke-sui.ts",
     "smoke:tatum": "tsx --env-file-if-exists=.env.local scripts/smoke-tatum.ts",
     "smoke:memwal": "tsx --env-file-if-exists=.env.local scripts/smoke-memwal.ts",
+    "arena:sim": "tsx scripts/arena-sim.ts",
     "fixtures:synthetic": "tsx tests/fixtures/sui/make-synthetic.ts"
   },
   "dependencies": {

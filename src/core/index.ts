@@ -9,3 +9,5 @@ export * from './namespace';
 export * from './walrus-ids';
 export * from './evidence';
 export * from './scoring';
+export * from './merkle';
+export * from './batch';

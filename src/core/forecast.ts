@@ -31,7 +31,7 @@ export type MarketRef = z.infer<typeof MarketRef>;
 
 export const AdviceRef = z.object({
   advisorId: z.string().min(1).max(128),
-  advisorKind: z.enum(['market', 'whale', 'tipster', 'pundit', 'crew']),
+  advisorKind: z.enum(['market', 'whale', 'tipster', 'pundit', 'crew', 'agent']),
   /** sha256 of the canonical JSON of exactly what was shown to the user (see adviceContentHash). */
   contentHash: hex64,
   /** true when the app chose the advisor at random ("fair test"), false when the user picked it. */
