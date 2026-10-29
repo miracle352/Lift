@@ -42,6 +42,14 @@ if (cmd === 'worker') {
   }
 } else if (cmd === 'tick') {
   console.log(await tick(deps));
+} else if (cmd === 'report') {
+  const { buildReport, reportMarkdown } = await import('../src/arena/report');
+  const { mkdirSync, writeFileSync } = await import('node:fs');
+  const r = await buildReport(deps.db);
+  mkdirSync('report', { recursive: true });
+  writeFileSync('report/stats.json', JSON.stringify(r, null, 2));
+  writeFileSync('report/summary.md', reportMarkdown(r));
+  console.log(reportMarkdown(r));
 } else if (cmd === 'rebuild') {
   // Portable memory: rebuild an agent's whole track record from Walrus Memory alone, then compare with the DB.
   const { rebuildAgentFromWalrus } = await import('../src/arena/rebuild');
