@@ -84,4 +84,4 @@ if (cmd === 'worker') {
   console.log('Tatum credits today:', credits.c);
 }
 closeSuiClient();
-if (cmd !== 'worker') process.exit(0);
+process.exit(0);
