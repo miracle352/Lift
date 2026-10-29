@@ -1,5 +1,5 @@
-import { and, asc, eq, inArray, isNull, lte } from 'drizzle-orm';
-import { arenaEpisodes, arenaForecasts, arenaLessons, arenaMarkets, arenaPurchases, arenaRounds, arenaTakes } from '@/db/schema';
+import { and, asc, eq, gte, inArray, isNull, like, lte } from 'drizzle-orm';
+import { arenaEpisodes, arenaForecasts, arenaLessons, arenaMarkets, arenaPurchases, arenaRounds, arenaTakes, tatumCalls } from '@/db/schema';
 import type { Verdict } from '@/core/scoring';
 import { brier } from '@/core/scoring';
 import { advisorStats, paysAdvisor, type RecalledLesson } from './brain/learner';
@@ -27,6 +27,18 @@ export async function settleDue(deps: ArenaDeps, opts: { resolved?: FastMarket[]
     .where(and(isNull(arenaMarkets.resolution), lte(arenaMarkets.closeTime, new Date(now - SETTLE_DELAY_MS)), inArray(arenaRounds.status, ['locked', 'sealed'])));
   if (!open.length) return { resolvedMarkets: 0, episodes: 0, lessons: 0 };
 
+  // Credit discipline: one resolved-feed call covers ~2.5 h of windows, so call it at most every 25 min,
+  // and only once the oldest pending market closed 10+ min ago (Tatum shows resolutions ~5–10 min after close).
+  if (!opts.resolved) {
+    const oldest = Math.min(...open.map((o) => o.arena_markets.closeTime.getTime()));
+    if (now - oldest < 10 * 60_000) return { resolvedMarkets: 0, episodes: 0, lessons: 0 };
+    const [last] = await deps.db
+      .select({ at: tatumCalls.at })
+      .from(tatumCalls)
+      .where(and(like(tatumCalls.path, '%status=resolved%'), gte(tatumCalls.at, new Date(now - 25 * 60_000))))
+      .limit(1);
+    if (last) return { resolvedMarkets: 0, episodes: 0, lessons: 0 };
+  }
   const feed = opts.resolved ?? (await fetchResolved15m(deps.tatum));
   const byCondition = new Map(feed.filter((m) => m.resolution).map((m) => [m.conditionId, m]));
   // Markets older than the feed window (worker was down): one targeted lookup each.

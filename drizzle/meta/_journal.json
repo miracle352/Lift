@@ -15,6 +15,13 @@
       "when": 1793271785115,
       "tag": "0001_arena",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1793272438569,
+      "tag": "0002_arena_payments",
+      "breakpoints": true
     }
   ]
 }

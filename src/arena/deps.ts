@@ -3,6 +3,7 @@ import type { MemoryClient } from '@/lib/memwal';
 import type { SuiCoreLike } from '@/lib/seal-evidence';
 import type { AssetKey } from './fast-markets';
 import type { TatumPrediction } from './tatum';
+import type { PayConfig } from './pay/wallets';
 
 /** Everything the arena touches, injected so tests run offline (fake fetch, MemWalMock, fake Sui). */
 export interface ArenaDeps {
@@ -15,6 +16,8 @@ export interface ArenaDeps {
   now: () => number;
   config: ArenaConfig;
   log: (msg: string, extra?: Record<string, unknown>) => void;
+  /** When set, agents buy takes over MPP (USDC on Sui) from `${baseUrl}/api/arena/takes`; otherwise a ledger is used. */
+  pay?: { cfg: PayConfig; baseUrl: string; buy?: typeof import('./pay/client').buyTakes };
 }
 
 export interface ArenaConfig {

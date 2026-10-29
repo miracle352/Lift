@@ -132,6 +132,7 @@ export const arenaPurchases = sqliteTable(
     /** escrow lifecycle (pay-for-lift) */
     payStatus: text('pay_status', { enum: ['none', 'escrowed', 'released', 'refunded', 'failed'] }).notNull().default('none'),
     payNetwork: text('pay_network', { enum: ['sui:testnet', 'sui:mainnet', 'ledger'] }),
+    /** MPP payment (buyer → clearinghouse) that escrowed this purchase */
     escrowDigest: text('escrow_digest'),
     settleDigest: text('settle_digest'),
     createdAt: createdAt(),
@@ -211,3 +212,22 @@ export const arenaEvents = sqliteTable(
   },
   (t) => [index('arena_events_round_idx').on(t.roundId)],
 );
+
+/** Replay protection for MPP payments (each Sui payment digest pays for exactly one request). */
+export const arenaPayDigests = sqliteTable('arena_pay_digests', {
+  digest: text('digest').primaryKey(),
+  at: createdAt(),
+});
+
+/** On-chain pay-for-lift settlement transactions (one PTB per round from the clearinghouse). */
+export const arenaPayouts = sqliteTable('arena_payouts', {
+  roundId: text('round_id').primaryKey(),
+  network: text('network').notNull(),
+  status: text('status', { enum: ['pending', 'sent', 'failed', 'empty'] }).notNull(),
+  releasedMicros: integer('released_micros').notNull().default(0),
+  refundedMicros: integer('refunded_micros').notNull().default(0),
+  transfersJson: text('transfers_json').notNull().default('[]'),
+  digest: text('digest'),
+  error: text('error'),
+  createdAt: createdAt(),
+});

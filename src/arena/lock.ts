@@ -1,5 +1,5 @@
 import { eq } from 'drizzle-orm';
-import { buildBatch, type BatchPhase } from '@/core/batch';
+import { buildBatch } from '@/core/batch';
 import { canonicalJson } from '@/core/hash';
 import { adviceContentHash, buildForecast, forecastHash, type ForecastV1 } from '@/core/forecast';
 import { arenaBatches, arenaForecasts, arenaMarkets, arenaPurchases, arenaRounds, arenaTakes } from '@/db/schema';
@@ -21,7 +21,10 @@ import { event, submitBatch } from './sealer';
  *  4. every agent makes a blind call per market (sealed, kind "blind")
  *  5. every agent recalls its lessons from Walrus Memory and decides whom to buy from (or declines)
  *  6. it reads the take, blends it with learned trust and makes an informed call (sealed, kind "informed")
- *  7. three Merkle batch seals go to Walrus Memory in order: blind, take, informed
+ *  7. three Merkle batch seals go to Walrus Memory in order: blind + take (before any advice is bought), then informed
+ *
+ * Steps 5–6 happen AFTER the blind batch is submitted: agents pay for their takes over MPP (USDC on Sui),
+ * the paid endpoint serves exactly the sealed take, and its hash goes into the informed forecast.
  */
 
 export interface LockResult {
@@ -87,10 +90,10 @@ export async function lockRound(deps: ArenaDeps, closeMs: number, opts: { live?:
     }
   }
 
-  // ---- agents: blind → recall lessons → decide → informed
+  // ---- Phase A: agents make blind calls, recall lessons, decide whom to buy from
   const blinds: { c: MarketCtx; agentId: string; forecast: ForecastV1 }[] = [];
-  const informeds: { c: MarketCtx; agentId: string; forecast: ForecastV1 }[] = [];
   const purchases: (typeof arenaPurchases.$inferInsert)[] = [];
+  const pending: { c: MarketCtx; agentId: string; advisorId: string; fairTest: boolean; trust: number; blind: ForecastV1; purchaseId: string }[] = [];
   for (const agent of FORECASTERS) {
     const episodes = await loadEpisodes(deps, agent.id);
     const stats = new Map(ADVISORS.map((a) => [a.id, advisorStats(a.id, episodes)]));
@@ -107,20 +110,7 @@ export async function lockRound(deps: ArenaDeps, closeMs: number, opts: { live?:
         continue;
       }
       const adv = ADVISOR_BY_ID.get(d.advisorId)!;
-      const t = c.takes.get(adv.id)!;
       const trust = stats.get(adv.id)!.trust;
-      const informedBps = blendBps(blindBps, toBps(t.take.p), trust);
-      const informed = buildForecast({
-        kind: 'informed',
-        user: agentUser(agent.id),
-        market: marketRefOf(c.market),
-        outcome: 'UP',
-        probabilityBps: informedBps,
-        prev: forecastHash(blind),
-        advice: { advisorId: adv.id, advisorKind: 'agent', contentHash: adviceContentHash(t.shown), fairTest: d.fairTest },
-        createdAt,
-      });
-      informeds.push({ c, agentId: agent.id, forecast: informed });
       purchases.push({
         ...base,
         action: 'buy',
@@ -132,18 +122,14 @@ export async function lockRound(deps: ArenaDeps, closeMs: number, opts: { live?:
         payStatus: 'escrowed',
         payNetwork: 'ledger',
       });
+      pending.push({ c, agentId: agent.id, advisorId: adv.id, fairTest: d.fairTest, trust, blind, purchaseId: base.id });
     }
   }
 
-  // ---- batches
   const takeForecasts = ctxs.flatMap((c) => [...c.takes.values()].map((t) => t.forecast));
-  const built: Partial<Record<BatchPhase, ReturnType<typeof buildBatch>>> = {
-    blind: buildBatch({ roundId, phase: 'blind', forecasts: blinds.map((b) => b.forecast), createdAt }),
-    take: buildBatch({ roundId, phase: 'take', forecasts: takeForecasts, createdAt }),
-  };
-  if (informeds.length) built.informed = buildBatch({ roundId, phase: 'informed', forecasts: informeds.map((b) => b.forecast), createdAt });
+  const blindBatch = buildBatch({ roundId, phase: 'blind', forecasts: blinds.map((b) => b.forecast), createdAt });
+  const takeBatch = buildBatch({ roundId, phase: 'take', forecasts: takeForecasts, createdAt });
 
-  // ---- persist (one transaction)
   await deps.db.transaction(async (tx) => {
     await tx.insert(arenaRounds).values({ id: roundId, windowStart: new Date(windowStart), closeTime: new Date(closeMs), lockAt: new Date(lockAt), status: 'locked' });
     for (const c of ctxs) {
@@ -179,28 +165,67 @@ export async function lockRound(deps: ArenaDeps, closeMs: number, opts: { live?:
         });
       }
     }
-    for (const [phase, b] of Object.entries(built) as [BatchPhase, ReturnType<typeof buildBatch>][]) {
-      await tx.insert(arenaBatches).values({ id: b.namespace, roundId, phase, root: b.root, leafCount: b.manifest.leaves.length, manifestJson: canonicalJson(b.manifest), status: 'queued' });
+    for (const b of [blindBatch, takeBatch]) {
+      await tx.insert(arenaBatches).values({ id: b.namespace, roundId, phase: b.phase, root: b.root, leafCount: b.manifest.leaves.length, manifestJson: canonicalJson(b.manifest), status: 'queued' });
     }
-    for (const [list, phase] of [
-      [blinds, 'blind'],
-      [informeds, 'informed'],
-    ] as const) {
-      for (const f of list) {
-        await tx.insert(arenaForecasts).values({
-          hash: forecastHash(f.forecast),
-          roundId,
-          marketId: f.c.marketId,
-          agentId: f.agentId,
-          kind: phase,
-          probabilityBps: f.forecast.probabilityBps,
-          forecastJson: canonicalJson(f.forecast),
-          batchId: built[phase]!.namespace,
-        });
-      }
+    for (const f of blinds) {
+      await tx.insert(arenaForecasts).values({ hash: forecastHash(f.forecast), roundId, marketId: f.c.marketId, agentId: f.agentId, kind: 'blind', probabilityBps: f.forecast.probabilityBps, forecastJson: canonicalJson(f.forecast), batchId: blindBatch.namespace });
     }
     for (const p of purchases) await tx.insert(arenaPurchases).values(p);
   });
+  // blind calls go to Walrus BEFORE any advice is bought
+  await submitBatch(deps, blindBatch.namespace);
+  await submitBatch(deps, takeBatch.namespace);
+
+  // ---- Phase B: buy the takes (MPP over HTTP, USDC on Sui) and make informed calls
+  const informeds: { c: MarketCtx; agentId: string; forecast: ForecastV1 }[] = [];
+  const byAgent = new Map<string, typeof pending>();
+  for (const p of pending) byAgent.set(p.agentId, [...(byAgent.get(p.agentId) ?? []), p]);
+  for (const [agentId, picks] of byAgent) {
+    let shownByAsset = new Map<string, Record<string, unknown>>();
+    let paid: { digest: string | null; network: 'sui:testnet' | 'sui:mainnet' } | null = null;
+    if (deps.pay) {
+      try {
+        const buy = deps.pay.buy ?? (await import('./pay/client')).buyTakes;
+        const res = await buy({ cfg: deps.pay.cfg, agentId, baseUrl: deps.pay.baseUrl, roundId, picks: picks.map((p) => ({ asset: p.c.market.asset, advisorId: p.advisorId })) });
+        shownByAsset = new Map(res.takes.map((t) => [t.asset, t.shown as Record<string, unknown>]));
+        paid = { digest: res.paymentDigest, network: deps.pay.cfg.network === 'mainnet' ? 'sui:mainnet' : 'sui:testnet' };
+        await event(deps, roundId, 'takes_paid', { digest: res.paymentDigest, network: paid.network, picks: picks.length, micros: picks.reduce((s, p) => s + ADVISOR_BY_ID.get(p.advisorId)!.priceMicros, 0) }, { agentId });
+      } catch (err) {
+        deps.log('payment failed, using ledger escrow', { agentId, err: String((err as Error).message ?? err).slice(0, 300) });
+        await event(deps, roundId, 'payment_failed', { error: String((err as Error).message ?? err).slice(0, 200) }, { agentId });
+      }
+    }
+    for (const p of picks) {
+      const t = p.c.takes.get(p.advisorId)!;
+      const shown = shownByAsset.get(p.c.market.asset) ?? t.shown;
+      const contentHash = adviceContentHash(shown);
+      if (contentHash !== adviceContentHash(t.shown)) throw new Error(`take served over MPP differs from the sealed take (${p.c.market.asset}/${p.advisorId})`);
+      const informedBps = blendBps(p.blind.probabilityBps, Number(shown.probabilityBps), p.trust);
+      const informed = buildForecast({
+        kind: 'informed',
+        user: agentUser(agentId),
+        market: marketRefOf(p.c.market),
+        outcome: 'UP',
+        probabilityBps: informedBps,
+        prev: forecastHash(p.blind),
+        advice: { advisorId: p.advisorId, advisorKind: 'agent', contentHash, fairTest: p.fairTest },
+        createdAt,
+      });
+      informeds.push({ c: p.c, agentId, forecast: informed });
+      if (paid) await deps.db.update(arenaPurchases).set({ payNetwork: paid.network, escrowDigest: paid.digest }).where(eq(arenaPurchases.id, p.purchaseId));
+    }
+  }
+  if (informeds.length) {
+    const informedBatch = buildBatch({ roundId, phase: 'informed', forecasts: informeds.map((b) => b.forecast), createdAt: new Date(deps.now()).toISOString() });
+    await deps.db.transaction(async (tx) => {
+      await tx.insert(arenaBatches).values({ id: informedBatch.namespace, roundId, phase: 'informed', root: informedBatch.root, leafCount: informedBatch.manifest.leaves.length, manifestJson: canonicalJson(informedBatch.manifest), status: 'queued' });
+      for (const f of informeds) {
+        await tx.insert(arenaForecasts).values({ hash: forecastHash(f.forecast), roundId, marketId: f.c.marketId, agentId: f.agentId, kind: 'informed', probabilityBps: f.forecast.probabilityBps, forecastJson: canonicalJson(f.forecast), batchId: informedBatch.namespace });
+      }
+    });
+    await submitBatch(deps, informedBatch.namespace);
+  }
 
   const buys = purchases.filter((p) => p.action === 'buy');
   await event(deps, roundId, 'round_locked', {
@@ -210,9 +235,6 @@ export async function lockRound(deps: ArenaDeps, closeMs: number, opts: { live?:
     declines: purchases.length - buys.length,
   });
   for (const p of purchases) await event(deps, roundId, p.action === 'buy' ? 'take_bought' : 'take_declined', { marketId: p.marketId, fairTest: p.fairTest ?? false, reason: p.reason, priceMicros: p.priceMicros ?? 0 }, { agentId: p.agentId, advisorId: p.advisorId ?? undefined });
-
-  // submit in order: blind first, then takes, then informed
-  for (const phase of ['blind', 'take', 'informed'] as const) if (built[phase]) await submitBatch(deps, built[phase]!.namespace);
 
   deps.log('round locked', { roundId, markets: ctxs.length, buys: buys.length, declines: purchases.length - buys.length });
   return { roundId, status: 'locked', markets: ctxs.length, buys: buys.length, declines: purchases.length - buys.length };

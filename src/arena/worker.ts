@@ -7,6 +7,7 @@ import { lockRound } from './lock';
 import { flushMemoryOutbox } from './memory';
 import { advanceBatches } from './sealer';
 import { settleDue } from './settle';
+import { sendDuePayouts } from './pay/payouts';
 
 /**
  * One worker tick (run every ~20 s by scripts/arena-worker.ts):
@@ -29,6 +30,7 @@ export async function tick(deps: ArenaDeps): Promise<Record<string, unknown>> {
   out.batches = await step(deps, 'batches', () => advanceBatches(deps));
   out.settle = await step(deps, 'settle', () => settleDue(deps));
   out.memory = await step(deps, 'memory', () => flushMemoryOutbox(deps));
+  if (deps.pay) out.payouts = await step(deps, 'payouts', () => sendDuePayouts(deps));
   return out;
 }
 
