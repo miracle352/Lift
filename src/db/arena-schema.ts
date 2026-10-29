@@ -59,6 +59,9 @@ export const arenaTakes = sqliteTable(
   {
     marketId: text('market_id').notNull().references(() => arenaMarkets.id),
     advisorId: text('advisor_id').notNull(),
+    advisorName: text('advisor_name').notNull().default(''),
+    /** price a buyer pays for this take (USDC micro-units) */
+    priceMicros: integer('price_micros').notNull().default(10000),
     probabilityBps: integer('probability_bps').notNull(),
     says: text('says').notNull(),
     inputsJson: text('inputs_json').notNull(),
@@ -229,5 +232,24 @@ export const arenaPayouts = sqliteTable('arena_payouts', {
   transfersJson: text('transfers_json').notNull().default('[]'),
   digest: text('digest'),
   error: text('error'),
+  createdAt: createdAt(),
+});
+
+/**
+ * Open advisor marketplace: anyone can register an HTTP endpoint that returns takes. Takes are sealed like the
+ * built-in advisors'; buyers pay over MPP; the advisor's payout address is paid only when its take helped.
+ */
+export const arenaAdvisors = sqliteTable('arena_advisors', {
+  id: text('id').primaryKey(), // "x-<slug>"
+  name: text('name').notNull(),
+  pitch: text('pitch').notNull(),
+  endpointUrl: text('endpoint_url').notNull(),
+  payoutAddress: text('payout_address').notNull(),
+  priceMicros: integer('price_micros').notNull(),
+  contact: text('contact'),
+  status: text('status', { enum: ['active', 'paused', 'failing'] }).notNull().default('active'),
+  consecutiveFailures: integer('consecutive_failures').notNull().default(0),
+  lastError: text('last_error'),
+  lastSeenAt: integer('last_seen_at', { mode: 'timestamp_ms' }),
   createdAt: createdAt(),
 });

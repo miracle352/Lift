@@ -3,7 +3,6 @@ import { Mppx } from 'mppx/server';
 import { sui, type DigestStore } from '@suimpp/mpp/server';
 import type { Db } from '@/db/client';
 import { arenaMarkets, arenaPayDigests, arenaRounds, arenaTakes } from '@/db/schema';
-import { ADVISOR_BY_ID } from '../brain/models';
 import { clearinghouse, microsToAmount, type PayConfig } from './wallets';
 
 export interface TakesSeller {
@@ -54,13 +53,24 @@ export function parseTakesRequest(url: URL): TakesRequest | { error: string } {
     return { asset, advisorId };
   });
   if (!picks.length || picks.length > 16) return { error: 'between 1 and 16 picks' };
-  if (picks.some((p) => !/^[a-z]{2,6}$/.test(p.asset ?? '') || !ADVISOR_BY_ID.has(p.advisorId ?? ''))) return { error: 'bad pick' };
+  if (picks.some((p) => !/^[a-z]{2,6}$/.test(p.asset ?? '') || !/^[a-z0-9-]{2,30}$/.test(p.advisorId ?? ''))) return { error: 'bad pick' };
   if (new Set(picks.map((p) => p.asset)).size !== picks.length) return { error: 'one pick per market' };
   return { roundId, picks };
 }
 
-export function priceOf(req: TakesRequest): number {
-  return req.picks.reduce((s, p) => s + ADVISOR_BY_ID.get(p.advisorId)!.priceMicros, 0);
+/** The sealed takes a request asks for (null if any pick has no take this round) and their total price. */
+export async function pickedTakes(db: Db, req: TakesRequest) {
+  const rows = [];
+  for (const p of req.picks) {
+    const [row] = await db
+      .select()
+      .from(arenaTakes)
+      .innerJoin(arenaMarkets, eq(arenaMarkets.id, arenaTakes.marketId))
+      .where(and(eq(arenaMarkets.roundId, req.roundId), eq(arenaMarkets.asset, p.asset), eq(arenaTakes.advisorId, p.advisorId)));
+    if (!row) return null;
+    rows.push({ asset: p.asset, take: row.arena_takes, market: row.arena_markets });
+  }
+  return { rows, priceMicros: rows.reduce((s, r) => s + r.take.priceMicros, 0) };
 }
 
 export function takesHandler(db: Db, cfg: TakesSeller, opts: { secretKey: string; now?: () => number; onPaid?: (info: { digest: string; sender?: string; req: TakesRequest }) => Promise<void> }) {
@@ -73,31 +83,24 @@ export function takesHandler(db: Db, cfg: TakesSeller, opts: { secretKey: string
     if (!round || round.status !== 'locked') return Response.json({ error: 'round not open' }, { status: 404 });
     if ((opts.now ?? Date.now)() >= round.closeTime.getTime()) return Response.json({ error: 'market closed' }, { status: 409 });
 
+    const picked = await pickedTakes(db, parsed);
+    if (!picked) return Response.json({ error: 'no such take this round' }, { status: 404 });
+
     let report: { digest: string; sender?: string } | null = null;
     const mppx = Mppx.create({
       methods: [sui({ currency: cfg.currency, recipient, network: cfg.network, store, onPayment: (r) => void (report = r) })],
       secretKey: opts.secretKey,
       realm: 'receipts-arena',
     });
-    const result = await mppx.charge({ amount: microsToAmount(priceOf(parsed), cfg.currency.decimals), description: `${parsed.picks.length} take(s) for ${parsed.roundId}` })(request);
+    const result = await mppx.charge({ amount: microsToAmount(picked.priceMicros, cfg.currency.decimals), description: `${parsed.picks.length} take(s) for ${parsed.roundId}` })(request);
     if (result.status === 402) return result.challenge;
 
-    const takes = [];
-    for (const p of parsed.picks) {
-      const [row] = await db
-        .select()
-        .from(arenaTakes)
-        .innerJoin(arenaMarkets, eq(arenaMarkets.id, arenaTakes.marketId))
-        .where(and(eq(arenaMarkets.roundId, parsed.roundId), eq(arenaMarkets.asset, p.asset), eq(arenaTakes.advisorId, p.advisorId)));
-      if (!row) continue;
-      const adv = ADVISOR_BY_ID.get(p.advisorId)!;
-      // exactly the object whose hash goes into the buyer's informed forecast (advice.contentHash)
-      takes.push({
-        asset: p.asset,
-        shown: { advisorId: adv.id, advisor: adv.name, market: row.arena_markets.conditionId, says: row.arena_takes.says, probabilityBps: row.arena_takes.probabilityBps, inputs: JSON.parse(row.arena_takes.inputsJson) },
-        takeHash: row.arena_takes.hash,
-      });
-    }
+    // exactly the object whose hash goes into the buyer's informed forecast (advice.contentHash)
+    const takes = picked.rows.map((r) => ({
+      asset: r.asset,
+      shown: { advisorId: r.take.advisorId, advisor: r.take.advisorName, market: r.market.conditionId, says: r.take.says, probabilityBps: r.take.probabilityBps, inputs: JSON.parse(r.take.inputsJson) },
+      takeHash: r.take.hash,
+    }));
     const r = report as { digest: string; sender?: string } | null;
     if (r && opts.onPaid) await opts.onPaid({ digest: r.digest, sender: r.sender, req: parsed });
     return result.withReceipt(Response.json({ roundId: parsed.roundId, paymentDigest: r?.digest ?? null, takes }));

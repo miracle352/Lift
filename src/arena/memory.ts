@@ -2,7 +2,8 @@ import { and, asc, eq, inArray, isNotNull } from 'drizzle-orm';
 import { arenaEpisodes, arenaLessons } from '@/db/schema';
 import type { Verdict } from '@/core/scoring';
 import { parseLesson, type Episode, type RecalledLesson } from './brain/learner';
-import { ADVISOR_BY_ID, FORECASTER_BY_ID } from './brain/models';
+import { FORECASTER_BY_ID } from './brain/models';
+import { advisorDirectory, advisorName, type AdvisorInfo } from './registry';
 import { agentNamespaces, type ArenaDeps } from './deps';
 
 /**
@@ -18,7 +19,7 @@ import { agentNamespaces, type ArenaDeps } from './deps';
 export async function recallLessons(deps: ArenaDeps, agentId: string): Promise<{ lessons: Map<string, RecalledLesson>; source: 'walrus' | 'db' }> {
   const ns = agentNamespaces(agentId).lessons;
   try {
-    const res = await deps.mem.recall({ query: `lesson verdict for advisors: ${[...ADVISOR_BY_ID.values()].map((a) => a.name).join(', ')}`, namespace: ns, topK: 40, sort: 'recent' });
+    const res = await deps.mem.recall({ query: 'lesson: whose advice made my forecasts better or worse, verdict per advisor', namespace: ns, topK: 60, sort: 'recent' });
     const out = new Map<string, RecalledLesson>();
     // sort: 'recent' → newest first; keep the newest lesson per advisor
     const sorted = [...res.results].sort((a, b) => (b.created_at ?? '').localeCompare(a.created_at ?? ''));
@@ -51,10 +52,10 @@ export async function loadEpisodes(deps: ArenaDeps, agentId: string): Promise<Ep
 }
 
 /** The text of one agent's episode memory for a round. Human-readable first, machine tag last. */
-export function episodeMemoryText(agentId: string, roundId: string, rows: (typeof arenaEpisodes.$inferSelect)[]): string {
+export function episodeMemoryText(agentId: string, roundId: string, rows: (typeof arenaEpisodes.$inferSelect)[], names: Map<string, AdvisorInfo> = new Map()): string {
   const agent = FORECASTER_BY_ID.get(agentId)?.name ?? agentId;
   const parts = rows.map((r) => {
-    const adv = ADVISOR_BY_ID.get(r.advisorId)?.name ?? r.advisorId;
+    const adv = advisorName(names, r.advisorId);
     const res = r.outcome === 1 ? 'UP' : 'DOWN';
     const d = r.deltaMicro / 1000;
     return `${r.asset.toUpperCase()}: bought ${adv}${r.fairTest ? ' (fair test)' : ''}, ${Math.round(r.blindBps / 100)}% → ${Math.round(r.informedBps / 100)}% UP, went ${res}, ${d >= 0 ? '+' : ''}${d.toFixed(1)} mBrier`;
@@ -109,11 +110,12 @@ export async function flushMemoryOutbox(deps: ArenaDeps, opts: { maxItems?: numb
     groups.set(k, [...(groups.get(k) ?? []), r]);
   }
   const items: { text: string; namespace: string; lessonId?: string; episodeIds?: string[] }[] = [];
+  const names = await advisorDirectory(db);
   for (const l of pendingLessons) items.push({ text: l.text, namespace: agentNamespaces(l.agentId).lessons, lessonId: l.id });
   for (const [k, rows] of groups) {
     if (items.length >= (opts.maxItems ?? 20)) break;
     const [agentId, roundId] = k.split('|');
-    items.push({ text: episodeMemoryText(agentId, roundId, rows), namespace: agentNamespaces(agentId).episodes, episodeIds: rows.map((r) => r.id) });
+    items.push({ text: episodeMemoryText(agentId, roundId, rows, names), namespace: agentNamespaces(agentId).episodes, episodeIds: rows.map((r) => r.id) });
   }
   if (!items.length) return { submitted: 0, stored };
   const res = await deps.mem.rememberBulk(items.map(({ text, namespace }) => ({ text, namespace })));

@@ -6,7 +6,9 @@ import { arenaBatches, arenaForecasts, arenaMarkets, arenaPurchases, arenaRounds
 import { computeFeatures, type WindowFeatures } from './brain/features';
 import { advisorStats, blendBps, decide } from './brain/learner';
 import { toBps } from './brain/math';
-import { ADVISORS, ADVISOR_BY_ID, FORECASTERS, type AdvisorContext, type OrderbookSnapshot, type Take } from './brain/models';
+import { ADVISORS, FORECASTERS, type AdvisorContext, type OrderbookSnapshot, type Take } from './brain/models';
+import { collectExternalTakes } from './external';
+import { activeExternalAdvisors } from './registry';
 import { advisorUser, agentUser, roundIdFor, type ArenaDeps } from './deps';
 import { ASSETS, fetchLive15m, marketRefOf, type FastMarket } from './fast-markets';
 import { fetchCandles, fetchUpBook } from './feeds';
@@ -40,7 +42,7 @@ interface MarketCtx {
   marketId: string;
   features: WindowFeatures;
   book: OrderbookSnapshot | null;
-  takes: Map<string, { take: Take; forecast: ForecastV1; shown: Record<string, unknown> }>;
+  takes: Map<string, { take: Take; forecast: ForecastV1; shown: Record<string, unknown>; name: string; priceMicros: number }>;
 }
 
 export async function lockRound(deps: ArenaDeps, closeMs: number, opts: { live?: FastMarket[] } = {}): Promise<LockResult> {
@@ -78,15 +80,41 @@ export async function lockRound(deps: ArenaDeps, closeMs: number, opts: { live?:
   }
 
   const createdAt = new Date(now).toISOString();
-  // ---- advisor takes
+  const addTake = (c: MarketCtx, a: { id: string; name: string; priceMicros: number }, take: Take) => {
+    const probabilityBps = toBps(take.p);
+    const shown = { advisorId: a.id, advisor: a.name, market: c.market.conditionId, says: take.says, probabilityBps, inputs: take.inputs };
+    const forecast = buildForecast({ kind: 'take', user: advisorUser(a.id), market: marketRefOf(c.market), outcome: 'UP', probabilityBps, createdAt });
+    c.takes.set(a.id, { take, forecast, shown, name: a.name, priceMicros: a.priceMicros });
+  };
+  // ---- built-in advisor takes
   for (const c of ctxs) {
     const actx: AdvisorContext = { roundId, marketUp: c.market.upPrice, features: c.features, book: c.book };
-    for (const a of ADVISORS) {
-      const take = a.take(actx);
-      const probabilityBps = toBps(take.p);
-      const shown = { advisorId: a.id, advisor: a.name, market: c.market.conditionId, says: take.says, probabilityBps, inputs: take.inputs };
-      const forecast = buildForecast({ kind: 'take', user: advisorUser(a.id), market: marketRefOf(c.market), outcome: 'UP', probabilityBps, createdAt });
-      c.takes.set(a.id, { take, forecast, shown });
+    for (const a of ADVISORS) addTake(c, a, a.take(actx));
+  }
+  // ---- open marketplace: one request per external advisor for the whole round
+  if ((await activeExternalAdvisors(deps.db)).length) {
+    const ext = await collectExternalTakes(deps.db, {
+      roundId,
+      closeTime: new Date(closeMs).toISOString(),
+      fetch: deps.externalFetch,
+      log: deps.log,
+      markets: ctxs.map((c) => ({
+        asset: c.market.asset,
+        conditionId: c.market.conditionId,
+        question: c.market.question,
+        windowStart: c.market.windowStart,
+        closeTime: c.market.closeTime,
+        marketUpBps: toBps(c.market.upPrice),
+        features: (({ startPrice, lastPrice, twapSoFar, minutesElapsed, minutesLeft, retSinceStart, ret3m, sigma1m }) => ({ startPrice, lastPrice, twapSoFar, minutesElapsed, minutesLeft, retSinceStart, ret3m, sigma1m }))(c.features),
+      })),
+    });
+    for (const a of ext.advisors) {
+      const byAsset = ext.takes.get(a.id);
+      if (!byAsset) continue;
+      for (const c of ctxs) {
+        const t = byAsset.get(c.market.asset);
+        if (t) addTake(c, a, { p: t.probabilityBps / 10000, says: t.says, inputs: { endpoint: new URL(a.endpointUrl).host } });
+      }
     }
   }
 
@@ -96,20 +124,21 @@ export async function lockRound(deps: ArenaDeps, closeMs: number, opts: { live?:
   const pending: { c: MarketCtx; agentId: string; advisorId: string; fairTest: boolean; trust: number; blind: ForecastV1; purchaseId: string }[] = [];
   for (const agent of FORECASTERS) {
     const episodes = await loadEpisodes(deps, agent.id);
-    const stats = new Map(ADVISORS.map((a) => [a.id, advisorStats(a.id, episodes)]));
+    const roundAdvisorIds = [...new Set(ctxs.flatMap((c) => [...c.takes.keys()]))];
+    const stats = new Map(roundAdvisorIds.map((id) => [id, advisorStats(id, episodes)]));
     const { lessons, source } = await recallLessons(deps, agent.id);
     if (lessons.size) await event(deps, roundId, 'lessons_recalled', { source, lessons: [...lessons.values()].map((l) => ({ advisorId: l.advisorId, verdict: l.verdict, blobId: l.blobId })) }, { agentId: agent.id });
     for (const c of ctxs) {
       const blindBps = toBps(agent.blind(c.features));
       const blind = buildForecast({ kind: 'blind', user: agentUser(agent.id), market: marketRefOf(c.market), outcome: 'UP', probabilityBps: blindBps, createdAt });
       blinds.push({ c, agentId: agent.id, forecast: blind });
-      const d = decide({ seed: `${roundId}:${c.market.asset}:${agent.id}`, advisorIds: ADVISORS.map((a) => a.id), stats, lessons, totalEpisodes: episodes.length });
+      const d = decide({ seed: `${roundId}:${c.market.asset}:${agent.id}`, advisorIds: [...c.takes.keys()], stats, lessons, totalEpisodes: episodes.length });
       const base = { id: `${c.marketId}:${agent.id}`, roundId, marketId: c.marketId, agentId: agent.id, reason: d.reason };
       if (d.action === 'decline') {
         purchases.push({ ...base, action: 'decline', lessonBlobIdsJson: JSON.stringify(d.lessonBlobIds) });
         continue;
       }
-      const adv = ADVISOR_BY_ID.get(d.advisorId)!;
+      const adv = { id: d.advisorId, priceMicros: c.takes.get(d.advisorId)!.priceMicros };
       const trust = stats.get(adv.id)!.trust;
       purchases.push({
         ...base,
@@ -156,6 +185,8 @@ export async function lockRound(deps: ArenaDeps, closeMs: number, opts: { live?:
         await tx.insert(arenaTakes).values({
           marketId: c.marketId,
           advisorId,
+          advisorName: t.name,
+          priceMicros: t.priceMicros,
           probabilityBps: t.forecast.probabilityBps,
           says: t.take.says,
           inputsJson: JSON.stringify(t.take.inputs),
@@ -190,7 +221,7 @@ export async function lockRound(deps: ArenaDeps, closeMs: number, opts: { live?:
         const res = await buy({ cfg: deps.pay.cfg, agentId, baseUrl: deps.pay.baseUrl, roundId, picks: picks.map((p) => ({ asset: p.c.market.asset, advisorId: p.advisorId })) });
         shownByAsset = new Map(res.takes.map((t) => [t.asset, t.shown as Record<string, unknown>]));
         paid = { digest: res.paymentDigest, network: deps.pay.cfg.network === 'mainnet' ? 'sui:mainnet' : 'sui:testnet' };
-        await event(deps, roundId, 'takes_paid', { digest: res.paymentDigest, network: paid.network, picks: picks.length, micros: picks.reduce((s, p) => s + ADVISOR_BY_ID.get(p.advisorId)!.priceMicros, 0) }, { agentId });
+        await event(deps, roundId, 'takes_paid', { digest: res.paymentDigest, network: paid.network, picks: picks.length, micros: picks.reduce((s, p) => s + p.c.takes.get(p.advisorId)!.priceMicros, 0) }, { agentId });
       } catch (err) {
         deps.log('payment failed, using ledger escrow', { agentId, err: String((err as Error).message ?? err).slice(0, 300) });
         await event(deps, roundId, 'payment_failed', { error: String((err as Error).message ?? err).slice(0, 200) }, { agentId });

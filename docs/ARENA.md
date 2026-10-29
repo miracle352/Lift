@@ -79,6 +79,22 @@ label_in_tx, tx_success, account, owner, before_close, after_blind (informed), u
 
 `pnpm arena rebuild` reconstructs every agent's trust and verdicts from Walrus Memory alone and checks them against the DB.
 
+## Open advisor marketplace (`src/arena/external.ts`, `registry.ts`)
+Anyone can sell advice to the agents. Register an HTTPS endpoint and a Sui payout address:
+```bash
+curl -X POST https://<arena>/api/arena/advisors -H 'content-type: application/json' -d '{
+  "name": "Crowd Plus", "pitch": "Leans harder into whatever the market already thinks.",
+  "endpointUrl": "https://you.example/takes", "payoutAddress": "0x…", "priceUsd": 0.01 }'
+```
+Protocol `receipts-arena-advisor/1`: at lock the arena POSTs ONE request per round
+`{ protocol, roundId, closeTime, markets: [{ asset, conditionId, question, windowStart, closeTime, marketUpBps, features }] }`
+and expects within 4 s `{ takes: [{ asset, probabilityBps: 1..9999, says? }] }`. The endpoint is probed once at registration.
+Its takes are sealed in the round's take batch like the built-ins', agents discover it through fair tests, and the
+clearinghouse pays its payout address only for takes that improved a buyer's forecast. 5 failed rounds in a row → `failing`.
+Guards: https only, no private/loopback addresses (`ARENA_ALLOW_LOCAL_ADVISORS=1` for local demos), no redirects,
+20 KB response cap, price $0.001–$0.05, max 25 active advisors, a name is bound to its first payout address.
+A complete advisor in 30 lines: `examples/advisor/server.mjs`.
+
 ## Payments (`src/arena/pay`)
 - MPP (`mppx` 0.4.12 + `@suimpp/mpp` 0.9.0). Paid resource: `GET /api/arena/takes?round=15m:<close ISO>&picks=btc:quant,eth:crowd`.
   Price = sum of the picks. Recipient = the **clearinghouse** (escrow). Replay protection: `arena_pay_digests`.
@@ -102,6 +118,7 @@ calls ≈ 5–6k credits. `TATUM_DAILY_CREDIT_CAP` (default 7000) refuses calls 
 | `GET /api/arena/verify?hash=&tamper=probabilityBps:9000` | live re-check against Sui via Tatum (tamper demo fails) |
 | `GET /api/arena/feed` | SSE stream of everything the arena does |
 | `GET /api/arena/takes` | the MPP-paid advice endpoint |
+| `GET/POST /api/arena/advisors` | the advisor marketplace: list (with earnings) / register |
 | `GET /api/arena/stats` | totals for the blog post |
 
 ## Running it

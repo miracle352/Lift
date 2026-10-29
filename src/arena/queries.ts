@@ -3,7 +3,8 @@ import { buildProofs } from '@/core/merkle';
 import type { Db } from '@/db/client';
 import { arenaBatches, arenaEpisodes, arenaEvents, arenaForecasts, arenaLessons, arenaMarkets, arenaPayouts, arenaPurchases, arenaRounds, arenaTakes, tatumCalls } from '@/db/schema';
 import { advisorStats, type Episode } from './brain/learner';
-import { ADVISORS, FORECASTERS } from './brain/models';
+import { FORECASTERS } from './brain/models';
+import { advisorDirectory } from './registry';
 
 /**
  * Read models for the public API (and later the UI). Rule: nothing that reveals a probability is
@@ -56,6 +57,7 @@ export async function leaderboard(db: Db) {
     .where(eq(arenaPurchases.action, 'buy'))
     .groupBy(arenaPurchases.advisorId, arenaPurchases.payStatus);
   const lessons = await db.select().from(arenaLessons).orderBy(desc(arenaLessons.createdAt)).limit(50);
+  const dir = [...(await advisorDirectory(db)).values()];
   return {
     agents: FORECASTERS.map((f) => {
       const eps = byAgent.get(f.id) ?? [];
@@ -64,13 +66,13 @@ export async function leaderboard(db: Db) {
         name: f.name,
         style: f.style,
         episodes: eps.length,
-        advisors: ADVISORS.map((a) => {
+        advisors: dir.map((a) => {
           const s = advisorStats(a.id, eps);
           return { advisorId: a.id, n: s.n, nFair: s.nFair, trust: round3(s.trust), verdict: s.verdict, meanDelta: s.summary.meanDelta === null ? null : round5(s.summary.meanDelta), ciLow: nullableRound(s.summary.ciLow), ciHigh: nullableRound(s.summary.ciHigh) };
         }),
       };
     }),
-    advisors: ADVISORS.map((a) => {
+    advisors: dir.map((a) => {
       const e = earnings.filter((x) => x.advisorId === a.id);
       const get = (st: string) => e.find((x) => x.status === st);
       return {
@@ -78,6 +80,9 @@ export async function leaderboard(db: Db) {
         name: a.name,
         pitch: a.pitch,
         priceMicros: a.priceMicros,
+        kind: a.kind,
+        status: a.status,
+        payoutAddress: a.kind === 'external' ? a.payoutAddress : null,
         sold: e.reduce((s, x) => s + Number(x.n), 0),
         releasedMicros: Number(get('released')?.micros ?? 0),
         refundedMicros: Number(get('refunded')?.micros ?? 0),

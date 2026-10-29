@@ -3,6 +3,7 @@ import { Transaction } from '@mysten/sui/transactions';
 import { arenaPayouts, arenaPurchases, arenaRounds } from '@/db/schema';
 import type { ArenaDeps } from '../deps';
 import { event } from '../sealer';
+import { advisorDirectory } from '../registry';
 import { advisorWallet, agentWallet, clearinghouse, payClient } from './wallets';
 
 /**
@@ -39,9 +40,10 @@ export async function sendDuePayouts(deps: ArenaDeps): Promise<number> {
   const settled = await deps.db.select({ id: arenaRounds.id }).from(arenaRounds).where(eq(arenaRounds.status, 'settled'));
   const done = new Set((await deps.db.select({ id: arenaPayouts.roundId }).from(arenaPayouts)).map((r) => r.id));
   let sent = 0;
+  const dir = await advisorDirectory(deps.db);
   for (const { id: roundId } of settled.filter((r) => !done.has(r.id))) {
     const rows = await deps.db.select().from(arenaPurchases).where(and(eq(arenaPurchases.roundId, roundId), eq(arenaPurchases.payNetwork, network), inArray(arenaPurchases.payStatus, ['released', 'refunded'])));
-    const transfers = planTransfers(rows, { advisor: (id) => advisorWallet(cfg, id).toSuiAddress(), agent: (id) => agentWallet(cfg, id).toSuiAddress() });
+    const transfers = planTransfers(rows, { advisor: (id) => dir.get(id)?.payoutAddress ?? advisorWallet(cfg, id).toSuiAddress(), agent: (id) => agentWallet(cfg, id).toSuiAddress() });
     const released = transfers.filter((t) => t.role === 'advisor').reduce((s, t) => s + t.micros, 0);
     const refunded = transfers.filter((t) => t.role === 'agent').reduce((s, t) => s + t.micros, 0);
     if (!transfers.length) {

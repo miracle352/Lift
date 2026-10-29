@@ -3,7 +3,8 @@ import { arenaEpisodes, arenaForecasts, arenaLessons, arenaMarkets, arenaPurchas
 import type { Verdict } from '@/core/scoring';
 import { brier } from '@/core/scoring';
 import { advisorStats, paysAdvisor, type RecalledLesson } from './brain/learner';
-import { ADVISORS, FORECASTER_BY_ID } from './brain/models';
+import { FORECASTER_BY_ID } from './brain/models';
+import { advisorDirectory } from './registry';
 import type { ArenaDeps } from './deps';
 import { fetchResolved15m, type FastMarket } from './fast-markets';
 import { lessonsFromStats } from './lessons';
@@ -123,11 +124,13 @@ export async function settleDue(deps: ArenaDeps, opts: { resolved?: FastMarket[]
     const agent = FORECASTER_BY_ID.get(agentId);
     if (!agent) continue;
     const eps = await loadEpisodes(deps, agentId);
-    const stats = new Map(ADVISORS.map((a) => [a.id, advisorStats(a.id, eps)]));
+    const names = await advisorDirectory(deps.db);
+    const ids = new Set([...names.keys()].filter((id) => names.get(id)!.kind === 'builtin').concat(eps.map((e) => e.advisorId)));
+    const stats = new Map([...ids].map((id) => [id, advisorStats(id, eps)]));
     const prior = await deps.db.select().from(arenaLessons).where(eq(arenaLessons.agentId, agentId)).orderBy(asc(arenaLessons.createdAt));
     const remembered = new Map<string, RecalledLesson>();
     for (const l of prior) remembered.set(l.advisorId, { advisorId: l.advisorId, verdict: l.verdict as Verdict, blobId: l.walrusBlobId, text: l.text });
-    for (const l of lessonsFromStats(agent, stats, remembered)) {
+    for (const l of lessonsFromStats(agent, stats, remembered, names)) {
       await deps.db.insert(arenaLessons).values({ id: `${agentId}:${l.advisorId}:${roundForLessons}`, agentId, advisorId: l.advisorId, verdict: l.verdict, text: l.text, roundId: roundForLessons }).onConflictDoNothing();
       await event(deps, roundForLessons, 'lesson_learned', { verdict: l.verdict, text: l.text }, { agentId, advisorId: l.advisorId });
       lessons++;

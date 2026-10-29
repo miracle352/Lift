@@ -1,5 +1,5 @@
 import { advisorStats, parseLesson, type Episode } from './brain/learner';
-import { ADVISORS } from './brain/models';
+import { advisorDirectory } from './registry';
 import { agentNamespaces, type ArenaDeps } from './deps';
 import { loadEpisodes, parseEpisodeMemory } from './memory';
 
@@ -27,6 +27,7 @@ export async function rebuildAgentFromWalrus(deps: ArenaDeps, agentId: string) {
   const ls = await deps.mem.recall({ query: 'lesson verdict advisor', namespace: ns.lessons, topK: 200, sort: 'recent' });
   const lessons = ls.results.map((r) => parseLesson(r.text)).filter((x) => x !== null);
   const db = await loadEpisodes(deps, agentId);
+  const ADVISORS = [...(await advisorDirectory(deps.db)).values()];
   const dbStats = new Map(ADVISORS.map((a) => [a.id, advisorStats(a.id, db)]));
   return {
     episodes: episodes.length,

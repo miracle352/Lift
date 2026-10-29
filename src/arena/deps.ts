@@ -13,6 +13,8 @@ export interface ArenaDeps {
   sui: SuiCoreLike;
   /** fetch for free public feeds (Coinbase, Polymarket CLOB) */
   fetch: typeof fetch;
+  /** fetch used to call external marketplace advisors (defaults to global fetch) */
+  externalFetch?: typeof fetch;
   now: () => number;
   config: ArenaConfig;
   log: (msg: string, extra?: Record<string, unknown>) => void;

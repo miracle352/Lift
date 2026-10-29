@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { lockRound } from '@/arena/lock';
 import { planTransfers } from '@/arena/pay/payouts';
-import { parseTakesRequest, priceOf, sellerFromPayConfig, takesHandler } from '@/arena/pay/takes-server';
+import { parseTakesRequest, sellerFromPayConfig, takesHandler } from '@/arena/pay/takes-server';
 import { agentWallet, clearinghouse, payConfigFromEnv, walletDirectory } from '@/arena/pay/wallets';
 import type { arenaPurchases } from '@/db/schema';
 import { fakeArena } from '../helpers/fake-arena';
@@ -25,9 +25,9 @@ describe('paid takes endpoint', () => {
     const u = (q: string) => new URL(`http://x/api/arena/takes?${q}`);
     expect(parseTakesRequest(u('round=15m:2026-10-29T11:00:00.000Z&picks=btc:crowd,eth:quant'))).toEqual({ roundId: '15m:2026-10-29T11:00:00.000Z', picks: [{ asset: 'btc', advisorId: 'crowd' }, { asset: 'eth', advisorId: 'quant' }] });
     expect(parseTakesRequest(u('round=nope&picks=btc:crowd'))).toEqual({ error: 'bad round' });
-    expect(parseTakesRequest(u('round=15m:2026-10-29T11:00:00.000Z&picks=btc:nobody'))).toEqual({ error: 'bad pick' });
+    expect(parseTakesRequest(u('round=15m:2026-10-29T11:00:00.000Z&picks=btc:No_Body!'))).toEqual({ error: 'bad pick' });
     expect(parseTakesRequest(u('round=15m:2026-10-29T11:00:00.000Z&picks=btc:crowd,btc:quant'))).toEqual({ error: 'one pick per market' });
-    expect(priceOf({ roundId: 'r', picks: [{ asset: 'btc', advisorId: 'crowd' }, { asset: 'eth', advisorId: 'quant' }] })).toBe(20_000);
+
   });
 
   it('answers 402 with an MPP challenge for an open round, and refuses closed or unknown rounds', async () => {
