@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { lockRound } from '@/arena/lock';
 import { planTransfers } from '@/arena/pay/payouts';
-import { parseTakesRequest, priceOf, takesHandler } from '@/arena/pay/takes-server';
+import { parseTakesRequest, priceOf, sellerFromPayConfig, takesHandler } from '@/arena/pay/takes-server';
 import { agentWallet, clearinghouse, payConfigFromEnv, walletDirectory } from '@/arena/pay/wallets';
 import type { arenaPurchases } from '@/db/schema';
 import { fakeArena } from '../helpers/fake-arena';
@@ -33,7 +33,7 @@ describe('paid takes endpoint', () => {
   it('answers 402 with an MPP challenge for an open round, and refuses closed or unknown rounds', async () => {
     const a = await fakeArena('2026-10-29T10:51:10.000Z');
     await lockRound(a.deps, Date.parse('2026-10-29T11:00:00.000Z'));
-    const handler = takesHandler(a.db, cfg, { secretKey: 'x'.repeat(40), now: a.deps.now });
+    const handler = takesHandler(a.db, sellerFromPayConfig(cfg), { secretKey: 'x'.repeat(40), now: a.deps.now });
     const res = await handler(new Request('http://x/api/arena/takes?round=15m:2026-10-29T11:00:00.000Z&picks=btc:crowd,eth:quant'));
     expect(res.status).toBe(402);
     const www = res.headers.get('www-authenticate') ?? '';

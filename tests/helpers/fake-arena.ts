@@ -47,6 +47,9 @@ export function fakeWalrusAndSui(now: () => number) {
       const m = memories.find((x) => x.jobId === jobId);
       return m ? { job_id: jobId, status: 'done' as const, blob_id: m.blobId, namespace: m.namespace } : { job_id: jobId, status: 'not_found' as const };
     },
+    async restore(namespace: string) {
+      return { restored: 0, skipped: 0, failed: 0, total: memories.filter((m) => m.namespace === namespace).length, namespace, owner: FIX_OWNER, truncated: false };
+    },
     async recall(p: { query: string; namespace?: string; topK?: number }) {
       const hits = memories.filter((m) => m.namespace === p.namespace).reverse().slice(0, p.topK ?? 10);
       return { results: hits.map((m) => ({ blob_id: m.blobId, text: m.text, distance: 0.3, created_at: m.createdAt })), total: hits.length };

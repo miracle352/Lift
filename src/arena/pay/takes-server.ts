@@ -6,6 +6,15 @@ import { arenaMarkets, arenaPayDigests, arenaRounds, arenaTakes } from '@/db/sch
 import { ADVISOR_BY_ID } from '../brain/models';
 import { clearinghouse, microsToAmount, type PayConfig } from './wallets';
 
+export interface TakesSeller {
+  network: PayConfig['network'];
+  currency: PayConfig['currency'];
+  /** clearinghouse (escrow) address that receives every payment */
+  recipient: string;
+}
+
+export const sellerFromPayConfig = (cfg: PayConfig): TakesSeller => ({ network: cfg.network, currency: cfg.currency, recipient: clearinghouse(cfg).toSuiAddress() });
+
 /**
  * The paid advice endpoint (MPP over HTTP, settled in USDC on Sui):
  *
@@ -54,9 +63,9 @@ export function priceOf(req: TakesRequest): number {
   return req.picks.reduce((s, p) => s + ADVISOR_BY_ID.get(p.advisorId)!.priceMicros, 0);
 }
 
-export function takesHandler(db: Db, cfg: PayConfig, opts: { secretKey: string; now?: () => number; onPaid?: (info: { digest: string; sender?: string; req: TakesRequest }) => Promise<void> }) {
+export function takesHandler(db: Db, cfg: TakesSeller, opts: { secretKey: string; now?: () => number; onPaid?: (info: { digest: string; sender?: string; req: TakesRequest }) => Promise<void> }) {
   const store = new DbDigestStore(db);
-  const recipient = clearinghouse(cfg).toSuiAddress();
+  const recipient = cfg.recipient;
   return async (request: Request): Promise<Response> => {
     const parsed = parseTakesRequest(new URL(request.url));
     if ('error' in parsed) return Response.json({ error: parsed.error }, { status: 400 });

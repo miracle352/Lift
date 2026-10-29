@@ -127,3 +127,20 @@ describe('arena round, end to end (offline fakes)', () => {
     void arenaMarkets;
   });
 });
+
+describe('portable memory', () => {
+  it('an agent rebuilt from Walrus Memory alone matches the database', async () => {
+    const { rebuildAgentFromWalrus } = await import('@/arena/rebuild');
+    const a = await fakeArena('2026-10-29T10:51:10.000Z');
+    await lockRound(a.deps, CLOSE);
+    a.setNow('2026-10-29T11:08:00.000Z');
+    const live = await fetchLive15m(a.deps.tatum);
+    const resolved = live.filter((m) => m.closeTime === '2026-10-29T11:00:00.000Z').map((m, i) => ({ ...m, resolution: (i % 2 ? 'UP' : 'DOWN') as 'UP' | 'DOWN', resolvedSource: 'chainlink' }));
+    await settleDue(a.deps, { resolved });
+    await flushMemoryOutbox(a.deps);
+    const r = await rebuildAgentFromWalrus(a.deps, 'rookie');
+    expect(r.episodes).toBe(8);
+    expect(r.dbEpisodes).toBe(8);
+    expect(r.advisors.every((x) => x.match)).toBe(true);
+  });
+});

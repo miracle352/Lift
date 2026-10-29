@@ -15,7 +15,7 @@ import { tick } from '../src/arena/worker';
 import { closeSuiClient } from '../src/lib/sui';
 import { serveFetch } from '../src/arena/pay/client';
 import { balances, fundAgents } from '../src/arena/pay/fund';
-import { takesHandler } from '../src/arena/pay/takes-server';
+import { sellerFromPayConfig, takesHandler } from '../src/arena/pay/takes-server';
 import { payConfigFromEnv, walletDirectory } from '../src/arena/pay/wallets';
 
 const cmd = process.argv[2] ?? 'status';
@@ -23,7 +23,7 @@ const deps = await liveArenaDeps({ migrate: true });
 
 async function startTakesServer() {
   if (!deps.pay || process.env.ARENA_TAKES_URL) return;
-  const handler = takesHandler(deps.db, deps.pay.cfg, { secretKey: process.env.MPP_SECRET_KEY ?? '' });
+  const handler = takesHandler(deps.db, sellerFromPayConfig(deps.pay.cfg), { secretKey: process.env.MPP_SECRET_KEY ?? '' });
   const port = Number(process.env.ARENA_PAY_PORT ?? 8787);
   await serveFetch((r) => (new URL(r.url).pathname === '/api/arena/takes' ? handler(r) : Promise.resolve(new Response('not found', { status: 404 }))), port);
   deps.log('paid takes endpoint listening', { url: `http://127.0.0.1:${port}/api/arena/takes`, network: deps.pay.cfg.network });
@@ -42,6 +42,14 @@ if (cmd === 'worker') {
   }
 } else if (cmd === 'tick') {
   console.log(await tick(deps));
+} else if (cmd === 'rebuild') {
+  // Portable memory: rebuild an agent's whole track record from Walrus Memory alone, then compare with the DB.
+  const { rebuildAgentFromWalrus } = await import('../src/arena/rebuild');
+  for (const agentId of process.argv[3] ? [process.argv[3]] : ['rookie', 'chartist', 'cautious', 'gambler']) {
+    const r = await rebuildAgentFromWalrus(deps, agentId);
+    console.log(`\n== ${agentId}: ${r.episodes} episodes and ${r.lessons} lessons recalled from Walrus (DB has ${r.dbEpisodes} episodes)`);
+    console.table(r.advisors);
+  }
 } else if (cmd === 'wallets') {
   const cfg = payConfigFromEnv();
   if (!cfg) throw new Error('Set ARENA_WALLET_SEED (64 hex chars) in .env.local first');
