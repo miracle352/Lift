@@ -38,7 +38,8 @@ export async function sendDuePayouts(deps: ArenaDeps): Promise<number> {
   const cfg = deps.pay.cfg;
   const network = cfg.network === 'mainnet' ? 'sui:mainnet' : 'sui:testnet';
   const settled = await deps.db.select({ id: arenaRounds.id }).from(arenaRounds).where(eq(arenaRounds.status, 'settled'));
-  const done = new Set((await deps.db.select({ id: arenaPayouts.roundId }).from(arenaPayouts)).map((r) => r.id));
+  // retry failed payouts; skip sent/empty ones
+  const done = new Set((await deps.db.select({ id: arenaPayouts.roundId, status: arenaPayouts.status }).from(arenaPayouts)).filter((r) => r.status !== 'failed').map((r) => r.id));
   let sent = 0;
   const dir = await advisorDirectory(deps.db);
   for (const { id: roundId } of settled.filter((r) => !done.has(r.id))) {
@@ -54,19 +55,27 @@ export async function sendDuePayouts(deps: ArenaDeps): Promise<number> {
       const signer = clearinghouse(cfg);
       const tx = new Transaction();
       tx.setSender(signer.toSuiAddress());
-      for (const t of transfers) {
-        tx.moveCall({ target: '0x2::balance::send_funds', typeArguments: [cfg.currency.type], arguments: [tx.balance({ type: cfg.currency.type, balance: BigInt(t.micros) }), tx.pure.address(t.to)] });
-      }
+      // ONE withdrawal (Sui allows at most 10 balance-withdraw reservations per transaction), split into transfers
+      const total = transfers.reduce((s, t) => s + t.micros, 0);
+      const pot = tx.coin({ type: cfg.currency.type, balance: BigInt(total) });
+      const parts = tx.splitCoins(pot, transfers.map((t) => BigInt(t.micros)));
+      transfers.forEach((t, i) => {
+        const bal = tx.moveCall({ target: '0x2::coin::into_balance', typeArguments: [cfg.currency.type], arguments: [parts[i]] });
+        tx.moveCall({ target: '0x2::balance::send_funds', typeArguments: [cfg.currency.type], arguments: [bal, tx.pure.address(t.to)] });
+      });
+      tx.moveCall({ target: '0x2::coin::destroy_zero', typeArguments: [cfg.currency.type], arguments: [pot] });
       const client = payClient(cfg.network);
       const res = await client.core.signAndExecuteTransaction({ transaction: await tx.build({ client }), signer, include: { effects: true } });
       const digest = (res as { Transaction?: { digest: string }; FailedTransaction?: { digest: string } }).Transaction?.digest;
       if (!digest) throw new Error('payout transaction failed');
-      await deps.db.insert(arenaPayouts).values({ roundId, network, status: 'sent', releasedMicros: released, refundedMicros: refunded, transfersJson: JSON.stringify(transfers), digest });
+      const row = { roundId, network, status: 'sent' as const, releasedMicros: released, refundedMicros: refunded, transfersJson: JSON.stringify(transfers), digest, error: null };
+      await deps.db.insert(arenaPayouts).values(row).onConflictDoUpdate({ target: arenaPayouts.roundId, set: row });
       await deps.db.update(arenaPurchases).set({ settleDigest: digest }).where(and(eq(arenaPurchases.roundId, roundId), eq(arenaPurchases.payNetwork, network)));
       await event(deps, roundId, 'payouts_sent', { digest, network, releasedMicros: released, refundedMicros: refunded, transfers });
       sent++;
     } catch (err) {
-      await deps.db.insert(arenaPayouts).values({ roundId, network, status: 'failed', releasedMicros: released, refundedMicros: refunded, transfersJson: JSON.stringify(transfers), error: String((err as Error).message ?? err).slice(0, 500) }).onConflictDoNothing();
+      const row = { roundId, network, status: 'failed' as const, releasedMicros: released, refundedMicros: refunded, transfersJson: JSON.stringify(transfers), error: String((err as Error).message ?? err).slice(0, 500) };
+      await deps.db.insert(arenaPayouts).values(row).onConflictDoUpdate({ target: arenaPayouts.roundId, set: row });
       deps.log('payout failed', { roundId, err: String(err) });
     }
   }
