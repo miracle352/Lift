@@ -37,7 +37,7 @@ export function walletFor(cfg: Pick<PayConfig, 'seedHex'>, name: string): Ed2551
 }
 
 export const clearinghouse = (cfg: PayConfig) => walletFor(cfg, 'clearinghouse');
-export const agentWallet = (cfg: PayConfig, agentId: string) => walletFor(cfg, `agent:${agentId}`);
+export const agentWallet = (cfg: Pick<PayConfig, 'seedHex'>, agentId: string) => walletFor(cfg, `agent:${agentId}`);
 export const advisorWallet = (cfg: PayConfig, advisorId: string) => walletFor(cfg, `advisor:${advisorId}`);
 
 export function walletDirectory(cfg: PayConfig) {

@@ -7,14 +7,14 @@ import type { arenaPurchases } from '@/db/schema';
 import { fakeArena } from '../helpers/fake-arena';
 
 const SEED = '42'.repeat(32);
-const cfg = payConfigFromEnv({ ARENA_WALLET_SEED: SEED } as NodeJS.ProcessEnv)!;
+const cfg = payConfigFromEnv({ ARENA_WALLET_SEED: SEED } as unknown as NodeJS.ProcessEnv)!;
 
 describe('wallets', () => {
   it('derives stable, distinct addresses from one seed', () => {
     const d = walletDirectory(cfg);
     expect(d.clearinghouse).toBe(clearinghouse(cfg).toSuiAddress());
     expect(new Set([d.clearinghouse, ...Object.values(d.agents), ...Object.values(d.advisors)]).size).toBe(1 + 4 + 7);
-    expect(agentWallet(cfg, 'rookie').toSuiAddress()).toBe(agentWallet({ seedHex: SEED }, 'rookie').toSuiAddress());
+    expect(agentWallet(cfg, 'rookie').toSuiAddress()).toBe(agentWallet({ ...cfg, seedHex: SEED }, 'rookie').toSuiAddress());
     expect(cfg.network).toBe('testnet');
     expect(cfg.currency.type).toMatch(/::usdc::USDC$/);
   });
