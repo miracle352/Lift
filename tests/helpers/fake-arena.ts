@@ -117,7 +117,15 @@ export async function fakeArena(startIso: string) {
     sleep: async () => {},
     fetch: (async (u: string) => {
       tatumCalls.push(String(u));
-      if (String(u).includes('status=resolved')) return new Response(JSON.stringify(loadFixture('tatum/events-15m-resolved.json')), { status: 200 });
+      const url = String(u);
+      if (url.includes('/positions'))
+        return new Response(JSON.stringify({ data: [{ token: 'y', positions: [{ outcome: 'YES', currentValue: 9000, size: 1, name: null }] }, { token: 'n', positions: [{ outcome: 'NO', currentValue: 3000, size: 1, name: null }] }], pagination: { pageSize: 5, pageNumber: 0 } }), { status: 200 });
+      const single = /\/markets\/(0x[0-9a-f]{64})$/.exec(url);
+      if (single) {
+        const ev = (loadFixture('tatum/events-epl-matches.json') as { data: { markets: { id: string }[] }[] }).data.flatMap((e) => e.markets).find((m) => m.id === single[1]);
+        return new Response(JSON.stringify({ data: { ...ev, resolution: { outcome: 'Yes', resolvedAt: '2026-10-31T15:00:00Z', txHash: null, source: 'uma' } } }), { status: 200 });
+      }
+      if (url.includes('status=resolved')) return new Response(JSON.stringify(loadFixture('tatum/events-15m-resolved.json')), { status: 200 });
       return new Response(JSON.stringify(loadFixture('tatum/events-15m-endingSoon.json')), { status: 200 });
     }) as unknown as typeof fetch,
   });

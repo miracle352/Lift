@@ -1,0 +1,472 @@
+{
+ "data": [
+  {
+   "id": "1209076",
+   "platform": "polymarket",
+   "title": "Chelsea FC vs. Manchester United FC",
+   "description": "This event is for the upcoming Premier League game, scheduled for Saturday, October 31, 2026 between Chelsea FC and Manchester United FC.",
+   "category": "Sports",
+   "tags": [
+    "sports",
+    "games",
+    "soccer",
+    "premier-league",
+    "EPL"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/Repetitive-markets/premier+league.jpg",
+   "status": "active",
+   "openTime": "2026-10-18T04:00:17.000Z",
+   "closeTime": "2026-10-31T12:30:00.000Z",
+   "marketCount": 3,
+   "totalVolume": 30344.746061,
+   "volumeUnit": "usd",
+   "totalLiquidity": 393327.7384,
+   "markets": [
+    {
+     "id": "0x871c424db72644585e0791b16a865ff4c02118ea9673a00c5a2c7ecac785b582",
+     "platform": "polymarket",
+     "eventId": "1209076",
+     "question": "Will Chelsea FC win on 2026-10-31?",
+     "description": "In the upcoming game, scheduled for October 31, 2026\nIf Chelsea FC wins, this market will resolve to \"Yes\".\nOtherwise, this market will resolve to \"No\".\nIf the game is postponed, this market will remain open until the game has been completed.\nIf the game is canceled entirely, with no make-up game, this market will resolve \"No\".\nThis market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.\n\nThe primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, data from Flashscore may be used; if Flashscore data is unavailable, data from Sofascore may be used; if neither is available, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome. If no acceptable data is available within 24 hours of the event's conclusion, this market will resolve 50-50, or to \"Draw\" where applicable.",
+     "category": "Sports",
+     "tags": [
+      "sports",
+      "games",
+      "soccer",
+      "premier-league",
+      "EPL"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/Repetitive-markets/premier+league.jpg",
+     "status": "active",
+     "openTime": "2026-10-18T00:00:00.000Z",
+     "closeTime": "2026-10-31T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "YES",
+       "price": 0.535,
+       "tokenId": "15290396180998198710310272736155640419943413721470664454665442922483962945384"
+      },
+      {
+       "name": "NO",
+       "price": 0.465,
+       "tokenId": "102490352960826289878203626922376022882491041625339900488317693005473902922874"
+      }
+     ],
+     "volume": 18860.10449,
+     "volumeUnit": "usd",
+     "liquidity": 128201.3255,
+     "resolution": null,
+     "createdAt": "2026-10-18T04:00:06.673Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0x871c424db72644585e0791b16a865ff4c02118ea9673a00c5a2c7ecac785b582",
+      "url": "https://polymarket.com/event/epl-che-mun-2026-10-31"
+     }
+    },
+    {
+     "id": "0x2fe39e817a750c609d0a31056a0d73247bee81451759262ac5415713bc12322c",
+     "platform": "polymarket",
+     "eventId": "1209076",
+     "question": "Will Chelsea FC vs. Manchester United FC end in a draw?",
+     "description": "In the upcoming game, scheduled for October 31, 2026\nIf the game ends in a draw, this market will resolve to \"Yes\".\nOtherwise, this market will resolve to \"No\".\nIf the game is postponed, this market will remain open until the game has been completed.\nIf the game is canceled entirely, with no make-up game, this market will resolve to \"Yes\".\nThis market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.\n\nThe primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, data from Flashscore may be used; if Flashscore data is unavailable, data from Sofascore may be used; if neither is available, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome. If no acceptable data is available within 24 hours of the event's conclusion, this market will resolve 50-50, or to \"Draw\" where applicable.",
+     "category": "Sports",
+     "tags": [
+      "sports",
+      "games",
+      "soccer",
+      "premier-league",
+      "EPL"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/Repetitive-markets/premier+league.jpg",
+     "status": "active",
+     "openTime": "2026-10-18T00:00:00.000Z",
+     "closeTime": "2026-10-31T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "YES",
+       "price": 0.245,
+       "tokenId": "11924499659940277990313763338145979800963868967390053504977336871911194083477"
+      },
+      {
+       "name": "NO",
+       "price": 0.755,
+       "tokenId": "101126693323255545794574137630437895473686407287405597013546579634889144381807"
+      }
+     ],
+     "volume": 1028.893411,
+     "volumeUnit": "usd",
+     "liquidity": 138604.3799,
+     "resolution": null,
+     "createdAt": "2026-10-18T04:00:06.845Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0x2fe39e817a750c609d0a31056a0d73247bee81451759262ac5415713bc12322c",
+      "url": "https://polymarket.com/event/epl-che-mun-2026-10-31"
+     }
+    },
+    {
+     "id": "0x31ecee8e1727480f7a2f1b46de88bc8422410fe3ccab92a7bc1bf6b886e4ad37",
+     "platform": "polymarket",
+     "eventId": "1209076",
+     "question": "Will Manchester United FC win on 2026-10-31?",
+     "description": "In the upcoming game, scheduled for October 31, 2026\nIf Manchester United FC wins, this market will resolve to \"Yes\".\nOtherwise, this market will resolve to \"No\".\nIf the game is postponed, this market will remain open until the game has been completed.\nIf the game is canceled entirely, with no make-up game, this market will resolve \"No\".\nThis market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.\n\nThe primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, data from Flashscore may be used; if Flashscore data is unavailable, data from Sofascore may be used; if neither is available, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome. If no acceptable data is available within 24 hours of the event's conclusion, this market will resolve 50-50, or to \"Draw\" where applicable.",
+     "category": "Sports",
+     "tags": [
+      "sports",
+      "games",
+      "soccer",
+      "premier-league",
+      "EPL"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/Repetitive-markets/premier+league.jpg",
+     "status": "active",
+     "openTime": "2026-10-18T00:00:00.000Z",
+     "closeTime": "2026-10-31T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "YES",
+       "price": 0.225,
+       "tokenId": "42196822305561413344053691620811148871819514949401220664893881229065342159878"
+      },
+      {
+       "name": "NO",
+       "price": 0.775,
+       "tokenId": "111793439037232748644111795259361641293160219434292079751709464955147396430376"
+      }
+     ],
+     "volume": 10455.74816,
+     "volumeUnit": "usd",
+     "liquidity": 126522.033,
+     "resolution": null,
+     "createdAt": "2026-10-18T04:00:07.020Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0x31ecee8e1727480f7a2f1b46de88bc8422410fe3ccab92a7bc1bf6b886e4ad37",
+      "url": "https://polymarket.com/event/epl-che-mun-2026-10-31"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "epl-che-mun-2026-10-31",
+    "url": "https://polymarket.com/event/epl-che-mun-2026-10-31"
+   }
+  },
+  {
+   "id": "1209112",
+   "platform": "polymarket",
+   "title": "Coventry City FC vs. Sunderland AFC",
+   "description": "This event is for the upcoming Premier League game, scheduled for Saturday, October 31, 2026 between Coventry City FC and Sunderland AFC.",
+   "category": "Sports",
+   "tags": [
+    "sports",
+    "games",
+    "soccer",
+    "premier-league",
+    "EPL"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/Repetitive-markets/premier+league.jpg",
+   "status": "active",
+   "openTime": "2026-10-18T04:00:24.000Z",
+   "closeTime": "2026-10-31T15:00:00.000Z",
+   "marketCount": 3,
+   "totalVolume": 11456.936933,
+   "volumeUnit": "usd",
+   "totalLiquidity": 285043.8927,
+   "markets": [
+    {
+     "id": "0xab7ed6e432b829f9468d9dae51316dde0897c01676262d9a19f947e3b84c4149",
+     "platform": "polymarket",
+     "eventId": "1209112",
+     "question": "Will Coventry City FC win on 2026-10-31?",
+     "description": "In the upcoming game, scheduled for October 31, 2026\nIf Coventry City FC wins, this market will resolve to \"Yes\".\nOtherwise, this market will resolve to \"No\".\nIf the game is postponed, this market will remain open until the game has been completed.\nIf the game is canceled entirely, with no make-up game, this market will resolve \"No\".\nThis market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.\n\nThe primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, data from Flashscore may be used; if Flashscore data is unavailable, data from Sofascore may be used; if neither is available, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome. If no acceptable data is available within 24 hours of the event's conclusion, this market will resolve 50-50, or to \"Draw\" where applicable.",
+     "category": "Sports",
+     "tags": [
+      "sports",
+      "games",
+      "soccer",
+      "premier-league",
+      "EPL"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/Repetitive-markets/premier+league.jpg",
+     "status": "active",
+     "openTime": "2026-10-18T00:00:00.000Z",
+     "closeTime": "2026-10-31T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "YES",
+       "price": 0.305,
+       "tokenId": "74647152902131616377049014046050201440980588855645094860218593866642350853078"
+      },
+      {
+       "name": "NO",
+       "price": 0.695,
+       "tokenId": "45441980282223109391240530082243137627136915964636685782033645356920512184098"
+      }
+     ],
+     "volume": 5054.2614730000005,
+     "volumeUnit": "usd",
+     "liquidity": 76003.251,
+     "resolution": null,
+     "createdAt": "2026-10-18T04:00:15.017Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0xab7ed6e432b829f9468d9dae51316dde0897c01676262d9a19f947e3b84c4149",
+      "url": "https://polymarket.com/event/epl-cov-sun-2026-10-31"
+     }
+    },
+    {
+     "id": "0xcbeacc5403115783dbba9421970f57db6a50b29a52bfdb4228bb5629e2200ffd",
+     "platform": "polymarket",
+     "eventId": "1209112",
+     "question": "Will Coventry City FC vs. Sunderland AFC end in a draw?",
+     "description": "In the upcoming game, scheduled for October 31, 2026\nIf the game ends in a draw, this market will resolve to \"Yes\".\nOtherwise, this market will resolve to \"No\".\nIf the game is postponed, this market will remain open until the game has been completed.\nIf the game is canceled entirely, with no make-up game, this market will resolve to \"Yes\".\nThis market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.\n\nThe primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, data from Flashscore may be used; if Flashscore data is unavailable, data from Sofascore may be used; if neither is available, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome. If no acceptable data is available within 24 hours of the event's conclusion, this market will resolve 50-50, or to \"Draw\" where applicable.",
+     "category": "Sports",
+     "tags": [
+      "sports",
+      "games",
+      "soccer",
+      "premier-league",
+      "EPL"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/Repetitive-markets/premier+league.jpg",
+     "status": "active",
+     "openTime": "2026-10-18T00:00:00.000Z",
+     "closeTime": "2026-10-31T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "YES",
+       "price": 0.285,
+       "tokenId": "54305899642569761657543951330181623522002665149421868484750422265817138615532"
+      },
+      {
+       "name": "NO",
+       "price": 0.715,
+       "tokenId": "57967054376869189379942327644400321536056600630874670743447892342806952721440"
+      }
+     ],
+     "volume": 1978.3641169999999,
+     "volumeUnit": "usd",
+     "liquidity": 130837.525,
+     "resolution": null,
+     "createdAt": "2026-10-18T04:00:15.173Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0xcbeacc5403115783dbba9421970f57db6a50b29a52bfdb4228bb5629e2200ffd",
+      "url": "https://polymarket.com/event/epl-cov-sun-2026-10-31"
+     }
+    },
+    {
+     "id": "0xbe9ad70d8a3ca20caa2cde55552ae1e8f67ebea93aa127155658c8b9505d9ffc",
+     "platform": "polymarket",
+     "eventId": "1209112",
+     "question": "Will Sunderland AFC win on 2026-10-31?",
+     "description": "In the upcoming game, scheduled for October 31, 2026\nIf Sunderland AFC wins, this market will resolve to \"Yes\".\nOtherwise, this market will resolve to \"No\".\nIf the game is postponed, this market will remain open until the game has been completed.\nIf the game is canceled entirely, with no make-up game, this market will resolve \"No\".\nThis market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.\n\nThe primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, data from Flashscore may be used; if Flashscore data is unavailable, data from Sofascore may be used; if neither is available, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome. If no acceptable data is available within 24 hours of the event's conclusion, this market will resolve 50-50, or to \"Draw\" where applicable.",
+     "category": "Sports",
+     "tags": [
+      "sports",
+      "games",
+      "soccer",
+      "premier-league",
+      "EPL"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/Repetitive-markets/premier+league.jpg",
+     "status": "active",
+     "openTime": "2026-10-18T00:00:00.000Z",
+     "closeTime": "2026-10-31T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "YES",
+       "price": 0.415,
+       "tokenId": "29054547522495283049679292669303294022096454226991914101249123108739056362042"
+      },
+      {
+       "name": "NO",
+       "price": 0.585,
+       "tokenId": "30141081825517153623079222745878088347053655838460792920589631478195337171121"
+      }
+     ],
+     "volume": 4424.311343,
+     "volumeUnit": "usd",
+     "liquidity": 78203.1167,
+     "resolution": null,
+     "createdAt": "2026-10-18T04:00:15.332Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0xbe9ad70d8a3ca20caa2cde55552ae1e8f67ebea93aa127155658c8b9505d9ffc",
+      "url": "https://polymarket.com/event/epl-cov-sun-2026-10-31"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "epl-cov-sun-2026-10-31",
+    "url": "https://polymarket.com/event/epl-cov-sun-2026-10-31"
+   }
+  },
+  {
+   "id": "1209135",
+   "platform": "polymarket",
+   "title": "Manchester City FC vs. Brighton & Hove Albion FC",
+   "description": "This event is for the upcoming Premier League game, scheduled for Saturday, October 31, 2026 between Manchester City FC and Brighton & Hove Albion FC.",
+   "category": "Sports",
+   "tags": [
+    "sports",
+    "games",
+    "soccer",
+    "premier-league",
+    "EPL"
+   ],
+   "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/Repetitive-markets/premier+league.jpg",
+   "status": "active",
+   "openTime": "2026-10-18T04:00:30.000Z",
+   "closeTime": "2026-10-31T15:00:00.000Z",
+   "marketCount": 3,
+   "totalVolume": 22926.198112,
+   "volumeUnit": "usd",
+   "totalLiquidity": 275085.1976,
+   "markets": [
+    {
+     "id": "0xca1390ebe138f4c2d052b570ec3167d1592ea0e31e0ccaa425385f24a99196b3",
+     "platform": "polymarket",
+     "eventId": "1209135",
+     "question": "Will Manchester City FC win on 2026-10-31?",
+     "description": "In the upcoming game, scheduled for October 31, 2026\nIf Manchester City FC wins, this market will resolve to \"Yes\".\nOtherwise, this market will resolve to \"No\".\nIf the game is postponed, this market will remain open until the game has been completed.\nIf the game is canceled entirely, with no make-up game, this market will resolve \"No\".\nThis market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.\n\nThe primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, data from Flashscore may be used; if Flashscore data is unavailable, data from Sofascore may be used; if neither is available, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome. If no acceptable data is available within 24 hours of the event's conclusion, this market will resolve 50-50, or to \"Draw\" where applicable.",
+     "category": "Sports",
+     "tags": [
+      "sports",
+      "games",
+      "soccer",
+      "premier-league",
+      "EPL"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/Repetitive-markets/premier+league.jpg",
+     "status": "active",
+     "openTime": "2026-10-18T00:00:00.000Z",
+     "closeTime": "2026-10-31T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "YES",
+       "price": 0.595,
+       "tokenId": "70643168695352331628859643545797103428052773564724041626328118889047522809081"
+      },
+      {
+       "name": "NO",
+       "price": 0.405,
+       "tokenId": "46103138124807222988368747699018366887325664789505067847216734645265540633572"
+      }
+     ],
+     "volume": 18229.626329,
+     "volumeUnit": "usd",
+     "liquidity": 86845.427,
+     "resolution": null,
+     "createdAt": "2026-10-18T04:00:22.220Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0xca1390ebe138f4c2d052b570ec3167d1592ea0e31e0ccaa425385f24a99196b3",
+      "url": "https://polymarket.com/event/epl-mac-bri-2026-10-31"
+     }
+    },
+    {
+     "id": "0x5e512c915faa9b874f47d8d25352247909b22b049148977e40d89a846bc9a39c",
+     "platform": "polymarket",
+     "eventId": "1209135",
+     "question": "Will Manchester City FC vs. Brighton & Hove Albion FC end in a draw?",
+     "description": "In the upcoming game, scheduled for October 31, 2026\nIf the game ends in a draw, this market will resolve to \"Yes\".\nOtherwise, this market will resolve to \"No\".\nIf the game is postponed, this market will remain open until the game has been completed.\nIf the game is canceled entirely, with no make-up game, this market will resolve to \"Yes\".\nThis market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.\n\nThe primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, data from Flashscore may be used; if Flashscore data is unavailable, data from Sofascore may be used; if neither is available, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome. If no acceptable data is available within 24 hours of the event's conclusion, this market will resolve 50-50, or to \"Draw\" where applicable.",
+     "category": "Sports",
+     "tags": [
+      "sports",
+      "games",
+      "soccer",
+      "premier-league",
+      "EPL"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/Repetitive-markets/premier+league.jpg",
+     "status": "active",
+     "openTime": "2026-10-18T00:00:00.000Z",
+     "closeTime": "2026-10-31T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "YES",
+       "price": 0.215,
+       "tokenId": "110533557942371846932277632204285606886350638358594755892357435661536547349159"
+      },
+      {
+       "name": "NO",
+       "price": 0.785,
+       "tokenId": "26721530037989009121927693334442531491093481638264934936191699560304290095142"
+      }
+     ],
+     "volume": 1657.05637,
+     "volumeUnit": "usd",
+     "liquidity": 99321.6732,
+     "resolution": null,
+     "createdAt": "2026-10-18T04:00:22.380Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0x5e512c915faa9b874f47d8d25352247909b22b049148977e40d89a846bc9a39c",
+      "url": "https://polymarket.com/event/epl-mac-bri-2026-10-31"
+     }
+    },
+    {
+     "id": "0x67075a4ddf0e75dc9400b356a28b688f2418fb2dbd89ab6e6a612dcf839717b7",
+     "platform": "polymarket",
+     "eventId": "1209135",
+     "question": "Will Brighton & Hove Albion FC win on 2026-10-31?",
+     "description": "In the upcoming game, scheduled for October 31, 2026\nIf Brighton & Hove Albion FC wins, this market will resolve to \"Yes\".\nOtherwise, this market will resolve to \"No\".\nIf the game is postponed, this market will remain open until the game has been completed.\nIf the game is canceled entirely, with no make-up game, this market will resolve \"No\".\nThis market refers only to the outcome within the first 90 minutes of regular play plus stoppage time.\n\nThe primary resolution source for this market is the official statistics of the event as recognized by the governing body or event organizers. However, if the governing body or event organizers have not published final match statistics within 2 hours after the event's conclusion, data from Flashscore may be used; if Flashscore data is unavailable, data from Sofascore may be used; if neither is available, a consensus of credible reporting may be used instead. All markets will settle based on the official final result as recognized by the governing body or event organizers. Revisions to officially declared final scores made after market resolution will not be accounted for in determining the outcome. If no acceptable data is available within 24 hours of the event's conclusion, this market will resolve 50-50, or to \"Draw\" where applicable.",
+     "category": "Sports",
+     "tags": [
+      "sports",
+      "games",
+      "soccer",
+      "premier-league",
+      "EPL"
+     ],
+     "imageUrl": "https://polymarket-upload.s3.us-east-2.amazonaws.com/Repetitive-markets/premier+league.jpg",
+     "status": "active",
+     "openTime": "2026-10-18T00:00:00.000Z",
+     "closeTime": "2026-10-31T00:00:00.000Z",
+     "settleTime": null,
+     "outcomes": [
+      {
+       "name": "YES",
+       "price": 0.195,
+       "tokenId": "101592447595007122790714206938755203449916634636488773113674799189240345007935"
+      },
+      {
+       "name": "NO",
+       "price": 0.805,
+       "tokenId": "31038705798540738040409754828480513505441479785279004737463571078315746297566"
+      }
+     ],
+     "volume": 3039.515413,
+     "volumeUnit": "usd",
+     "liquidity": 88918.0974,
+     "resolution": null,
+     "createdAt": "2026-10-18T04:00:22.528Z",
+     "source": {
+      "platform": "polymarket",
+      "platformId": "0x67075a4ddf0e75dc9400b356a28b688f2418fb2dbd89ab6e6a612dcf839717b7",
+      "url": "https://polymarket.com/event/epl-mac-bri-2026-10-31"
+     }
+    }
+   ],
+   "source": {
+    "platform": "polymarket",
+    "platformId": "epl-mac-bri-2026-10-31",
+    "url": "https://polymarket.com/event/epl-mac-bri-2026-10-31"
+   }
+  }
+ ],
+ "pagination": {
+  "pageSize": 3
+ }
+}

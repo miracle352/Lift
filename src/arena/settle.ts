@@ -28,31 +28,43 @@ export async function settleDue(deps: ArenaDeps, opts: { resolved?: FastMarket[]
     .where(and(isNull(arenaMarkets.resolution), lte(arenaMarkets.closeTime, new Date(now - SETTLE_DELAY_MS)), inArray(arenaRounds.status, ['locked', 'sealed'])));
   if (!open.length) return { resolvedMarkets: 0, episodes: 0, lessons: 0 };
 
-  // Credit discipline: one resolved-feed call covers ~2.5 h of windows, so call it at most every 25 min,
-  // and only once the oldest pending market closed 10+ min ago (Tatum shows resolutions ~5–10 min after close).
-  if (!opts.resolved) {
-    const oldest = Math.min(...open.map((o) => o.arena_markets.closeTime.getTime()));
-    if (now - oldest < 10 * 60_000) return { resolvedMarkets: 0, episodes: 0, lessons: 0 };
+  // Credit discipline: one resolved-feed call covers ~2.5 h of 15-minute windows, so call it at most every 25 min,
+  // and only once the oldest pending crypto market closed 10+ min ago (Tatum shows resolutions ~5–10 min after close).
+  const crypto = open.filter((o) => o.arena_markets.roundId.startsWith('15m:'));
+  let feed: FastMarket[] = opts.resolved ?? [];
+  if (!opts.resolved && crypto.length) {
+    const oldest = Math.min(...crypto.map((o) => o.arena_markets.closeTime.getTime()));
     const [last] = await deps.db
       .select({ at: tatumCalls.at })
       .from(tatumCalls)
       .where(and(like(tatumCalls.path, '%status=resolved%'), gte(tatumCalls.at, new Date(now - 25 * 60_000))))
       .limit(1);
-    if (last) return { resolvedMarkets: 0, episodes: 0, lessons: 0 };
+    if (now - oldest >= 10 * 60_000 && !last) feed = await fetchResolved15m(deps.tatum);
   }
-  const feed = opts.resolved ?? (await fetchResolved15m(deps.tatum));
   const byCondition = new Map(feed.filter((m) => m.resolution).map((m) => [m.conditionId, m]));
-  // Markets older than the feed window (worker was down): one targeted lookup each.
+  // Targeted lookups (one call per market, at most every 30 min each): football matches from kickoff + 2 h,
+  // and crypto markets that fell out of the feed window (worker was down for 3 h+).
   for (const { arena_markets: m } of open) {
-    if (byCondition.has(m.conditionId) || now - m.closeTime.getTime() < 3 * 3600_000) continue;
+    if (byCondition.has(m.conditionId)) continue;
+    const football = !m.roundId.startsWith('15m:');
+    if (now - m.closeTime.getTime() < (football ? 2 : 3) * 3600_000) continue;
+    const [recent] = await deps.db
+      .select({ at: tatumCalls.at })
+      .from(tatumCalls)
+      .where(and(like(tatumCalls.path, `/markets/${m.conditionId}%`), gte(tatumCalls.at, new Date(now - 30 * 60_000))))
+      .limit(1);
+    if (recent) continue;
     try {
       const pm = await deps.tatum.market(m.conditionId);
       const out = pm.resolution?.outcome?.toUpperCase();
-      if (out === 'UP' || out === 'DOWN') byCondition.set(m.conditionId, { conditionId: m.conditionId, resolution: out, resolvedSource: pm.resolution?.source ?? null } as FastMarket);
+      // football markets resolve YES/NO; stored as UP/DOWN (UP = the market's question came true)
+      const mapped = out === 'UP' || out === 'YES' ? 'UP' : out === 'DOWN' || out === 'NO' ? 'DOWN' : null;
+      if (mapped) byCondition.set(m.conditionId, { conditionId: m.conditionId, resolution: mapped, resolvedSource: pm.resolution?.source ?? null } as FastMarket);
     } catch (err) {
       deps.log('market lookup failed', { conditionId: m.conditionId, err: String(err) });
     }
   }
+  if (!byCondition.size) return { resolvedMarkets: 0, episodes: 0, lessons: 0 };
 
   let resolvedMarkets = 0;
   let episodes = 0;

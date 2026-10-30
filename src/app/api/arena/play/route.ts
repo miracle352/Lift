@@ -1,11 +1,11 @@
 import { connection } from 'next/server';
-import { openRound } from '@/arena/humans';
+import { openMatches, openRound } from '@/arena/humans';
 import { handle } from '@/arena/web';
 import { getDb } from '@/db/client';
 
 
-/** The round you can play now (markets without prices: call blind first), or { round: null }. */
+/** What you can play now: the open crypto round and upcoming football matches (no prices: call blind first). */
 export async function GET() {
   await connection();
-  return handle(async () => ({ round: await openRound(getDb(), Date.now()) }));
+  return handle(async () => ({ round: await openRound(getDb(), Date.now()), matches: await openMatches(getDb(), Date.now()) }));
 }

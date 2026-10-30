@@ -1,5 +1,5 @@
 import { createHash, randomBytes, randomUUID } from 'node:crypto';
-import { and, asc, desc, eq, inArray, isNotNull, lt } from 'drizzle-orm';
+import { and, asc, desc, eq, gt, inArray, isNotNull, like, lt } from 'drizzle-orm';
 import { verifySeal } from '@/core/evidence';
 import { canonicalJson } from '@/core/hash';
 import { adviceContentHash, buildForecast, forecastHash, ForecastV1 } from '@/core/forecast';
@@ -63,7 +63,7 @@ export async function openRound(db: Db, nowMs: number) {
   const [r] = await db
     .select()
     .from(arenaRounds)
-    .where(and(eq(arenaRounds.status, 'locked')))
+    .where(and(eq(arenaRounds.status, 'locked'), like(arenaRounds.id, '15m:%')))
     .orderBy(desc(arenaRounds.closeTime))
     .limit(1);
   if (!r || nowMs >= r.closeTime.getTime() - BLIND_CUTOFF_MS) return null;
@@ -80,6 +80,24 @@ export async function openRound(db: Db, nowMs: number) {
   };
 }
 
+/** Football matches you can play now (blind calls close 2 min before kickoff). No prices: call blind first. */
+export async function openMatches(db: Db, nowMs: number) {
+  const rounds = await db
+    .select()
+    .from(arenaRounds)
+    .where(and(eq(arenaRounds.status, 'locked'), like(arenaRounds.id, 'fb:%'), gt(arenaRounds.closeTime, new Date(nowMs + BLIND_CUTOFF_MS))))
+    .orderBy(asc(arenaRounds.closeTime));
+  const out = [];
+  for (const r of rounds) {
+    const [m] = await db.select().from(arenaMarkets).where(eq(arenaMarkets.roundId, r.id));
+    if (!m) continue;
+    const f = JSON.parse(m.featuresJson) as { league: string; title: string };
+    const advisors = await db.select({ id: arenaTakes.advisorId, name: arenaTakes.advisorName }).from(arenaTakes).where(eq(arenaTakes.marketId, m.id));
+    out.push({ roundId: r.id, asset: 'match', league: f.league, title: f.title, question: m.question, kickoff: r.closeTime.toISOString(), url: m.url, advisors });
+  }
+  return out;
+}
+
 async function marketFor(db: Db, roundId: string, asset: string, nowMs: number, cutoffMs: number) {
   const [m] = await db.select().from(arenaMarkets).where(and(eq(arenaMarkets.roundId, roundId), eq(arenaMarkets.asset, asset)));
   if (!m) throw new PlayError('no such market in this round', 404);
@@ -88,6 +106,9 @@ async function marketFor(db: Db, roundId: string, asset: string, nowMs: number, 
   if (nowMs >= m.closeTime.getTime() - cutoffMs) throw new PlayError('too late for this market', 409);
   return m;
 }
+
+/** Crypto windows ask "UP?"; football matches ask "will the home team win?" (YES). */
+const outcomeOf = (m: typeof arenaMarkets.$inferSelect) => (m.asset === 'match' ? 'YES' : 'UP');
 
 const refOf = (m: typeof arenaMarkets.$inferSelect) => ({ platform: 'polymarket' as const, id: m.conditionId, question: m.question, rulesHash: m.rulesHash, closeTime: m.closeTime.toISOString() });
 
@@ -109,7 +130,7 @@ export async function playBlind(deps: ArenaDeps, playerId: string, input: { roun
   const agentId = humanAgentId(playerId);
   const [dup] = await deps.db.select().from(arenaForecasts).where(and(eq(arenaForecasts.marketId, m.id), eq(arenaForecasts.agentId, agentId), eq(arenaForecasts.kind, 'blind')));
   if (dup) throw new PlayError('you already locked a blind call on this market', 409);
-  const f = buildForecast({ kind: 'blind', user: agentId, market: refOf(m), outcome: 'UP', probabilityBps: input.probabilityBps, createdAt: new Date(deps.now()).toISOString() });
+  const f = buildForecast({ kind: 'blind', user: agentId, market: refOf(m), outcome: outcomeOf(m), probabilityBps: input.probabilityBps, createdAt: new Date(deps.now()).toISOString() });
   await deps.db.insert(arenaForecasts).values({ hash: forecastHash(f), roundId: m.roundId, marketId: m.id, agentId, kind: 'blind', probabilityBps: f.probabilityBps, forecastJson: canonicalJson(f), sealNamespace: sealNamespaceFor(f), sealStatus: 'queued' });
   const sealed = await sealOne(deps, f);
   await event(deps, m.roundId, 'human_blind', { asset: m.asset, hash: sealed.hash }, { agentId });
@@ -162,7 +183,7 @@ export async function playInformed(deps: ArenaDeps, playerId: string, input: { r
     kind: 'informed',
     user: agentId,
     market: refOf(m),
-    outcome: 'UP',
+    outcome: outcomeOf(m),
     probabilityBps: input.probabilityBps,
     prev: blind.hash,
     advice: { advisorId: t.advisorId, advisorKind: 'agent', contentHash: adviceContentHash(shown), fairTest: p.fairTest },
