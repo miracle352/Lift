@@ -1,5 +1,7 @@
 'use client';
 import { useEffect, useState } from 'react';
+import type { CSSProperties } from 'react';
+import { CountUp } from './motion';
 import { advisorName, agentName, usd, VERDICT } from './names';
 
 interface Leaderboard {
@@ -42,7 +44,7 @@ export function Earnings() {
   const rows = [...lb.advisors].filter((a) => a.sold > 0).sort((a, b) => b.releasedMicros - a.releasedMicros);
   const max = Math.max(1, ...rows.map((a) => a.releasedMicros + a.refundedMicros));
   return (
-    <table className="a-earn">
+    <table className="a-earn" data-m>
       <thead>
         <tr>
           <th>Advisor</th>
@@ -51,8 +53,8 @@ export function Earnings() {
         </tr>
       </thead>
       <tbody>
-        {rows.map((a) => (
-          <tr key={a.id}>
+        {rows.map((a, i) => (
+          <tr key={a.id} style={{ '--i': i } as CSSProperties}>
             <td style={{ paddingRight: 16 }}>
               <div className="a-name">
                 {a.name}
@@ -82,14 +84,14 @@ export function VerdictGrid() {
   if (!lb) return null;
   const advisorIds = lb.advisors.filter((a) => a.sold > 0).map((a) => a.id);
   return (
-    <div className="a-grid" style={{ gridTemplateColumns: `minmax(120px, 1.2fr) repeat(${advisorIds.length}, minmax(92px, 1fr))` }} role="table" aria-label="Verdicts by agent and advisor">
+    <div className="a-grid" data-m style={{ gridTemplateColumns: `minmax(120px, 1.2fr) repeat(${advisorIds.length}, minmax(92px, 1fr))` }} role="table" aria-label="Verdicts by agent and advisor">
       <div className="a-cell h" role="columnheader" />
       {advisorIds.map((id) => (
         <div key={id} className="a-cell h" role="columnheader">
           {advisorName(id)}
         </div>
       ))}
-      {lb.agents.map((ag) => (
+      {lb.agents.map((ag, r) => (
         <div key={ag.id} style={{ display: 'contents' }} role="row">
           <div className="a-cell h" role="rowheader">
             {agentName(ag.id)}
@@ -97,11 +99,11 @@ export function VerdictGrid() {
               {ag.episodes} calls
             </span>
           </div>
-          {advisorIds.map((id) => {
+          {advisorIds.map((id, c) => {
             const s = ag.advisors.find((x) => x.advisorId === id);
             const v = s?.verdict ?? 'not_enough_evidence';
             return (
-              <div key={id} className={`a-cell ${v}`} role="cell">
+              <div key={id} className={`a-cell ${v}`} role="cell" style={{ '--i': r * advisorIds.length + c } as CSSProperties}>
                 <span className="v">{VERDICT[v]}</span>
                 <span className="n">
                   n={s?.n ?? 0} · trust {s ? s.trust.toFixed(2) : '–'}
@@ -119,9 +121,9 @@ export function Lessons() {
   const lb = useJson<Leaderboard>('/api/arena/leaderboard');
   if (!lb) return null;
   return (
-    <ul className="a-lessons">
-      {lb.lessons.slice(0, 6).map((l) => (
-        <li key={`${l.agentId}${l.advisorId}${l.at}`} className="a-lesson">
+    <ul className="a-lessons" data-m>
+      {lb.lessons.slice(0, 6).map((l, i) => (
+        <li key={`${l.agentId}${l.advisorId}${l.at}`} className="a-lesson" style={{ '--i': i } as CSSProperties}>
           {l.text.split(' [[')[0]}
           <small>
             {new Date(l.at).toUTCString().slice(5, 22)} UTC ·{' '}
@@ -151,7 +153,7 @@ export function StatsStrip() {
     <div className="a-stats">
       {items.map(([n, label]) => (
         <div key={label} className="a-stat">
-          <b>{n === undefined ? '—' : n.toLocaleString('en-US')}</b>
+          <b>{n === undefined ? '—' : <CountUp to={n} />}</b>
           <span>{label}</span>
         </div>
       ))}

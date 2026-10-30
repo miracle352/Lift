@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
 import './arena.css';
+import { MotionRoot } from '@/components/arena/motion';
 
 // Self-hosted variable fonts (SIL OFL): no network at build time, no layout shift.
 const inter = localFont({
@@ -54,7 +55,10 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
       <head>
         <script dangerouslySetInnerHTML={{ __html: revealScript }} />
       </head>
-      <body className="a-body min-h-full">{children}</body>
+      <body className="a-body min-h-full">
+        {children}
+        <MotionRoot />
+      </body>
     </html>
   );
 }

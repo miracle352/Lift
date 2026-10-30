@@ -3,6 +3,8 @@ import { Earnings, Lessons, StatsStrip, VerdictGrid } from '@/components/arena/b
 import { HeroVideo } from '@/components/arena/hero-video';
 import { LivePrinter } from '@/components/arena/live-printer';
 import { Nav, Foot } from '@/components/arena/chrome';
+import { Tilt, Words } from '@/components/arena/motion';
+import { Ticker } from '@/components/arena/ticker';
 
 export default function Home() {
   return (
@@ -31,35 +33,38 @@ export default function Home() {
                 </a>
               </div>
             </div>
-            <LivePrinter />
+            <Tilt>
+              <LivePrinter />
+            </Tilt>
           </div>
         </section>
+        <Ticker />
 
         <section className="a-sec" id="how">
           <div className="a-wrap">
-            <h2 className="a-h2">One round, start to finish</h2>
+            <Words className="a-h2" text="One round, start to finish" />
             <p className="a-p">
               Every hour the arena takes the eight Polymarket crypto markets that close at the top of the hour. On weekends it adds the big
               football matches. The same five steps run every time.
             </p>
-            <ol className="a-steps">
-              <li>
+            <ol className="a-steps" data-m>
+              <li style={{ ["--i" as string]: 0 }}>
                 <h3>Call it blind</h3>
                 <p>Each player says how likely UP is, before seeing any price or tip. The call is sealed on Walrus.</p>
               </li>
-              <li>
+              <li style={{ ["--i" as string]: 1 }}>
                 <h3>Buy one take</h3>
                 <p>Agents pay over MPP in USDC on Sui. The money sits with the arena, not the advisor.</p>
               </li>
-              <li>
+              <li style={{ ["--i" as string]: 2 }}>
                 <h3>Call it again</h3>
                 <p>The second call is sealed too, linked to the first and to the exact take that was read.</p>
               </li>
-              <li>
+              <li style={{ ["--i" as string]: 3 }}>
                 <h3>The market settles</h3>
                 <p>Tatum reports the result. Both calls get a Brier score, so you see what the advice did.</p>
               </li>
-              <li className="is-key">
+              <li className="is-key" style={{ ["--i" as string]: 4 }}>
                 <h3>Paid or refunded</h3>
                 <p>Advice that improved the call is paid. Advice that didn’t goes back to the buyer.</p>
               </li>
@@ -70,7 +75,7 @@ export default function Home() {
         <section className="a-sec" id="paid">
           <div className="a-wrap a-split">
             <div>
-              <h2 className="a-h2">Who’s getting paid</h2>
+              <Words className="a-h2" text="Who’s getting paid" />
               <p className="a-p">
                 Seven advisors are plain code, from Polymarket’s own price to a tipster who calls everything with total confidence. One more
                 was added by an outside developer. Nobody here is paid for being loud, only for making someone’s next call better.
@@ -86,7 +91,7 @@ export default function Home() {
         <section className="a-sec" id="memory">
           <div className="a-wrap a-split">
             <div>
-              <h2 className="a-h2">What the agents remember</h2>
+              <Words className="a-h2" text="What the agents remember" />
               <p className="a-p">
                 When an agent changes its mind about an advisor, it writes a lesson to its own Walrus Memory. Before it buys anything, it
                 recalls those lessons. That is why it stops paying the tipster. Wipe the database and the agents can rebuild themselves from
@@ -103,7 +108,7 @@ export default function Home() {
         <section className="a-sec" id="sell">
           <div className="a-wrap a-split">
             <div>
-              <h2 className="a-h2">Sell your advice</h2>
+              <Words className="a-h2" text="Sell your advice" />
               <p className="a-p">
                 Point the arena at a web address that returns a probability. Your takes are sealed before anyone reads them, agents can buy
                 them, and your Sui wallet is paid each time your take made a buyer’s call better.

@@ -92,7 +92,8 @@ export function LivePrinter() {
   const [live, setLive] = useState(false);
   const [fresh, setFresh] = useState<ReadonlySet<number>>(new Set());
   useEffect(() => {
-    const es = new EventSource('/api/arena/feed?tail=24');
+    // On Vercel the live stream connects straight to the arena server (long-lived streams don't suit proxies)
+    const es = new EventSource(`${process.env.NEXT_PUBLIC_ARENA_API_ORIGIN ?? ''}/api/arena/feed?tail=24`);
     es.onopen = () => setLive(true);
     es.onerror = () => setLive(false);
     const onEvent = (m: MessageEvent) => {
@@ -131,7 +132,7 @@ export function LivePrinter() {
                 <span key={x.id} style={{ marginRight: 10, whiteSpace: 'nowrap' }}>
                   {ASSET[String(x.payload.asset)] ?? String(x.payload.asset)} <b>{x.payload.asset === 'match' ? (up(x) ? 'home win' : 'no home win') : up(x) ? '↑' : '↓'}</b>
                 </span>
-              ))}
+              )).flatMap((s, i) => (i ? [' ', s] : [s]))}
             </>
           ),
         },

@@ -179,3 +179,67 @@
   .a-paper { transition: none; }
   .a-ln-new { animation: none; }
 }
+
+/* ================= motion ================= */
+/* hero: headline lines feed out of the printer slot one by one, on load */
+.a-h1 span { clip-path: inset(0 0 0 0); animation: m-feed 1.1s var(--ease) both; }
+.a-h1 span:nth-child(2) { animation-delay: 0.18s; }
+.a-h1 span:nth-child(3) { animation-delay: 0.36s; }
+@keyframes m-feed { from { clip-path: inset(100% 0 0 0); transform: translateY(0.35em); } to { clip-path: inset(0 0 0 0); transform: none; } }
+.a-lede, .a-ctas { animation: m-rise 0.9s var(--ease) 0.6s both; }
+@keyframes m-rise { from { opacity: 0; transform: translateY(14px); } }
+.a-printer { animation: m-rise 1s var(--ease) 0.4s both; }
+/* the print head: an amber line sweeps across the outlined line once */
+.a-h1 .a-out { position: relative; }
+.a-h1 .a-out::after { content: ''; position: absolute; left: 0; right: 0; top: 52%; height: 3px; background: var(--amber); box-shadow: 0 0 18px var(--amber); transform: scaleX(0); transform-origin: left; animation: m-head 1.6s var(--ease) 0.9s both; }
+@keyframes m-head { 0% { transform: scaleX(0); opacity: 1; } 70% { transform: scaleX(1); opacity: 1; } 100% { transform: scaleX(1); opacity: 0; } }
+.m-tilt { transition: transform 0.6s var(--ease); will-change: transform; }
+
+/* scroll-linked: the footage sinks and darkens as you leave the hero (browsers with scroll timelines) */
+@supports (animation-timeline: scroll()) {
+  .a-hero-media { animation: m-sink linear both; animation-timeline: scroll(root); animation-range: 0 100vh; }
+  @keyframes m-sink { to { transform: translateY(18vh) scale(1.06); filter: brightness(0.45); } }
+}
+
+/* ticker */
+.a-ticker { height: 54px; border-block: 1px solid var(--rule); overflow: hidden; background: var(--deck-2); display: flex; align-items: center; }
+.a-ticker-track { display: flex; gap: 56px; white-space: nowrap; animation: m-tick 60s linear infinite; padding-left: 56px; font-family: var(--d); font-weight: 600; font-size: 22px; color: var(--mist); }
+.a-ticker-track span::before { content: '■'; color: var(--amber); font-size: 10px; margin-right: 14px; vertical-align: 4px; }
+@keyframes m-tick { to { transform: translateX(-50%); } }
+.a-ticker:hover .a-ticker-track { animation-play-state: paused; }
+
+/* headings: words rise out of a mask */
+.m-words .m-w { display: inline-block; overflow: hidden; vertical-align: top; padding-bottom: 0.06em; }
+.m-words .m-w > span { display: inline-block; }
+.m-ready .m-words .m-w > span { transform: translateY(105%); transition: transform 0.9s var(--ease); transition-delay: calc(var(--i) * 70ms); }
+.m-ready .m-words.on .m-w > span { transform: none; }
+
+/* steps: the paper tape runs across, numbers drop in */
+.a-steps { position: relative; }
+.a-steps::before { content: ''; position: absolute; left: 0; right: 0; top: 0; height: 2px; background: var(--amber); transform: scaleX(0); transform-origin: left; transition: transform 1.8s var(--ease); z-index: 1; }
+.a-steps.on::before { transform: scaleX(1); }
+.m-ready .a-steps li { opacity: 0; transform: translateY(24px); transition: opacity 0.6s, transform 0.8s var(--ease); transition-delay: calc(var(--i) * 140ms + 200ms); }
+.m-ready .a-steps.on li { opacity: 1; transform: none; }
+
+/* earnings bars grow from zero */
+.m-ready .a-earn .a-bar { transform: scaleX(0); transform-origin: left; transition: transform 1.2s var(--ease); transition-delay: calc(var(--i) * 90ms); }
+.m-ready .a-earn.on .a-bar { transform: scaleX(1); }
+
+/* verdict grid: split-flap flip, cell by cell */
+.a-grid { perspective: 900px; }
+.m-ready .a-grid .a-cell:not(.h) { transform: rotateX(90deg); transform-origin: top; opacity: 0.2; transition: transform 0.7s var(--ease), opacity 0.4s; transition-delay: calc(var(--i) * 28ms); }
+.m-ready .a-grid.on .a-cell:not(.h) { transform: none; opacity: 1; }
+
+/* lessons slide out of a slot, one after another */
+.m-ready .a-lessons .a-lesson { clip-path: inset(0 0 100% 0); transform: translateY(-18px); transition: clip-path 0.9s var(--ease), transform 0.9s var(--ease); transition-delay: calc(var(--i) * 160ms); }
+.m-ready .a-lessons.on .a-lesson { clip-path: inset(0 0 -10px 0); transform: none; }
+
+/* buttons: the amber one glows like a lamp on hover */
+.a-btn { transition: background 0.2s, border-color 0.2s, box-shadow 0.3s, transform 0.2s; }
+.a-btn-amber:hover { box-shadow: 0 0 0 4px #f3a23a33, 0 0 30px #f3a23a55; transform: translateY(-1px); }
+
+@media (prefers-reduced-motion: reduce) {
+  .a-h1 span, .a-lede, .a-ctas, .a-printer, .a-h1 .a-out::after { animation: none !important; }
+  .a-ticker-track { animation: none; }
+  .a-hero-media { animation: none !important; }
+}
