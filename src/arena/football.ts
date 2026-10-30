@@ -60,7 +60,11 @@ export async function whaleTake(deps: ArenaDeps, conditionId: string) {
   const r = await deps.tatum.get('positions', `/markets/${conditionId}/positions?status=OPEN&sortBy=TOKENS&sortDirection=DESC&limit=5`, Positions);
   let yes = 0;
   let no = 0;
-  for (const g of r.data) for (const p of g.positions) (p.outcome?.toUpperCase() === 'YES' ? (yes += p.currentValue) : (no += p.currentValue));
+  for (const g of r.data)
+    for (const p of g.positions) {
+      if (p.outcome?.toUpperCase() === 'YES') yes += p.currentValue;
+      else no += p.currentValue;
+    }
   const p = yes + no > 0 ? 0.5 + 0.4 * ((yes - no) / (yes + no)) : 0.5;
   return { p, says: `Top holders: $${Math.round(yes).toLocaleString('en-US')} on YES vs $${Math.round(no).toLocaleString('en-US')} on NO.`, inputs: { yesUsd: Math.round(yes), noUsd: Math.round(no) } };
 }

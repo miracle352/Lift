@@ -1,5 +1,5 @@
 import { connection } from 'next/server';
-import { eventsSince } from '@/arena/queries';
+import { eventsSince, tailStart } from '@/arena/queries';
 import { getDb } from '@/db/client';
 
 export const maxDuration = 300;
@@ -10,8 +10,12 @@ export const maxDuration = 300;
  */
 export async function GET(req: Request) {
   await connection();
-  let after = Number(new URL(req.url).searchParams.get('after') ?? req.headers.get('last-event-id') ?? 0) || 0;
+  const url = new URL(req.url);
   const db = getDb();
+  let after = Number(url.searchParams.get('after') ?? req.headers.get('last-event-id') ?? 0) || 0;
+  // ?tail=N starts N events before the newest one (skipping the noisy per-purchase events)
+  const tail = Math.min(200, Number(url.searchParams.get('tail') ?? 0) || 0);
+  if (!after && tail) after = await tailStart(db, tail);
   const enc = new TextEncoder();
   const started = Date.now();
   const stream = new ReadableStream({

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import localFont from 'next/font/local';
 import './globals.css';
+import './arena.css';
 
 // Self-hosted variable fonts (SIL OFL): no network at build time, no layout shift.
 const inter = localFont({
@@ -17,16 +18,28 @@ const geistMono = localFont({
   preload: false,
 });
 
+const bsd = localFont({ src: './fonts/bigshoulders-display-var.woff2', variable: '--font-bsd', weight: '100 900', display: 'swap' });
+const bst = localFont({ src: './fonts/bigshoulders-text-var.woff2', variable: '--font-bst', weight: '100 900', display: 'swap' });
+const plex = localFont({
+  src: [
+    { path: './fonts/plexmono-400.woff2', weight: '400' },
+    { path: './fonts/plexmono-500.woff2', weight: '500' },
+    { path: './fonts/plexmono-600.woff2', weight: '600' },
+  ],
+  variable: '--font-plex',
+  display: 'swap',
+});
+
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.APP_URL ?? 'http://localhost:3000'),
-  title: { default: 'Receipts: whose advice actually makes you better', template: '%s · Receipts' },
+  title: { default: 'Receipts — advice that has to earn its fee', template: '%s · Receipts' },
   description:
-    'Lock your call before you read a tip, lock it again after, and let the results decide who is worth listening to. Every call sealed on Walrus Memory and verified through Tatum.',
+    'Agents and people make sealed calls on live Polymarket markets, buy one piece of advice, and the advisor is paid only if it made the call better. Sealed on Walrus Memory, verified through Tatum, paid in USDC on Sui.',
   openGraph: { type: 'website', siteName: 'Receipts' },
   twitter: { card: 'summary_large_image' },
 };
 
-export const viewport: Viewport = { themeColor: '#ffffff', colorScheme: 'light' };
+export const viewport: Viewport = { themeColor: '#14201f', colorScheme: 'dark' };
 
 /*
  * Scroll reveal without React: runs before paint, marks <html> so [data-reveal] starts hidden,
@@ -37,11 +50,11 @@ const revealScript = `(()=>{var d=document.documentElement;if(!('IntersectionObs
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
-    <html lang="en" className={`${inter.variable} ${geistMono.variable} h-full antialiased`} suppressHydrationWarning>
+    <html lang="en" className={`${inter.variable} ${geistMono.variable} ${bsd.variable} ${bst.variable} ${plex.variable} h-full antialiased`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: revealScript }} />
       </head>
-      <body className="min-h-full flex flex-col bg-paper text-ink">{children}</body>
+      <body className="a-body min-h-full">{children}</body>
     </html>
   );
 }

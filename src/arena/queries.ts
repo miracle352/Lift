@@ -169,3 +169,14 @@ export async function stats(db: Db, nowMs = Date.now()) {
   const [settled] = await db.select({ n: sql<number>`count(*)` }).from(arenaRounds).where(and(eq(arenaRounds.status, 'settled'), lte(arenaRounds.closeTime, new Date(nowMs))));
   return { tatumCalls: Number(c.n), tatumCredits: Number(c.credits), verifiedSeals: Number(seals.n), sealedForecasts: Number(seals.leaves), settledEpisodes: Number(eps.n), lessonsOnWalrus: Number(mem.n), settledRounds: Number(settled.n) };
 }
+
+/** Event id to resume from so that the next page holds the last `n` headline events (purchases excluded). */
+export async function tailStart(db: Db, n: number): Promise<number> {
+  const rows = await db
+    .select({ id: arenaEvents.id })
+    .from(arenaEvents)
+    .where(sql`${arenaEvents.type} not in ('take_bought','take_declined','lessons_recalled','batch_submitted')`)
+    .orderBy(desc(arenaEvents.id))
+    .limit(n);
+  return rows.length ? rows[rows.length - 1].id - 1 : 0;
+}
