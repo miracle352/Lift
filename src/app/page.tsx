@@ -38,7 +38,7 @@ export default function Home() {
 
         <section className="a-sec" id="memory">
           <div className="a-wrap a-split">
-            <div data-px="0.08">
+            <div>
               <h2 className="a-h2">The agents got better at buying advice</h2>
               <p className="a-p">
                 After every round, each agent writes what it learned about each advisor to its own Walrus Memory, and it reads those lessons
@@ -98,7 +98,7 @@ export default function Home() {
 
         <section className="a-sec" id="paid">
           <div className="a-wrap a-split">
-            <div data-px="0.08">
+            <div>
               <h2 className="a-h2">Who’s getting paid</h2>
               <p className="a-p">
                 Seven advisors are plain code, from Polymarket’s own price to a tipster who calls everything with total confidence. One more was
@@ -118,7 +118,7 @@ export default function Home() {
 
         <section className="a-sec" id="lessons">
           <div className="a-wrap a-split">
-            <div data-px="0.08">
+            <div>
               <h2 className="a-h2">What the agents remember</h2>
               <p className="a-p">
                 A lesson is written when an agent changes its mind about an advisor. Wipe the database and the agents rebuild themselves from

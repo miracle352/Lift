@@ -215,8 +215,8 @@
 /* stats */
 .a-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; margin-top: 56px; }
 .a-stat b { font-variant-numeric: tabular-nums; display: block; font-family: var(--d); font-weight: 800; font-variation-settings: 'wdth' 105; font-size: clamp(36px, 4.4vw, 60px); line-height: 1; letter-spacing: -0.03em; }
-.a-stat span { color: var(--ink-2); font-size: 15px; }
-.is-blue .a-stat span { color: var(--sky); }
+.a-stat > span { color: var(--ink-2); font-size: 15px; }
+.is-blue .a-stat > span { color: var(--sky); }
 @media (max-width: 760px) { .a-stats { grid-template-columns: 1fr 1fr; } }
 
 /* code block */
@@ -316,7 +316,7 @@
 
 /* scroll-driven: the hero content drifts up and fades as you leave it */
 @supports (animation-timeline: scroll()) {
-  .a-hero-grid { animation: hero-out linear both; animation-timeline: scroll(root); animation-range: 0 90vh; }
+  @media (min-width: 1021px) { .a-hero-grid > div:first-child { animation: hero-out linear both; animation-timeline: scroll(root); animation-range: 0 90vh; } }
   @keyframes hero-out { to { transform: translateY(-14vh); opacity: 0.15; } }
 }
 
@@ -324,15 +324,15 @@
 .m-ready .a-sec .a-h2, .m-ready .a-page .a-h2 { transition: font-variation-settings 1.2s var(--ease), opacity 0.8s, transform 1.2s var(--ease); }
 .m-ready .a-sec .a-h2:not(.on), .m-ready .a-page .a-h2:not(.on) { font-variation-settings: 'wdth' 50; opacity: 0; transform: translateY(30px); }
 @supports (animation-timeline: view()) {
-  .m-ready .a-sec .a-h2 { animation: h2-open linear both; animation-timeline: view(); animation-range: entry 0% cover 35%; transition: none; opacity: 1; transform: none; }
+  .m-ready .a-sec .a-h2 { animation: h2-open linear both; animation-timeline: view(); animation-range: entry 10% entry 90%; transition: none; opacity: 1; transform: none; }
   @keyframes h2-open { from { font-variation-settings: 'wdth' 50; letter-spacing: 0.02em; opacity: 0; transform: translateY(40px); } to { font-variation-settings: 'wdth' 112; letter-spacing: -0.03em; opacity: 1; transform: none; } }
 }
 
 /* giant marquee bands */
-.a-marquee { overflow: hidden; padding: 26px 0; border-block: 1px solid var(--line); background: var(--paper); }
+.a-marquee { overflow: hidden; padding: 34px 0 40px; border-block: 1px solid var(--line); background: var(--paper); }
 .a-marquee.is-blue { background: var(--blue); color: #fff; border: 0; }
 .a-marquee-track { display: flex; width: max-content; will-change: transform; }
-.a-marquee span { font-family: var(--d); font-weight: 800; font-variation-settings: 'wdth' 125; font-size: clamp(48px, 8vw, 128px); line-height: 1; letter-spacing: -0.03em; white-space: nowrap; display: inline-flex; align-items: center; padding-right: 0.4em; }
+.a-marquee span { font-family: var(--d); font-weight: 800; font-variation-settings: 'wdth' 125; font-size: clamp(44px, 7vw, 112px); line-height: 1.15; letter-spacing: -0.03em; white-space: nowrap; display: inline-flex; align-items: center; padding-right: 0.4em; }
 .a-marquee span i { width: 0.36em; height: 0.36em; border-radius: 50%; background: var(--gold); margin-left: 0.4em; display: inline-block; }
 .a-marquee span:nth-child(even) i { background: var(--rose); }
 .a-marquee span:nth-child(3n) { color: transparent; -webkit-text-stroke: 2px currentColor; }
@@ -341,8 +341,8 @@
 /* reveals: each block enters its own way */
 .m-ready .a-learn li { opacity: 0; transform: translateX(-40px); transition: opacity 0.7s, transform 1s var(--ease); transition-delay: calc(var(--i) * 130ms); }
 .m-ready .a-learn.on li { opacity: 1; transform: none; }
-.m-ready .a-twins { clip-path: inset(0 50% 0 50% round 10px); transition: clip-path 1.3s var(--ease); }
-.m-ready .a-twins.on { clip-path: inset(0 0 0 0 round 10px); }
+.m-ready .a-twins { opacity: 0; transform: scaleX(0.9); transition: opacity 0.6s, transform 1.2s var(--ease); }
+.m-ready .a-twins.on { opacity: 1; transform: none; }
 .m-ready .a-twin { opacity: 0; transform: translateY(30px); transition: opacity 0.6s 0.4s, transform 1s var(--ease) 0.4s; }
 .m-ready .a-twins.on .a-twin { opacity: 1; transform: none; }
 .a-chart .ln { stroke-dasharray: 2400; stroke-dashoffset: 0; }
@@ -406,3 +406,6 @@
 }
 .a-flow .vault.hit { animation: vault-hit 0.5s var(--ease); transform-box: fill-box; transform-origin: center; }
 @keyframes vault-hit { 40% { transform: scale(1.12); fill: #24308f; } }
+
+.a-earn td:first-child { min-width: 170px; }
+.a-earn .a-name { white-space: nowrap; }

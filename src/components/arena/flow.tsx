@@ -43,18 +43,18 @@ function useNarrow() {
 
 function layout(advisorIds: string[], narrow: boolean) {
   if (!narrow) {
-    const W = 1000;
-    const H = 600;
+    const W = 1100;
+    const H = 620;
     const ay = (i: number) => 90 + (i * (H - 180)) / (AGENTS.length - 1);
     const vy = (i: number, n: number) => (n === 1 ? H / 2 : 60 + (i * (H - 120)) / (n - 1));
     return {
       W,
       H,
-      vault: { x: 520, y: H / 2 },
-      agent: Object.fromEntries(AGENTS.map((id, i) => [id, { x: 190, y: ay(i) }])) as Record<string, Pt>,
-      advisor: Object.fromEntries(advisorIds.map((id, i) => [id, { x: 830, y: vy(i, advisorIds.length) }])) as Record<string, Pt>,
-      ctl: (a: Pt, b: Pt) => ({ x: (a.x + b.x) / 2, y: a.x < 520 ? a.y : b.y }),
-      label: { agent: (p: Pt) => ({ x: p.x - 18, y: p.y, anchor: 'end' as const }), advisor: (p: Pt) => ({ x: p.x + 18, y: p.y, anchor: 'start' as const }) },
+      vault: { x: 590, y: H / 2 },
+      agent: Object.fromEntries(AGENTS.map((id, i) => [id, { x: 250, y: ay(i) }])) as Record<string, Pt>,
+      advisor: Object.fromEntries(advisorIds.map((id, i) => [id, { x: 880, y: vy(i, advisorIds.length) }])) as Record<string, Pt>,
+      ctl: (a: Pt, b: Pt) => ({ x: (a.x + b.x) / 2, y: a.x < 590 ? a.y : b.y }),
+      label: { agent: (p: Pt) => ({ x: p.x - 26, y: p.y, anchor: 'end' as const }), advisor: (p: Pt) => ({ x: p.x + 26, y: p.y, anchor: 'start' as const }) },
       narrow,
     };
   }

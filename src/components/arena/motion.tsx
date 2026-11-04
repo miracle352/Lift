@@ -19,7 +19,7 @@ export function MotionRoot() {
             io.unobserve(e.target);
           }
         }),
-      { rootMargin: '0px 0px -10% 0px', threshold: 0.1 },
+      { rootMargin: '0px 0px -60px 0px', threshold: 0 },
     );
     const scan = () =>
       document.querySelectorAll('[data-m], .a-h2').forEach((el) => {
