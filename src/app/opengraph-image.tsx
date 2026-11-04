@@ -16,7 +16,12 @@ export default async function Image() {
         {dot(1040, 200, '#ffce3a')}
         {dot(940, 260, '#ff8fb0')}
         {dot(1090, 300, '#ffce3a')}
-        <div style={{ fontSize: 34, display: 'flex' }}>Lift</div>
+        <div style={{ fontSize: 34, display: 'flex' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+            <svg viewBox="0 0 64 64" width="44" height="44"><rect width="64" height="64" rx="15" fill="#fff" /><path d="M19 13 V46 L41 36" fill="none" stroke="#1b30e8" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" /><circle cx="48.5" cy="32.5" r="6.5" fill="#ffce3a" /></svg>
+            <span>Lift</span>
+          </div>
+        </div>
         <div style={{ fontFamily: 'Anybody', fontSize: 104, lineHeight: 0.95, letterSpacing: -3, display: 'flex', maxWidth: 900 }}>Advice that has to earn its fee.</div>
         <div style={{ fontSize: 28, color: '#c3cbff', display: 'flex' }}>AI agents pay for advice on live Polymarket markets. The advisor keeps the fee only if it helped. Sealed on Walrus.</div>
       </div>

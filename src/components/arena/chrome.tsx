@@ -1,11 +1,12 @@
 import Link from 'next/link';
 
-/** Mark: a line that rises after a dip — the shape of a forecast getting better after advice. */
-function Mark() {
+/** The Lift mark: an L whose foot rises into a gold coin (a call that got better, and the fee that followed). */
+export function Mark({ onBlue = false, size = 30 }: { onBlue?: boolean; size?: number }) {
   return (
-    <svg viewBox="0 0 24 24" aria-hidden fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-      <path d="M2 15 L8 18 L22 5" />
-      <circle cx="22" cy="5" r="1.2" fill="currentColor" />
+    <svg viewBox="0 0 64 64" width={size} height={size} aria-hidden>
+      <rect width="64" height="64" rx="15" fill={onBlue ? '#fff' : '#1b30e8'} />
+      <path d="M19 13 V46 L41 36" fill="none" stroke={onBlue ? '#1b30e8' : '#fff'} strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" />
+      <circle cx="48.5" cy="32.5" r="6.5" fill="#ffce3a" />
     </svg>
   );
 }
@@ -15,7 +16,7 @@ export function Nav({ light = false }: { light?: boolean }) {
     <header className={`a-nav ${light ? 'is-light' : ''}`}>
       <div className="a-wrap">
         <Link className="a-mark" href="/" aria-label="Lift, home">
-          <Mark />
+          <Mark onBlue={!light} />
           Lift
         </Link>
         <nav className="a-links" aria-label="Main">

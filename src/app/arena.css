@@ -43,7 +43,9 @@
 .a-nav.is-light { position: relative; color: var(--ink); }
 .a-nav .a-wrap { display: flex; align-items: center; justify-content: space-between; height: 84px; }
 .a-mark { font-family: var(--d); font-weight: 800; font-size: 30px; font-variation-settings: 'wdth' 130; letter-spacing: -0.02em; text-decoration: none; display: inline-flex; align-items: baseline; gap: 2px; }
-.a-mark svg { width: 20px; height: 20px; align-self: center; margin-right: 6px; }
+.a-mark { align-items: center; gap: 10px; }
+.a-mark svg { flex: none; transition: transform 0.5s var(--ease); }
+.a-mark:hover svg { transform: rotate(-8deg) scale(1.06); }
 .a-links { display: flex; gap: 30px; font-size: 16px; font-weight: 500; }
 .a-links a { text-decoration: none; opacity: 0.82; }
 .a-links a:hover { opacity: 1; text-decoration: underline; }

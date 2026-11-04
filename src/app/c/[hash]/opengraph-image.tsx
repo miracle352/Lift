@@ -40,7 +40,10 @@ export default async function Image({ params }: { params: Promise<{ hash: string
     (
       <div style={{ width: '100%', height: '100%', background: '#1b30e8', color: '#fff', display: 'flex', flexDirection: 'column', justifyContent: 'space-between', padding: 72, fontFamily: 'Schibsted' }}>
         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 30 }}>
-          <span>Lift</span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+            <svg viewBox="0 0 64 64" width="44" height="44"><rect width="64" height="64" rx="15" fill="#fff" /><path d="M19 13 V46 L41 36" fill="none" stroke="#1b30e8" strokeWidth="8" strokeLinecap="round" strokeLinejoin="round" /><circle cx="48.5" cy="32.5" r="6.5" fill="#ffce3a" /></svg>
+            <span>Lift</span>
+          </div>
           <span style={{ color: '#c3cbff' }}>sealed on Walrus before the market closed</span>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
