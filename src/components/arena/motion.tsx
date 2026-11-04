@@ -116,17 +116,18 @@ export function Marquee({ items, reverse = false, tone = 'ink' }: { items: strin
       io.disconnect();
     };
   }, [reverse]);
-  const row = items.map((t, i) => (
-    <span key={i}>
-      {t}
-      <i aria-hidden />
-    </span>
-  ));
+  const row = (dup: boolean) =>
+    items.map((t, i) => (
+      <span key={`${dup}${i}`} className={dup ? 'dup' : undefined}>
+        {t}
+        <i aria-hidden />
+      </span>
+    ));
   return (
     <div ref={ref} className={`a-marquee is-${tone}`} aria-hidden>
       <div className="a-marquee-track">
-        {row}
-        {row}
+        {row(false)}
+        {row(true)}
       </div>
     </div>
   );

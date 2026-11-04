@@ -329,10 +329,10 @@
 }
 
 /* giant marquee bands */
-.a-marquee { overflow: hidden; padding: 34px 0 40px; border-block: 1px solid var(--line); background: var(--paper); }
+.a-marquee { overflow: hidden; padding: 22px 0 26px; border-block: 1px solid var(--line); background: var(--paper); }
 .a-marquee.is-blue { background: var(--blue); color: #fff; border: 0; }
 .a-marquee-track { display: flex; width: max-content; will-change: transform; }
-.a-marquee span { font-family: var(--d); font-weight: 800; font-variation-settings: 'wdth' 125; font-size: clamp(44px, 7vw, 112px); line-height: 1.15; letter-spacing: -0.03em; white-space: nowrap; display: inline-flex; align-items: center; padding-right: 0.4em; }
+.a-marquee span { font-family: var(--d); font-weight: 800; font-variation-settings: 'wdth' 125; font-size: clamp(36px, 5.6vw, 88px); line-height: 1.15; letter-spacing: -0.03em; white-space: nowrap; display: inline-flex; align-items: center; padding-right: 0.4em; }
 .a-marquee span i { width: 0.36em; height: 0.36em; border-radius: 50%; background: var(--gold); margin-left: 0.4em; display: inline-block; }
 .a-marquee span:nth-child(even) i { background: var(--rose); }
 .a-marquee span:nth-child(3n) { color: transparent; -webkit-text-stroke: 2px currentColor; }
@@ -409,3 +409,11 @@
 
 .a-earn td:first-child { min-width: 170px; }
 .a-earn .a-name { white-space: nowrap; }
+
+/* when animations are off, the band is a calm centred line instead of a clipped one */
+@media (prefers-reduced-motion: reduce) {
+  .a-marquee-track { width: auto; flex-wrap: wrap; justify-content: center; transform: none !important; padding-inline: 20px; row-gap: 4px; }
+  .a-marquee span.dup { display: none; }
+  .a-marquee span { font-size: clamp(24px, 3.2vw, 44px); }
+  .a-marquee span:last-of-type:not(.dup) i, .a-marquee span:nth-last-child(1 of :not(.dup)) i { display: none; }
+}
