@@ -107,6 +107,13 @@ describe('arena round, end to end (offline fakes)', () => {
     expect(await b.db.select().from(arenaRounds)).toHaveLength(0);
   });
 
+  it('switches to the slow cadence after the cut-over (11:00 is off the 2-hour grid)', async () => {
+    const a = await fakeArena('2026-10-29T10:51:10.000Z');
+    a.deps.config = { ...a.deps.config, cadenceMin: 60, slowAfterMs: Date.parse('2026-10-29T00:00:00Z'), slowCadenceMin: 120 };
+    await tick(a.deps);
+    expect(await a.db.select().from(arenaRounds)).toHaveLength(0);
+  });
+
   it('lessons recalled from memory change what agents buy', async () => {
     const a = await fakeArena('2026-10-29T10:51:10.000Z');
     // Seed a lesson for every agent: the Loud Tipster makes them worse

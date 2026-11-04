@@ -82,7 +82,11 @@ export async function settleDue(deps: ArenaDeps, opts: { resolved?: FastMarket[]
       for (const p of purchases) {
         const blind = forecasts.find((f) => f.agentId === p.agentId && f.kind === 'blind');
         const informed = forecasts.find((f) => f.agentId === p.agentId && f.kind === 'informed');
-        if (!blind || !informed || !p.advisorId) continue;
+        if (!blind || !informed || !p.advisorId) {
+          // paid but never made the second call: nothing to score, so the buyer gets the money back
+          if (p.payStatus === 'escrowed') await tx.update(arenaPurchases).set({ payStatus: 'refunded' }).where(eq(arenaPurchases.id, p.id));
+          continue;
+        }
         const advice = JSON.parse(informed.forecastJson).advice as { advisorId: string } | null;
         const takeBps = takes.get(advice?.advisorId ?? p.advisorId) ?? 5000;
         const delta = brier(blind.probabilityBps, outcome) - brier(informed.probabilityBps, outcome);

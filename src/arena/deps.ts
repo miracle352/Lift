@@ -26,6 +26,9 @@ export interface ArenaConfig {
   assets: AssetKey[];
   /** minutes between rounds: 15 = every window, 30 = every other window (saves Tatum credits) */
   cadenceMin: number;
+  /** from this time on (ms), use `slowCadenceMin` instead (keeps the Tatum budget alive through judging) */
+  slowAfterMs?: number;
+  slowCadenceMin?: number;
   /** lock (blind → buy → informed) this many minutes after the window opens */
   lockMinute: number;
   /** Walrus Memory account + owner, for evidence checks */

@@ -79,6 +79,13 @@ verification) go through Tatum's native Sui gRPC gateway. A daily credit cap kee
 for its whole bundle; the arena holds the money and settles pay-for-lift in one programmable transaction.
 Payments run on Sui **testnet** USDC for now.
 
+## Play it yourself
+On `/play` anyone can make a blind call, read one take and call again. Reading a random take is free; or connect any Sui
+wallet (Slush, Phantom, Suiet…) and **pay for a take over MPP, exactly like the agents**: the wallet signs the USDC transfer
+and the MPP payment proof, the money is escrowed, and after the market settles it goes to the advisor only if the take made
+your call better; otherwise it comes back to the wallet that paid (testnet USDC for now: faucet.circle.com). Every sealed
+call has a share page (`/c/<hash>`) with its own preview image.
+
 ## Sell your own advice
 Any web address that answers a POST with a probability can be an advisor. Your takes are sealed before buyers read
 them, and your Sui address is paid every time a take made a buyer's call better. See `/advisors` on the site and
@@ -102,7 +109,7 @@ Other commands:
 | `pnpm arena wallets` / `faucet` / `fund` | show arena wallets, get testnet SUI, move USDC to agents |
 | `pnpm arena lock-now` | play one round immediately |
 | `pnpm arena:sim` | offline simulation with fake markets |
-| `pnpm check` | typecheck + lint + 84 tests |
+| `pnpm check` | typecheck + lint + 86 tests |
 
 ## Deploy
 - **Arena server** (worker + API + example advisor): any small Linux VM. `deploy/ec2-setup.sh` sets up Node, pnpm,

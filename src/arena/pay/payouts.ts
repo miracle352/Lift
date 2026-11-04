@@ -25,10 +25,13 @@ export function planTransfers(rows: (typeof arenaPurchases.$inferSelect)[], addr
     if (p.action !== 'buy' || !p.priceMicros) continue;
     const key = p.payStatus === 'released' ? `advisor:${p.advisorId}` : p.payStatus === 'refunded' ? `agent:${p.agentId}` : null;
     if (!key) continue;
-    const [role, id] = key.split(':') as ['advisor' | 'agent', string];
-    const t = sums.get(key) ?? { to: role === 'advisor' ? addr.advisor(id) : addr.agent(id), role, id, micros: 0 };
+    const role = key.slice(0, key.indexOf(':')) as 'advisor' | 'agent';
+    const id = key.slice(key.indexOf(':') + 1);
+    // a player who paid from their own wallet is refunded to that wallet (one transfer per payer)
+    const payerKey = role === 'agent' && p.payerAddress ? `${key}:${p.payerAddress}` : key;
+    const t = sums.get(payerKey) ?? { to: role === 'advisor' ? addr.advisor(id) : (p.payerAddress ?? addr.agent(id)), role, id, micros: 0 };
     t.micros += p.priceMicros;
-    sums.set(key, t);
+    sums.set(payerKey, t);
   }
   return [...sums.values()].sort((a, b) => a.role.localeCompare(b.role) || a.id.localeCompare(b.id));
 }

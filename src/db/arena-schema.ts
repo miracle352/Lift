@@ -146,6 +146,8 @@ export const arenaPurchases = sqliteTable(
     payNetwork: text('pay_network', { enum: ['sui:testnet', 'sui:mainnet', 'ledger'] }),
     /** MPP payment (buyer → clearinghouse) that escrowed this purchase */
     escrowDigest: text('escrow_digest'),
+    /** who paid (a player's own wallet); refunds go back here instead of to a derived agent wallet */
+    payerAddress: text('payer_address'),
     settleDigest: text('settle_digest'),
     createdAt: createdAt(),
   },

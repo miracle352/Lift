@@ -1,4 +1,5 @@
 'use client';
+import { ShareCall } from './share';
 import { useSearchParams } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { short, suiscan } from './names';
@@ -76,6 +77,9 @@ export function VerifyApp() {
                 Put the real number back
               </button>
             )}
+            <span style={{ marginLeft: 10, display: 'inline-block', marginTop: 16 }}>
+              <ShareCall hash={hash} text="This call was sealed on Walrus before its market closed. Check it yourself:" />
+            </span>
           </div>
         )}
       </div>

@@ -1,0 +1,1 @@
+ALTER TABLE `arena_purchases` ADD `payer_address` text;

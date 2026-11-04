@@ -24,6 +24,8 @@ export async function liveArenaDeps(opts: { migrate?: boolean } = {}): Promise<A
     config: {
       assets,
       cadenceMin: Number(process.env.ARENA_CADENCE_MIN ?? 60),
+      slowAfterMs: process.env.ARENA_SLOW_AFTER ? Date.parse(process.env.ARENA_SLOW_AFTER) : undefined,
+      slowCadenceMin: process.env.ARENA_SLOW_CADENCE_MIN ? Number(process.env.ARENA_SLOW_CADENCE_MIN) : undefined,
       lockMinute: Number(process.env.ARENA_LOCK_MINUTE ?? 6),
       memwalAccountId: requireEnv('MEMWAL_ACCOUNT_ID'),
       memwalOwner: requireEnv('MEMWAL_OWNER_ADDRESS'),

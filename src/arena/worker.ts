@@ -24,7 +24,9 @@ export async function tick(deps: ArenaDeps): Promise<Record<string, unknown>> {
   const now = deps.now();
   const close = nextCloseAfter(now, 15);
   const lockAt = close - 15 * 60_000 + deps.config.lockMinute * 60_000;
-  const onCadence = Math.floor(close / 60_000) % deps.config.cadenceMin === 0;
+  const c = deps.config;
+  const cadence = c.slowAfterMs && c.slowCadenceMin && close >= c.slowAfterMs ? c.slowCadenceMin : c.cadenceMin;
+  const onCadence = Math.floor(close / 60_000) % cadence === 0;
   // lock window: from lockAt until 2 minutes later (late starts are skipped to keep the timing honest)
   if (onCadence && now >= lockAt && now < lockAt + 2 * 60_000) {
     const [exists] = await deps.db.select({ id: arenaRounds.id }).from(arenaRounds).where(eq(arenaRounds.id, roundIdFor(close)));

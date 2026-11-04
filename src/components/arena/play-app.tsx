@@ -1,11 +1,14 @@
 'use client';
 import Link from 'next/link';
 import { useCallback, useEffect, useState } from 'react';
-import { advisorName, ASSET, hhmm, VERDICT } from './names';
+import { advisorName, ASSET, hhmm, suiscan, VERDICT } from './names';
+import { ShareCall } from './share';
+import { WalletPay, type Paid } from './wallet-pay';
 
 interface Open {
   round: { roundId: string; closeTime: string; blindUntil: string; markets: { asset: string; question: string; url: string }[] } | null;
   matches: { roundId: string; asset: string; league: string; title: string; question: string; kickoff: string }[];
+  payments?: { network: 'testnet' | 'mainnet'; priceMicros: number } | null;
 }
 interface Pick {
   roundId: string;
@@ -44,7 +47,7 @@ export function PlayApp() {
   const [step, setStep] = useState<Step>('blind');
   const [blind, setBlind] = useState(50);
   const [informed, setInformed] = useState(50);
-  const [take, setTake] = useState<{ advisorId: string; fairTest: boolean; shown: { advisor: string; says: string; probabilityBps: number } } | null>(null);
+  const [take, setTake] = useState<{ advisorId: string; fairTest: boolean; shown: { advisor: string; says: string; probabilityBps: number }; paid?: Paid | null } | null>(null);
   const [receipts, setReceipts] = useState<{ blind?: string; informed?: string }>({});
   const [err, setErr] = useState('');
   const [busy, setBusy] = useState(false);
@@ -207,9 +210,23 @@ export function PlayApp() {
                 <p className="a-p">You get to read exactly one take. Let the arena pick at random so the test is fair, or choose.</p>
                 <div className="a-ctas" style={{ marginTop: 18 }}>
                   <button className="a-btn a-btn-amber" onClick={() => reveal()} disabled={busy}>
-                    Show me a random take
+                    Show me a random take, free
                   </button>
                 </div>
+                {open?.payments && pick.asset !== 'match' && (
+                  <WalletPay
+                    network={open.payments.network}
+                    priceMicros={open.payments.priceMicros}
+                    token={me!.token}
+                    roundId={pick.roundId}
+                    asset={pick.asset}
+                    disabled={busy}
+                    onTake={(t) => {
+                      setTake(t);
+                      setStep('informed');
+                    }}
+                  />
+                )}
               </>
             )}
             {(step === 'informed' || step === 'done') && take && (
@@ -236,7 +253,22 @@ export function PlayApp() {
                   <>
                     <p className="a-ok">
                       Both calls are sealed: {blind}% then {informed}%. You’ll see whether {advisorName(take.advisorId)} helped you when the market settles.
+                      {take.paid?.digest && (
+                        <>
+                          {' '}
+                          Your payment is in escrow (
+                          <a href={suiscan(take.paid.digest, open?.payments?.network ?? 'testnet')} target="_blank" rel="noreferrer">
+                            transaction
+                          </a>
+                          ): it goes to {advisorName(take.advisorId)} only if the take made your call better, otherwise it comes back to your wallet.
+                        </>
+                      )}
                     </p>
+                    {receipts.informed && (
+                      <div className="a-ctas" style={{ margin: '12px 0' }}>
+                        <ShareCall hash={receipts.informed} />
+                      </div>
+                    )}
                     <p className="a-p" style={{ fontSize: 16 }}>
                       Your sealed calls: <Link href={`/verify?hash=${receipts.blind}`}>blind call</Link> · <Link href={`/verify?hash=${receipts.informed}`}>second call</Link>
                     </p>

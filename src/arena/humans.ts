@@ -21,7 +21,7 @@ import { event, locateBlobs } from './sealer';
  *      call is stored on Walrus, so the order is provable
  *   3. informed call (sealed, linked to the blind call and the exact take you saw)
  * Settlement, Brier deltas, verdicts and lessons are shared with the agents (agentId = "human:<playerId>").
- * Humans read takes for free; agents pay over MPP.
+ * Humans read takes for free, or pay for one from their own Sui wallet over MPP, exactly like the agents.
  */
 
 export const humanAgentId = (playerId: string) => `human:${playerId}`;
@@ -137,12 +137,8 @@ export async function playBlind(deps: ArenaDeps, playerId: string, input: { roun
   return { ...sealed, receipt: `/api/arena/receipts/${sealed.hash}` };
 }
 
-/** Reveals ONE take for this market. Requires the blind call to be stored on Walrus first. */
-export async function playReveal(deps: ArenaDeps, playerId: string, input: { roundId: string; asset: string; advisorId?: string }) {
-  const m = await marketFor(deps.db, input.roundId, input.asset, deps.now(), INFORMED_CUTOFF_MS);
-  const agentId = humanAgentId(playerId);
-  const purchaseId = `${m.id}:${agentId}`;
-  const [blind] = await deps.db.select().from(arenaForecasts).where(and(eq(arenaForecasts.marketId, m.id), eq(arenaForecasts.agentId, agentId), eq(arenaForecasts.kind, 'blind')));
+async function requireSealedBlind(deps: ArenaDeps, marketId: string, agentId: string) {
+  const [blind] = await deps.db.select().from(arenaForecasts).where(and(eq(arenaForecasts.marketId, marketId), eq(arenaForecasts.agentId, agentId), eq(arenaForecasts.kind, 'blind')));
   if (!blind) throw new PlayError('lock a blind call first', 409);
   if (blind.sealStatus === 'submitted' && blind.sealJobId) {
     const st = await deps.mem.getRememberStatus(blind.sealJobId).catch(() => null);
@@ -152,6 +148,17 @@ export async function playReveal(deps: ArenaDeps, playerId: string, input: { rou
     }
   }
   if (blind.sealStatus !== 'stored' && blind.sealStatus !== 'verified') throw new PlayError('your blind call is still being sealed on Walrus — try again in a few seconds', 425);
+  return blind;
+}
+
+const shownOf = (t: typeof arenaTakes.$inferSelect, m: typeof arenaMarkets.$inferSelect) => ({ advisorId: t.advisorId, advisor: t.advisorName, market: m.conditionId, says: t.says, probabilityBps: t.probabilityBps, inputs: JSON.parse(t.inputsJson) });
+
+/** Reveals ONE take for this market. Requires the blind call to be stored on Walrus first. */
+export async function playReveal(deps: ArenaDeps, playerId: string, input: { roundId: string; asset: string; advisorId?: string }) {
+  const m = await marketFor(deps.db, input.roundId, input.asset, deps.now(), INFORMED_CUTOFF_MS);
+  const agentId = humanAgentId(playerId);
+  const purchaseId = `${m.id}:${agentId}`;
+  await requireSealedBlind(deps, m.id, agentId);
 
   const takes = await deps.db.select().from(arenaTakes).where(eq(arenaTakes.marketId, m.id));
   const [existing] = await deps.db.select().from(arenaPurchases).where(eq(arenaPurchases.id, purchaseId));
@@ -164,8 +171,34 @@ export async function playReveal(deps: ArenaDeps, playerId: string, input: { rou
     await deps.db.insert(arenaPurchases).values({ id: purchaseId, roundId: m.roundId, marketId: m.id, agentId, advisorId, action: 'buy', fairTest, reason: fairTest ? 'fair test (random advisor)' : 'picked by the player', priceMicros: 0, payStatus: 'none' });
     await event(deps, m.roundId, 'human_reveal', { asset: m.asset, fairTest }, { agentId, advisorId });
   }
-  const shown = { advisorId: t.advisorId, advisor: t.advisorName, market: m.conditionId, says: t.says, probabilityBps: t.probabilityBps, inputs: JSON.parse(t.inputsJson) };
-  return { advisorId, fairTest, shown, takeReceipt: `/api/arena/receipts/${t.hash}` };
+  return { advisorId, fairTest, shown: shownOf(t, m), takeReceipt: `/api/arena/receipts/${t.hash}`, paid: existing?.payStatus && existing.payStatus !== 'none' ? { status: existing.payStatus, digest: existing.escrowDigest } : null };
+}
+
+/**
+ * Paying for a take with your own wallet (pay-for-lift, same as the agents): checked BEFORE payment so nobody pays
+ * for a take they can't have. The price goes to escrow; after the market settles it is paid to the advisor if the
+ * take improved your call, or refunded to the wallet that paid.
+ */
+export async function paidTakeQuote(deps: ArenaDeps, playerId: string, input: { roundId: string; asset: string; advisorId: string }) {
+  const m = await marketFor(deps.db, input.roundId, input.asset, deps.now(), INFORMED_CUTOFF_MS);
+  const agentId = humanAgentId(playerId);
+  await requireSealedBlind(deps, m.id, agentId);
+  const [existing] = await deps.db.select().from(arenaPurchases).where(eq(arenaPurchases.id, `${m.id}:${agentId}`));
+  if (existing) throw new PlayError('you already read a take on this market', 409);
+  const [t] = await deps.db.select().from(arenaTakes).where(and(eq(arenaTakes.marketId, m.id), eq(arenaTakes.advisorId, input.advisorId)));
+  if (!t) throw new PlayError('that advisor has no take on this market', 404);
+  if (!t.priceMicros) throw new PlayError('this take is free: reveal it instead', 400);
+  return { market: m, take: t, priceMicros: t.priceMicros, agentId };
+}
+
+export async function recordPaidTake(deps: ArenaDeps, q: Awaited<ReturnType<typeof paidTakeQuote>>, pay: { digest: string; sender: string | null; network: 'sui:testnet' | 'sui:mainnet'; fairTest: boolean }) {
+  const { market: m, take: t, agentId } = q;
+  await deps.db
+    .insert(arenaPurchases)
+    .values({ id: `${m.id}:${agentId}`, roundId: m.roundId, marketId: m.id, agentId, advisorId: t.advisorId, action: 'buy', fairTest: pay.fairTest, reason: 'paid by the player from their own wallet', priceMicros: q.priceMicros, payStatus: 'escrowed', payNetwork: pay.network, escrowDigest: pay.digest, payerAddress: pay.sender })
+    .onConflictDoNothing();
+  await event(deps, m.roundId, 'takes_paid', { micros: q.priceMicros, picks: 1, digest: pay.digest, network: pay.network, by: 'player' }, { agentId, advisorId: t.advisorId });
+  return { advisorId: t.advisorId, fairTest: pay.fairTest, shown: shownOf(t, m), takeReceipt: `/api/arena/receipts/${t.hash}`, paid: { status: 'escrowed', digest: pay.digest } };
 }
 
 export async function playInformed(deps: ArenaDeps, playerId: string, input: { roundId: string; asset: string; probabilityBps: number }) {
@@ -178,7 +211,7 @@ export async function playInformed(deps: ArenaDeps, playerId: string, input: { r
   const [dup] = await deps.db.select().from(arenaForecasts).where(and(eq(arenaForecasts.marketId, m.id), eq(arenaForecasts.agentId, agentId), eq(arenaForecasts.kind, 'informed')));
   if (dup) throw new PlayError('you already locked an informed call on this market', 409);
   const [t] = await deps.db.select().from(arenaTakes).where(and(eq(arenaTakes.marketId, m.id), eq(arenaTakes.advisorId, p.advisorId)));
-  const shown = { advisorId: t.advisorId, advisor: t.advisorName, market: m.conditionId, says: t.says, probabilityBps: t.probabilityBps, inputs: JSON.parse(t.inputsJson) };
+  const shown = shownOf(t, m);
   const f = buildForecast({
     kind: 'informed',
     user: agentId,
