@@ -1,5 +1,5 @@
 /** Display names shared by the arena UI (ids come from the API). */
-export const AGENTS: Record<string, string> = { rookie: 'Rookie', chartist: 'Chartist', cautious: 'Cautious Quant', gambler: 'Gambler' };
+export const AGENTS: Record<string, string> = { rookie: 'Rookie', chartist: 'Chartist', cautious: 'Cautious Quant', gambler: 'Gambler', goldfish: 'Goldfish' };
 export const ADVISORS: Record<string, string> = {
   crowd: 'The Crowd',
   quant: 'The Quant',

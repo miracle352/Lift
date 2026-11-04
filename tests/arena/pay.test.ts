@@ -13,7 +13,7 @@ describe('wallets', () => {
   it('derives stable, distinct addresses from one seed', () => {
     const d = walletDirectory(cfg);
     expect(d.clearinghouse).toBe(clearinghouse(cfg).toSuiAddress());
-    expect(new Set([d.clearinghouse, ...Object.values(d.agents), ...Object.values(d.advisors)]).size).toBe(1 + 4 + 7);
+    expect(new Set([d.clearinghouse, ...Object.values(d.agents), ...Object.values(d.advisors)]).size).toBe(1 + 5 + 7);
     expect(agentWallet(cfg, 'rookie').toSuiAddress()).toBe(agentWallet({ ...cfg, seedHex: SEED }, 'rookie').toSuiAddress());
     expect(cfg.network).toBe('testnet');
     expect(cfg.currency.type).toMatch(/::usdc::USDC$/);
@@ -69,7 +69,7 @@ describe('lock with MPP purchases', () => {
       },
     };
     await lockRound(a.deps, Date.parse('2026-10-29T11:00:00.000Z'));
-    expect(calls.sort()).toEqual(['cautious', 'chartist', 'gambler', 'rookie']);
+    expect(calls.sort()).toEqual(['cautious', 'chartist', 'gambler', 'goldfish', 'rookie']);
     const { arenaPurchases: P } = await import('@/db/schema');
     const rows = await a.db.select().from(P);
     expect(rows.every((r) => r.payNetwork === 'sui:testnet' && r.escrowDigest === `DIGEST-${r.agentId}`)).toBe(true);
@@ -81,7 +81,7 @@ describe('lock with MPP purchases', () => {
     await lockRound(a.deps, Date.parse('2026-10-29T11:00:00.000Z'));
     const { arenaPurchases: P, arenaForecasts: F } = await import('@/db/schema');
     expect((await a.db.select().from(P)).every((r) => r.payNetwork === 'ledger')).toBe(true);
-    expect((await a.db.select().from(F)).filter((f) => f.kind === 'informed')).toHaveLength(32);
+    expect((await a.db.select().from(F)).filter((f) => f.kind === 'informed')).toHaveLength(40);
 
     const b = await fakeArena('2026-10-29T10:51:10.000Z');
     b.deps.pay = { cfg, baseUrl: 'http://local', buy: async ({ picks }) => ({ paymentDigest: 'D', receipt: null, takes: picks.map((p) => ({ asset: p.asset, takeHash: 'x', shown: { advisorId: p.advisorId, advisor: 'X', market: 'm', says: 'tampered', probabilityBps: 9999, inputs: {} } })) }) };

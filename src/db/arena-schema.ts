@@ -169,7 +169,7 @@ export const arenaEpisodes = sqliteTable(
     outcome: integer('outcome').notNull(), // 1 = UP
     /** realized Brier change (blind − informed), x1e6 integer */
     deltaMicro: integer('delta_micro').notNull(),
-    memoryStatus: text('memory_status', { enum: ['pending', 'submitted', 'stored', 'failed'] }).notNull().default('pending'),
+    memoryStatus: text('memory_status', { enum: ['pending', 'submitted', 'stored', 'failed', 'skipped'] }).notNull().default('pending'),
     memoryJobId: text('memory_job_id'),
     walrusBlobId: text('walrus_blob_id'),
     settledAt: createdAt(),

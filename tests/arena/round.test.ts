@@ -22,9 +22,9 @@ describe('arena round, end to end (offline fakes)', () => {
     const takes = await a.db.select().from(arenaTakes);
     expect(takes).toHaveLength(8 * 7);
     const forecasts = await a.db.select().from(arenaForecasts);
-    expect(forecasts.filter((f) => f.kind === 'blind')).toHaveLength(8 * 4);
+    expect(forecasts.filter((f) => f.kind === 'blind')).toHaveLength(8 * 5);
     const purchases = await a.db.select().from(arenaPurchases);
-    expect(purchases).toHaveLength(8 * 4);
+    expect(purchases).toHaveLength(8 * 5);
     // with no history every agent explores (fair tests)
     expect(purchases.every((p) => p.action === 'buy' && p.fairTest)).toBe(true);
 
@@ -68,7 +68,7 @@ describe('arena round, end to end (offline fakes)', () => {
     const resolved = live.filter((m) => m.closeTime === '2026-10-29T11:00:00.000Z').map((m) => ({ ...m, resolution: 'UP' as const, resolvedSource: 'chainlink' }));
     const s = await settleDue(a.deps, { resolved });
     expect(s.resolvedMarkets).toBe(8);
-    expect(s.episodes).toBe(32);
+    expect(s.episodes).toBe(40); // 5 agents × 8 markets
     const [round] = await a.db.select().from(arenaRounds);
     expect(round.status).toBe('settled');
     const pays = await a.db.select().from(arenaPurchases);
@@ -88,7 +88,7 @@ describe('arena round, end to end (offline fakes)', () => {
     expect(epMem).toHaveLength(1);
     expect(parseEpisodeMemory(epMem[0].text)).toHaveLength(8);
     const stored = await a.db.select().from(arenaEpisodes).where(eq(arenaEpisodes.memoryStatus, 'stored'));
-    expect(stored).toHaveLength(32);
+    expect(stored).toHaveLength(32); // the Goldfish (control) writes no memory
 
     // ledger of Tatum credits
     const calls = await a.db.select().from(tatumCalls);
@@ -118,7 +118,8 @@ describe('arena round, end to end (offline fakes)', () => {
     }
     await lockRound(a.deps, CLOSE);
     const p = await a.db.select().from(arenaPurchases);
-    const hype = p.filter((x) => x.advisorId === 'hype');
+    const hype = p.filter((x) => x.advisorId === 'hype' && x.agentId !== 'goldfish');
+    // the Goldfish never recalls the lesson, so it still buys the Tipster at random
     expect(hype.every((x) => /re-test/.test(x.reason))).toBe(true);
     expect(hype.length).toBeLessThan(4);
     const ev = await a.db.select().from(arenaEvents).where(eq(arenaEvents.type, 'lessons_recalled'));

@@ -134,6 +134,8 @@ export interface ForecasterDef {
   style: string;
   /** blind call from features only: never sees market prices or takes */
   blind(f: WindowFeatures): number;
+  /** false = the control agent: never reads or writes memory (no past calls, no lessons) */
+  memory?: boolean;
 }
 
 export const FORECASTERS: ForecasterDef[] = [
@@ -150,6 +152,13 @@ export const FORECASTERS: ForecasterDef[] = [
     name: 'Gambler',
     style: 'Overconfident: any move since the open is destiny.',
     blind: (f) => clamp(normCdf(f.retSinceStart / (f.sigma1m * 0.5)), 0.03, 0.97),
+  },
+  {
+    id: 'goldfish',
+    name: 'Goldfish',
+    style: 'Rookie’s identical twin with no memory: never recalls a past call or a lesson, so it buys at random and trusts every take halfway. The control group.',
+    blind: () => 0.5,
+    memory: false,
   },
 ];
 

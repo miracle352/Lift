@@ -145,7 +145,8 @@ export class TatumPrediction {
   async get<T>(endpoint: TatumEndpoint, path: string, schema: z.ZodType<T>): Promise<T> {
     const credits = TATUM_CREDITS[endpoint];
     await this.opts.beforeCall?.(endpoint, credits);
-    const retries = this.opts.retries ?? 3;
+    // positions answers 500 for many markets: one try only (every answered call costs credits)
+    const retries = endpoint === 'positions' ? 0 : (this.opts.retries ?? 3);
     for (let attempt = 0; ; attempt++) {
       const t0 = Date.now();
       let status = 0;

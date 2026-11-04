@@ -70,9 +70,13 @@ export async function whaleTake(deps: ArenaDeps, conditionId: string) {
 }
 
 /** Worker step: every 12 h, open rounds for matches kicking off within 30 h. */
+let lastAttempt = 0;
 export async function syncMatchday(deps: ArenaDeps, opts: { events?: Record<string, PredictionEvent[]> } = {}) {
   const now = deps.now();
   if (!opts.events) {
+    // throttle attempts too, not just successful calls: a failed sync must not retry every tick
+    if (now - lastAttempt < 30 * 60_000) return { opened: 0 };
+    lastAttempt = now;
     const [recent] = await deps.db.select({ at: tatumCalls.at }).from(tatumCalls).where(and(like(tatumCalls.path, '%tag=EPL%'), gte(tatumCalls.at, new Date(now - SYNC_EVERY_MS)))).limit(1);
     if (recent) return { opened: 0 };
   }

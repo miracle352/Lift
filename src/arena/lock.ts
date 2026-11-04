@@ -4,7 +4,7 @@ import { canonicalJson } from '@/core/hash';
 import { adviceContentHash, buildForecast, forecastHash, type ForecastV1 } from '@/core/forecast';
 import { arenaBatches, arenaForecasts, arenaMarkets, arenaPurchases, arenaRounds, arenaTakes } from '@/db/schema';
 import { computeFeatures, type WindowFeatures } from './brain/features';
-import { advisorStats, blendBps, decide } from './brain/learner';
+import { advisorStats, blendBps, decide, type RecalledLesson } from './brain/learner';
 import { toBps } from './brain/math';
 import { ADVISORS, FORECASTERS, type AdvisorContext, type OrderbookSnapshot, type Take } from './brain/models';
 import { collectExternalTakes } from './external';
@@ -123,10 +123,12 @@ export async function lockRound(deps: ArenaDeps, closeMs: number, opts: { live?:
   const purchases: (typeof arenaPurchases.$inferInsert)[] = [];
   const pending: { c: MarketCtx; agentId: string; advisorId: string; fairTest: boolean; trust: number; blind: ForecastV1; purchaseId: string }[] = [];
   for (const agent of FORECASTERS) {
-    const episodes = await loadEpisodes(deps, agent.id);
+    // the control agent (Goldfish) has no memory: no past episodes, no lessons
+    const remembers = agent.memory !== false;
+    const episodes = remembers ? await loadEpisodes(deps, agent.id) : [];
     const roundAdvisorIds = [...new Set(ctxs.flatMap((c) => [...c.takes.keys()]))];
     const stats = new Map(roundAdvisorIds.map((id) => [id, advisorStats(id, episodes)]));
-    const { lessons, source } = await recallLessons(deps, agent.id);
+    const { lessons, source } = remembers ? await recallLessons(deps, agent.id) : { lessons: new Map<string, RecalledLesson>(), source: 'none' as const };
     if (lessons.size) await event(deps, roundId, 'lessons_recalled', { source, lessons: [...lessons.values()].map((l) => ({ advisorId: l.advisorId, verdict: l.verdict, blobId: l.blobId })) }, { agentId: agent.id });
     for (const c of ctxs) {
       const blindBps = toBps(agent.blind(c.features));

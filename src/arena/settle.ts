@@ -101,6 +101,7 @@ export async function settleDue(deps: ArenaDeps, opts: { resolved?: FastMarket[]
             informedBps: informed.probabilityBps,
             outcome,
             deltaMicro: Math.round(delta * 1e6),
+            ...(FORECASTER_BY_ID.get(p.agentId)?.memory === false ? { memoryStatus: 'skipped' as const } : {}),
           })
           .onConflictDoNothing();
         if (p.payStatus === 'escrowed') {
@@ -138,7 +139,7 @@ export async function settleDue(deps: ArenaDeps, opts: { resolved?: FastMarket[]
       const [p] = await deps.db.select().from(arenaPlayers).where(eq(arenaPlayers.id, agentId.slice(6)));
       if (p) agent = { id: agentId, name: `@${p.handle}` };
     }
-    if (!agent) continue;
+    if (!agent || FORECASTER_BY_ID.get(agentId)?.memory === false) continue;
     const eps = await loadEpisodes(deps, agentId);
     const names = await advisorDirectory(deps.db);
     const ids = new Set([...names.keys()].filter((id) => names.get(id)!.kind === 'builtin').concat(eps.map((e) => e.advisorId)));

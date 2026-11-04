@@ -167,7 +167,84 @@ export async function stats(db: Db, nowMs = Date.now()) {
   const [eps] = await db.select({ n: sql<number>`count(*)` }).from(arenaEpisodes);
   const [mem] = await db.select({ n: sql<number>`count(*)` }).from(arenaLessons).where(eq(arenaLessons.memoryStatus, 'stored'));
   const [settled] = await db.select({ n: sql<number>`count(*)` }).from(arenaRounds).where(and(eq(arenaRounds.status, 'settled'), lte(arenaRounds.closeTime, new Date(nowMs))));
-  return { tatumCalls: Number(c.n), tatumCredits: Number(c.credits), verifiedSeals: Number(seals.n), sealedForecasts: Number(seals.leaves), settledEpisodes: Number(eps.n), lessonsOnWalrus: Number(mem.n), settledRounds: Number(settled.n) };
+  const [epMem] = await db.select({ n: sql<number>`count(distinct ${arenaEpisodes.walrusBlobId})` }).from(arenaEpisodes).where(eq(arenaEpisodes.memoryStatus, 'stored'));
+  const [sealMem] = await db.select({ n: sql<number>`count(*)` }).from(arenaBatches).where(sql`${arenaBatches.walrusBlobId} is not null`);
+  const [paid] = await db.select({ released: sql<number>`coalesce(sum(case when ${arenaPurchases.payStatus} = 'released' then ${arenaPurchases.priceMicros} end),0)`, refunded: sql<number>`coalesce(sum(case when ${arenaPurchases.payStatus} = 'refunded' then ${arenaPurchases.priceMicros} end),0)`, payments: sql<number>`count(distinct ${arenaPurchases.escrowDigest})` }).from(arenaPurchases);
+  return {
+    tatumCalls: Number(c.n),
+    tatumCredits: Number(c.credits),
+    verifiedSeals: Number(seals.n),
+    sealedForecasts: Number(seals.leaves),
+    settledEpisodes: Number(eps.n),
+    lessonsOnWalrus: Number(mem.n),
+    settledRounds: Number(settled.n),
+    memoriesOnWalrus: Number(epMem.n) + Number(sealMem.n) + Number(mem.n),
+    releasedMicros: Number(paid.released),
+    refundedMicros: Number(paid.refunded),
+    mppPayments: Number(paid.payments),
+  };
+}
+
+/**
+ * The memory experiment: Rookie and the Goldfish make the same blind call (50%) on the same markets and see the
+ * same takes. Rookie remembers (Walrus Memory: past episodes + lessons); the Goldfish remembers nothing. Any gap
+ * in their informed Brier score is what memory is worth.
+ */
+export async function memoryTest(db: Db, withMemory = 'rookie', control = 'goldfish') {
+  const rows = await db.select().from(arenaEpisodes).where(inArray(arenaEpisodes.agentId, [withMemory, control]));
+  const byMarket = new Map<string, { m?: (typeof rows)[number]; c?: (typeof rows)[number] }>();
+  for (const r of rows) {
+    const e = byMarket.get(r.marketId) ?? {};
+    if (r.agentId === withMemory) e.m = r;
+    else e.c = r;
+    byMarket.set(r.marketId, e);
+  }
+  const pairs = [...byMarket.values()].filter((p): p is { m: (typeof rows)[number]; c: (typeof rows)[number] } => !!p.m && !!p.c).sort((a, b) => (a.m.settledAt?.getTime() ?? 0) - (b.m.settledAt?.getTime() ?? 0));
+  const b = (bps: number, y: number) => (bps / 10000 - y) ** 2;
+  let sm = 0;
+  let sc = 0;
+  const series: { at: string; memory: number; goldfish: number }[] = [];
+  pairs.forEach((p, i) => {
+    sm += p.m.deltaMicro / 1e6;
+    sc += p.c.deltaMicro / 1e6;
+    if (i % Math.max(1, Math.floor(pairs.length / 60)) === 0 || i === pairs.length - 1) series.push({ at: (p.m.settledAt ?? new Date()).toISOString(), memory: Math.round(sm * 1000) / 1000, goldfish: Math.round(sc * 1000) / 1000 });
+  });
+  const mean = (xs: number[]) => (xs.length ? xs.reduce((a, x) => a + x, 0) / xs.length : null);
+  const paid = await db
+    .select({ agentId: arenaPurchases.agentId, status: arenaPurchases.payStatus, micros: sql<number>`coalesce(sum(${arenaPurchases.priceMicros}),0)` })
+    .from(arenaPurchases)
+    .where(inArray(arenaPurchases.agentId, [withMemory, control]))
+    .groupBy(arenaPurchases.agentId, arenaPurchases.payStatus);
+  const spend = (id: string) => ({
+    releasedMicros: Number(paid.find((p) => p.agentId === id && p.status === 'released')?.micros ?? 0),
+    refundedMicros: Number(paid.find((p) => p.agentId === id && p.status === 'refunded')?.micros ?? 0),
+  });
+  return {
+    pairs: pairs.length,
+    memory: { agentId: withMemory, brier: mean(pairs.map((p) => b(p.m.informedBps, p.m.outcome))), liftPerCall: mean(pairs.map((p) => p.m.deltaMicro / 1e6)), helped: pairs.filter((p) => p.m.deltaMicro > 0).length, ...spend(withMemory) },
+    goldfish: { agentId: control, brier: mean(pairs.map((p) => b(p.c.informedBps, p.c.outcome))), liftPerCall: mean(pairs.map((p) => p.c.deltaMicro / 1e6)), helped: pairs.filter((p) => p.c.deltaMicro > 0).length, ...spend(control) },
+    series,
+  };
+}
+
+/** Everything the arena has written to Walrus Memory, newest first (seals, episode memories, lessons). */
+export async function memoryLog(db: Db, limit = 60) {
+  const seals = await db.select({ id: arenaBatches.id, phase: arenaBatches.phase, leaves: arenaBatches.leafCount, blob: arenaBatches.walrusBlobId, at: arenaBatches.createdAt, digest: arenaBatches.commitDigest }).from(arenaBatches).where(sql`${arenaBatches.walrusBlobId} is not null`).orderBy(desc(arenaBatches.createdAt)).limit(limit);
+  const eps = await db
+    .select({ agentId: arenaEpisodes.agentId, roundId: arenaEpisodes.roundId, blob: arenaEpisodes.walrusBlobId, at: sql<number>`max(${arenaEpisodes.settledAt})`, n: sql<number>`count(*)` })
+    .from(arenaEpisodes)
+    .where(eq(arenaEpisodes.memoryStatus, 'stored'))
+    .groupBy(arenaEpisodes.walrusBlobId, arenaEpisodes.agentId, arenaEpisodes.roundId)
+    .orderBy(desc(sql`max(${arenaEpisodes.settledAt})`))
+    .limit(limit);
+  const lessons = await db.select().from(arenaLessons).where(eq(arenaLessons.memoryStatus, 'stored')).orderBy(desc(arenaLessons.createdAt)).limit(limit);
+  const toIso = (v: unknown) => (v instanceof Date ? v.toISOString() : typeof v === 'number' ? new Date(v > 1e12 ? v : v * 1000).toISOString() : String(v));
+  const items = [
+    ...seals.map((s) => ({ kind: 'seal' as const, namespace: s.id, text: `${s.leaves} ${s.phase} calls sealed as one Merkle root`, blobId: s.blob, at: toIso(s.at), digest: s.digest })),
+    ...eps.map((e) => ({ kind: 'episode' as const, namespace: `arena1:${e.agentId}:episodes`, text: `${e.agentId}: ${e.n} settled calls from round ${e.roundId.replace(/^15m:/, '')}`, blobId: e.blob, at: toIso(e.at), digest: null })),
+    ...lessons.map((l) => ({ kind: 'lesson' as const, namespace: `arena1:${l.agentId}:lessons`, text: l.text.split(' [[')[0], blobId: l.walrusBlobId, at: l.createdAt.toISOString(), digest: null })),
+  ].sort((a, b) => b.at.localeCompare(a.at));
+  return items.slice(0, limit * 2);
 }
 
 /** Event id to resume from so that the next page holds the last `n` headline events (purchases excluded). */
