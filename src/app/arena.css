@@ -419,3 +419,12 @@
   .a-marquee span { font-size: clamp(24px, 3.2vw, 44px); }
   .a-marquee span:last-of-type:not(.dup) i, .a-marquee span:nth-last-child(1 of :not(.dup)) i { display: none; }
 }
+
+/* verify verdict: readable on both outcomes */
+.a-verdict b { font-size: 22px; margin-bottom: 10px; }
+.a-verdict.is-ok b { color: var(--gold); }
+.a-verdict.is-bad { background: var(--ink); }
+.a-verdict.is-bad b { color: var(--rose); }
+.a-verdict .a-checks li { border-bottom-color: #ffffff26; }
+.a-verdict .a-checks li.is-fail { color: var(--rose); font-weight: 650; }
+.a-verdict .a-checks li span:first-child { font-weight: 700; }

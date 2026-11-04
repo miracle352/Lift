@@ -85,13 +85,13 @@ export function VerifyApp() {
       </div>
       <div>
         {res?.verification && (
-          <div className="a-take">
-            <b style={{ color: res.verification.status.startsWith('valid') ? '#7a4a0c' : '#a8352b' }}>
+          <div className={`a-take a-verdict ${res.verification.status.startsWith('valid') ? 'is-ok' : 'is-bad'}`}>
+            <b>
               {res.verification.status.startsWith('valid') ? 'Checks out on Sui' : res.tampered ? 'Edited: no longer matches what was sealed' : 'Does not check out'}
             </b>
             <ul className="a-checks">
               {res.verification.checks.map((c) => (
-                <li key={c.id}>
+                <li key={c.id} className={c.ok === false ? 'is-fail' : undefined}>
                   <span>{c.ok === true ? '✓' : c.ok === false ? '✗' : '–'}</span>
                   <span>{LABEL[c.id] ?? c.id}</span>
                 </li>
