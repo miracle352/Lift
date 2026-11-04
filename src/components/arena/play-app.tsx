@@ -238,7 +238,7 @@ export function PlayApp() {
                       Both calls are sealed: {blind}% then {informed}%. You’ll see whether {advisorName(take.advisorId)} helped you when the market settles.
                     </p>
                     <p className="a-p" style={{ fontSize: 16 }}>
-                      Receipts: <Link href={`/verify?hash=${receipts.blind}`}>blind call</Link> · <Link href={`/verify?hash=${receipts.informed}`}>second call</Link>
+                      Your sealed calls: <Link href={`/verify?hash=${receipts.blind}`}>blind call</Link> · <Link href={`/verify?hash=${receipts.informed}`}>second call</Link>
                     </p>
                   </>
                 )}

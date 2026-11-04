@@ -67,7 +67,7 @@ export function reportMarkdown(r: Awaited<ReturnType<typeof buildReport>>): stri
   const usd = (m: number) => `$${(m / 1e6).toFixed(2)}`;
   const t = r.totals;
   const lines = [
-    `# Receipts Arena — numbers (${r.generatedAt})`,
+    `# Lift arena — numbers (${r.generatedAt})`,
     '',
     `- Rounds settled: **${t.settledRounds}** · episodes: **${t.settledEpisodes}** · forecasts sealed in Merkle batches: **${t.sealedForecasts}** (${t.verifiedSeals} batch seals verified on Sui)`,
     `- Purchases declined by agents: **${t.declines}** · MPP payments on Sui: **${t.mppPayments}** · pay-for-lift payout transactions: **${t.payoutTransactions}**`,

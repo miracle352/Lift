@@ -21,6 +21,9 @@ export function Nav({ light = false }: { light?: boolean }) {
         <nav className="a-links" aria-label="Main">
           <Link href="/play">Play</Link>
           <Link href="/#memory">Memory</Link>
+          <Link className="a-hide-sm" href="/blog">
+            Blog
+          </Link>
           <Link className="a-hide-sm" href="/advisors">
             Sell advice
           </Link>

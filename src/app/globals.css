@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /*
- * Receipts design tokens (docs/DESIGN.md).
+ * Base styles and Tailwind setup. The Lift design tokens live in arena.css.
  * Light, paper-like UI with ink text, a warm gold accent and one dark "night" section style.
  * Sharp corners everywhere (radius 0), 1px warm hairlines, mono for numbers, hashes and labels.
  */

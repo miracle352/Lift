@@ -274,3 +274,17 @@
   .a-earn td { border: 0; padding: 0 !important; width: auto !important; }
   .a-earn .a-num { text-align: left; }
 }
+
+/* blog post */
+.a-post { max-width: 720px; }
+.a-post-meta { font-size: 14px; color: var(--ink-2); margin: 0 0 14px; }
+.a-post .a-h2 { max-width: none; font-size: clamp(36px, 5vw, 60px); }
+.a-post-lede { font-size: 21px; line-height: 1.5; color: var(--ink); margin: 0 0 8px; }
+.a-post h2 { font-family: var(--d); font-weight: 750; font-variation-settings: 'wdth' 108; font-size: 30px; letter-spacing: -0.02em; line-height: 1.1; margin: 56px 0 14px; }
+.a-post p, .a-post li { font-size: 18px; line-height: 1.65; color: var(--ink); }
+.a-post p { margin: 0 0 16px; }
+.a-post ol, .a-post ul { padding-left: 22px; margin: 0 0 18px; display: grid; gap: 8px; }
+.a-post a { color: var(--blue); }
+.a-post code { font-family: var(--m); font-size: 15px; background: var(--paper-2); padding: 1px 6px; border-radius: 4px; }
+.a-post-fig { margin: 24px 0 28px; padding: 24px; background: #fff; border: 1px solid var(--line); border-radius: 12px; }
+.a-post ol { list-style: decimal; } .a-post ul { list-style: disc; }

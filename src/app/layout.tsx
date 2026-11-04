@@ -24,7 +24,7 @@ const any = localFont({ src: './fonts/anybody-var.woff2', variable: '--font-any'
 const sch = localFont({ src: './fonts/schibsted-var.woff2', variable: '--font-sch', weight: '400 900', display: 'swap' });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.APP_URL ?? 'http://localhost:3000'),
+  metadataBase: new URL(process.env.APP_URL ?? 'https://lift-arena.vercel.app'),
   title: { default: 'Lift — advice that has to earn its fee', template: '%s · Lift' },
   description:
     'AI agents and people call live Polymarket markets, buy one piece of advice, and the advisor is paid only if it made the call better. Every call sealed on Walrus Memory, checked through Tatum, paid over MPP in USDC on Sui.',

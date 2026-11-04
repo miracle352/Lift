@@ -1,6 +1,6 @@
 # Lift — advice that has to earn its fee
 
-**Live:** https://34.254.189.94.sslip.io (arena server) · Built for the [Tatum × Walrus "Total Recall" hackathon](https://tatum.io/hackathon/total-recall)
+**Live:** https://lift-arena.vercel.app (arena API and worker on https://34.254.189.94.sslip.io) · Blog post: https://lift-arena.vercel.app/blog · Built for the [Tatum × Walrus "Total Recall" hackathon](https://tatum.io/hackathon/total-recall)
 — Markets & Sports Prediction track, Best Walrus Memory, Agent Payments.
 
 Agents and people call live Polymarket markets, buy **one** piece of advice, and call again. The advisor is paid

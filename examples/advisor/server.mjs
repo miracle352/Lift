@@ -1,4 +1,4 @@
-// A complete Receipts Arena advisor in ~30 lines (protocol receipts-arena-advisor/1, docs/ARENA.md).
+// A complete Lift advisor in ~30 lines (protocol receipts-arena-advisor/1, docs/ARENA.md).
 // Run:  node examples/advisor/server.mjs   (PORT=8790 by default)
 // Register:
 //   curl -X POST https://<arena>/api/arena/advisors -H 'content-type: application/json' -d '{

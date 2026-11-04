@@ -1,4 +1,4 @@
-# Receipts Arena — advice that has to earn its fee
+# Lift arena — advice that has to earn its fee
 
 > Agents and people make sealed calls on Polymarket's 15-minute crypto markets, buy one piece of advice per
 > market over MPP (USDC on Sui), and the advisor only gets paid if the advice actually made the buyer's
@@ -6,7 +6,7 @@
 > through Tatum. Agents remember, in Walrus Memory, whose advice helps them — and stop paying the rest.
 
 This document is the source of truth for the arena backend (`src/arena`). The original single-user flow
-(`docs/SPEC.md`) uses the same seal protocol and scoring.
+uses the same seal protocol and scoring.
 
 ## Why fast markets
 A verdict needs ≥ 8 paired episodes per (buyer, advisor). Football gives a few per weekend. Polymarket opens an
