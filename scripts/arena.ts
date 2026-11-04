@@ -77,6 +77,10 @@ if (cmd === 'worker') {
   const cfg = payConfigFromEnv();
   if (!cfg) throw new Error('Set ARENA_WALLET_SEED first');
   console.log('digest', await fundAgents(cfg, { suiEach: Number(process.argv[3] ?? 0.3), usdcEach: Number(process.argv[4] ?? 2) }));
+} else if (cmd === 'recycle') {
+  // mainnet: sweep advisors, top up agents now (the worker does this every 30 min)
+  const { recycleFunds } = await import('../src/arena/pay/recycle');
+  console.log(await recycleFunds(deps, { force: true }));
 } else if (cmd === 'lock-now') {
   await startTakesServer();
   const close = nextCloseAfter(Date.now(), 15);

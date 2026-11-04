@@ -8,6 +8,7 @@ import { flushMemoryOutbox } from './memory';
 import { advanceBatches } from './sealer';
 import { settleDue } from './settle';
 import { sendDuePayouts } from './pay/payouts';
+import { recycleFunds } from './pay/recycle';
 import { advanceHumanSeals } from './humans';
 import { syncMatchday } from './football';
 
@@ -35,6 +36,7 @@ export async function tick(deps: ArenaDeps): Promise<Record<string, unknown>> {
   out.settle = await step(deps, 'settle', () => settleDue(deps));
   out.memory = await step(deps, 'memory', () => flushMemoryOutbox(deps));
   if (deps.pay) out.payouts = await step(deps, 'payouts', () => sendDuePayouts(deps));
+  if (deps.pay) out.recycle = await step(deps, 'recycle', () => recycleFunds(deps));
   return out;
 }
 
