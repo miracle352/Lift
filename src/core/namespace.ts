@@ -5,7 +5,7 @@ import { sha256Hex } from './hash';
 
 /**
  * Seal namespaces are public on Sui (they are stored as a Blob attribute), so they carry only
- * short one-way tags plus the seal hash. Format (docs/PROOF.md):
+ * short one-way tags plus the seal hash. Format (docs/how-it-works.md):
  *
  *   rcpt1:<userTag>:<marketTag>:<kindChar>:<sha256hex>
  *

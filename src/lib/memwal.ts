@@ -8,7 +8,7 @@ import { MEMWAL_MAINNET } from '@/core/constants';
  * - MEMWAL_MOCK=1 swaps in MemWalMock (in-memory, no network) for tests and offline work.
  * - Namespaces are exact-match strings (<= 255 bytes); see src/core/namespace.ts for the ones we use.
  * - Write budget on the shared relayer: ~30 weighted req/min per delegate key, 500/hour per account;
- *   remember = 5, remember/bulk = 10, recall = 1 (docs/vendor/memwal-notes.md). Queue writes; never fire them in loops.
+ *   remember = 5, remember/bulk = 10, recall = 1 (relayer limits). Queue writes; never fire them in loops.
  */
 export type MemoryClient = Pick<MemWal, 'remember' | 'rememberAndWait' | 'getRememberStatus' | 'rememberBulk' | 'recall' | 'restore' | 'listNamespaces' | 'health' | 'getPublicKeyHex'>;
 

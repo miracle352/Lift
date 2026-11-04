@@ -27,15 +27,8 @@ const ServerEnv = z.object({
   DATABASE_URL: z.string().default('file:./local.db'),
   DATABASE_AUTH_TOKEN: z.string().optional(),
 
-  // App secrets
-  SESSION_SECRET: z.string().min(32, 'SESSION_SECRET must be at least 32 characters'),
-  CRON_SECRET: z.string().min(16),
-  /** Comma-separated handles allowed to curate markets. */
-  ADMIN_HANDLES: z.string().default(''),
-
-  // Agent payments (optional, milestone M7)
+  // Agent payments (optional)
   MPP_SECRET_KEY: z.string().min(32).optional(),
-  AGENT_WALLET_PRIVATE_KEY: z.string().optional(),
 });
 export type ServerEnv = z.infer<typeof ServerEnv>;
 

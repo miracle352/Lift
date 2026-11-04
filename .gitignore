@@ -49,3 +49,7 @@ next-env.d.ts
 *.db-wal
 *.db-shm
 /report
+
+# tooling files written by editors and agents
+AGENTS.md
+CLAUDE.md

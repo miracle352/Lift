@@ -5,7 +5,7 @@ import { verifySeal, type SealVerification } from '@/core/evidence';
 import { u256FromBlobId } from '@/core/walrus-ids';
 
 /**
- * Turning a Walrus Memory write into on-chain evidence (docs/PROOF.md, "Capturing evidence").
+ * Turning a Walrus Memory write into on-chain evidence (docs/how-it-works.md, "Verifying a call").
  *
  * rememberAndWait() returns only the Walrus blob id. The Sui side is found like this:
  *  1. scan the account owner's Blob objects (listOwnedObjects is ordered by object id, not time,

@@ -2,7 +2,7 @@ import { sql } from 'drizzle-orm';
 import { index, integer, primaryKey, sqliteTable, text, uniqueIndex } from 'drizzle-orm/sqlite-core';
 
 /**
- * Arena tables (docs/ARENA.md). The database is a cache + work queue: forecasts are sealed in Merkle
+ * Arena tables (docs/how-it-works.md). The database is a cache + work queue: forecasts are sealed in Merkle
  * batches on Walrus Memory (Sui mainnet), and agent episodes/lessons live in Walrus Memory too.
  * Times are integer ms. Probabilities are basis points (1..9999). Money is USDC micro-units (6 decimals).
  */
@@ -85,7 +85,7 @@ export const arenaForecasts = sqliteTable(
     probabilityBps: integer('probability_bps').notNull(),
     forecastJson: text('forecast_json').notNull(),
     batchId: text('batch_id').references(() => arenaBatches.id),
-    /** Human calls are sealed one by one (rcpt1 single seals, docs/PROOF.md) instead of in a round batch. */
+    /** Human calls are sealed one by one (rcpt1 single seals, docs/how-it-works.md) instead of in a round batch. */
     sealNamespace: text('seal_namespace'),
     sealStatus: text('seal_status', { enum: ['queued', 'submitted', 'stored', 'verified', 'failed'] }),
     sealJobId: text('seal_job_id'),

@@ -15,8 +15,8 @@ import { advisorDirectory } from './registry';
 import { event, locateBlobs } from './sealer';
 
 /**
- * People in the arena (docs/ARENA.md, "Humans"). Same rounds and advisors as the agents:
- *   1. blind call  (sealed on its own: an rcpt1 single seal, docs/PROOF.md)
+ * People in the arena (docs/how-it-works.md, "People"). Same rounds and advisors as the agents:
+ *   1. blind call  (sealed on its own: an rcpt1 single seal, docs/how-it-works.md)
  *   2. reveal ONE take — a random advisor by default ("fair test"), or one you pick — only after your blind
  *      call is stored on Walrus, so the order is provable
  *   3. informed call (sealed, linked to the blind call and the exact take you saw)

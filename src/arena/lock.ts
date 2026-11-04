@@ -16,7 +16,7 @@ import { loadEpisodes, recallLessons } from './memory';
 import { event, submitBatch } from './sealer';
 
 /**
- * Locking a round (docs/ARENA.md, "Round lifecycle"), `lockMinute` minutes after a 15-minute window opens:
+ * Locking a round (docs/how-it-works.md, "A round"), `lockMinute` minutes after a 15-minute window opens:
  *  1. one Tatum call → the live Up/Down markets closing at `closeMs` (+ Polymarket's UP price)
  *  2. free feeds → 1-minute spot candles and the UP order book, turned into features
  *  3. every advisor publishes a take per market (sealed, kind "take")

@@ -2,9 +2,9 @@ import { sql } from 'drizzle-orm';
 import { index, integer, primaryKey, real, sqliteTable, text, uniqueIndex } from 'drizzle-orm/sqlite-core';
 
 /**
- * Data model (docs/ARCHITECTURE.md#data-model). SQLite/libSQL: local file in dev, Turso in production.
+ * Data model. SQLite/libSQL: a local file in dev and on the arena server.
  * The database is a working cache + queue. The durable record of every forecast is its seal on
- * Walrus + Sui; `pnpm rebuild:ledger` (milestone M6) must be able to rebuild seals from Walrus Memory.
+ * Walrus + Sui, and `pnpm arena rebuild` restores agent memory from Walrus Memory.
  *
  * Times are integer milliseconds (drizzle `timestamp_ms` mode gives you Date objects).
  */
@@ -18,7 +18,7 @@ export const users = sqliteTable('users', {
   displayName: text('display_name').notNull(),
   passwordHash: text('password_hash').notNull(), // scrypt (node:crypto), "scrypt$N$r$p$salt$hash"
   bio: text('bio'),
-  /** Sui address that receives USDC when this user sells takes (M7). */
+  /** Sui address that receives USDC when this user sells takes . */
   payoutAddress: text('payout_address'),
   createdAt: createdAt(),
 });
@@ -145,7 +145,7 @@ export const episodes = sqliteTable(
   (t) => [uniqueIndex('episodes_user_market').on(t.userId, t.marketId), index('episodes_user_advisor').on(t.userId, t.advisorId)],
 );
 
-/** Tipster takes: sealed advice that others can read (free) or buy (M7). */
+/** Tipster takes: sealed advice that others can read (free) or buy. */
 export const takes = sqliteTable(
   'takes',
   {
@@ -219,7 +219,7 @@ export const blobLocator = sqliteTable('blob_locator', {
   seenAt: createdAt(),
 });
 
-// ---------- M7: agent payments ----------
+// ---------- agent payments ----------
 
 export const agentRules = sqliteTable('agent_rules', {
   userId: text('user_id').primaryKey().references(() => users.id),

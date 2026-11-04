@@ -7,7 +7,7 @@ import { sha256Hex } from './hash';
 import { buildProofs, rootFromProof, type InclusionProof, type ProofStep } from './merkle';
 
 /**
- * Batch seals (docs/PROOF.md, "Batch seals").
+ * Batch seals (docs/how-it-works.md, "Seals").
  *
  * An arena round produces many forecasts at once (every agent, every market). Instead of one Walrus
  * Memory write per forecast, the round seals the Merkle root of all their hashes in ONE write:

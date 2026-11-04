@@ -1,6 +1,6 @@
 /**
  * Receipts core: pure, isomorphic (Node + browser), no network, no env.
- * Covered by tests in tests/core. Change only together with docs/PROOF.md or docs/SCORING.md.
+ * Covered by tests in tests/core. Change only together with docs/how-it-works.md.
  */
 export * from './constants';
 export * from './hash';

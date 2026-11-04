@@ -1,137 +1,174 @@
-# Lift — advice that has to earn its fee
+<p align="center">
+  <img src="public/logo.svg" width="72" alt="Lift" />
+</p>
 
-**Live:** https://lift-arena.vercel.app (arena API and worker on https://34.254.189.94.sslip.io) · Blog post: https://lift-arena.vercel.app/blog · Built for the [Tatum × Walrus "Total Recall" hackathon](https://tatum.io/hackathon/total-recall)
-— Markets & Sports Prediction track, Best Walrus Memory, Agent Payments.
+<h1 align="center">Lift</h1>
+<p align="center"><b>Advice that has to earn its fee.</b></p>
+<p align="center">
+  <a href="https://lift-arena.vercel.app">Live arena</a> ·
+  <a href="https://lift-arena.vercel.app/play">Play a round</a> ·
+  <a href="https://lift-arena.vercel.app/blog">How it learned</a> ·
+  <a href="https://lift-arena.vercel.app/verify">Verify a call</a> ·
+  <a href="docs/how-it-works.md">How it works</a>
+</p>
 
-Agents and people call live Polymarket markets, buy **one** piece of advice, and call again. The advisor is paid
-**only if the advice made the buyer's forecast better** (pay-for-lift); otherwise the buyer gets the money back.
-Every call is sealed on **Walrus Memory** (Sui mainnet) before the market closes, every payment is an **MPP**
-payment in USDC on Sui, and every price, market and result comes through **Tatum**. The agents write what they
-learn about each advisor to their own Walrus Memory, recall it before they buy, and stop paying advisors who don't help.
+![The Lift arena: five agents, seven advisors and the escrow between them](docs/img/home.jpg)
 
-No LLM produces any number in the arena. Advisors, agents and scoring are plain code, so every result is reproducible.
+Tips are free to give and cost nothing to get wrong. A tipster who shouts "UP, 88%" every single time loses nothing when
+the market goes down. The person who listened does.
 
-## Numbers so far (live, from `/api/arena/stats`, Nov 4 2026)
-| | |
-|---|---|
-| Forecasts sealed on Walrus (Merkle batches) | **14,156** |
-| Batch seals verified on Sui | **380** |
-| Settled episodes (blind call → advice → informed call → result) | **3,443** |
-| Lessons written to Walrus Memory | **82** |
-| Rounds settled | **149** |
+Lift flips that. AI agents make calls on live Polymarket markets, and each one can buy **one piece of advice per market**
+for a cent. The cent doesn't go to the advisor. It waits in escrow until the market settles, and then:
 
-`pnpm arena report` prints the full ledger: who got paid, every lesson with its Walrus blob id, and how each agent's buying changed.
+- if the advice made the agent's call better, the advisor keeps it;
+- if it didn't, the cent goes back to the agent.
 
-## How it learned
-How much of each agent's forecasting error the advice it bought removed, first quarter of its calls vs last quarter:
+Every call is sealed on **Walrus Memory** before the market closes, so nobody can change it afterwards. Every result comes
+through **Tatum**. Every payment is **MPP** in USDC on **Sui**. And every agent keeps a diary in its own Walrus Memory: what
+it learned about each advisor, which it reads again before it spends another cent.
 
-| agent | first quarter | last quarter |
+Nothing in the arena is a language model guessing. The advisors, the agents and the scoring are plain code, and every number
+on the site can be traced to a sealed call.
+
+## What happened when we let it run
+
+The arena has played a round every hour or two since October 29. As of November 4:
+
+- **15,020** calls sealed on Walrus mainnet, in 398 batches verified on Sui
+- **953** memories written to Walrus: seals, one episode per agent per round, and 85 lessons
+- **3,685** settled calls with a before-and-after score
+- **381** MPP payments; $20.24 paid to advisors whose advice helped, $16.60 refunded
+
+The agents learned whom to pay. Here's how much of each agent's forecasting error the advice it bought removed, in its first
+quarter of calls and in its latest quarter:
+
+| agent | first quarter | latest quarter |
 |---|---|---|
-| Rookie | 8.0% | **21.5%** |
-| Chartist | 1.5% | **19.1%** |
-| Cautious Quant | advice made it 8.7% worse | **2.6% better** |
-| Gambler | 16.3% | **17.8%** |
+| Rookie | 8.2% | **17.7%** |
+| Chartist | 2.2% | **15.2%** |
+| Cautious Quant | made it 8.1% worse | **4.0% better** |
+| Gambler | 16.8% | **21.1%** |
 
-**The memory test.** Since Nov 4 a fifth agent, the **Goldfish**, plays every round: Rookie's identical twin (same blind
-call, same advisors, same markets) that never reads or writes memory. The gap between Rookie and the Goldfish on the same
-markets is what Walrus Memory is worth; the site shows it live (`/api/arena/memory-test`).
+On its first day Rookie paid The Fader three times and got all three cents back. At 17:10 it wrote its first lesson,
+*"reading The Fader has made my forecasts worse — stop buying"*, and sealed it on Walrus. Now six of its eight cents a
+round go to The Crowd, and it buys the Loud Tipster only in its random fair tests, about 3% of the time.
 
-Each agent starts out buying from all seven advisors more or less evenly. After every settled round it updates a
-per-advisor verdict from its own paired Brier scores (`helps_you`, `makes_you_worse`, `rarely_moves_you`,
-`no_clear_effect`, with a 95% interval). When a verdict changes, it writes a **lesson** to Walrus Memory, and it
-recalls those lessons before the next purchase. From the first third of each agent's purchases to the last third:
+### The Goldfish test
 
-- **Rookie:** The Crowd 35% → 0%; The Quant 11% → **54%**; outside advisor Crowd Plus 5% → 32%. Learned "The Fader makes me worse" twice.
-- **Chartist:** The Crowd 27% → **68%**, The Quant 22% → 27%; the Loud Tipster dropped from 11% to 0%.
-- **Gambler:** bought the Loud Tipster 24% of the time at first, then never again; Book Reader 5% → **73%** after the lesson "reading Book Reader has made my forecasts better".
-- **Cautious Quant:** moved toward The Quant and Book Reader (6% → 39%).
-
-Wipe the database and `pnpm arena rebuild` restores every agent's trust from Walrus Memory alone.
+To see what memory is actually worth, Rookie has a twin called **Goldfish**: the same blind calls, the same advisors, the same
+markets, but no memory at all. It picks an advisor at random every round. On the same 48 markets, Rookie's forecast error
+(Brier score) is **0.217**; Goldfish's is **0.251**, worse than flipping a coin. The live comparison is on the
+[home page](https://lift-arena.vercel.app/#memory).
 
 ## One round
-| step | what happens | where |
-|---|---|---|
-| 1. Blind call | 4 agents (and any human players) give P(UP) from price features only, no prices or tips. Sealed. | `src/arena/lock.ts` |
-| 2. Takes | 7 code advisors + external advisors publish a take per market. Sealed **before** anyone can read them. | `src/arena/brain/models.ts` |
-| 3. Buy | Each agent recalls its lessons from Walrus Memory, picks takes (or declines) and pays in **one MPP request** (HTTP 402 → USDC on Sui → retry). The money sits in a clearinghouse escrow. | `src/arena/pay/` |
-| 4. Informed call | blind + trust × (take − blind). Sealed and linked to the blind call and the exact take read. | `src/arena/lock.ts` |
-| 5. Settle | Tatum reports the result; both calls get a Brier score. | `src/arena/settle.ts` |
-| 6. Pay-for-lift | Escrow is released to the advisor if the take improved the buyer's Brier score, refunded otherwise: one Sui transaction per round. | `src/arena/pay/payouts.ts` |
-| 7. Remember | One episode memory per agent per round, plus a lesson whenever a verdict changes, written to Walrus Memory. | `src/arena/memory.ts` |
 
-Markets: every hour, the eight Polymarket 15-minute crypto Up/Down markets (BTC, ETH, SOL, XRP, DOGE, BNB, HYPE, ZEC).
-On matchdays it adds Premier League, LaLiga, Champions League and Bundesliga matches ("Will the home team win?"),
-with a Whale advisor that reads the biggest open Polymarket positions through Tatum.
-
-## How each sponsor tech is used
-**Walrus Memory (mainnet).** Each phase of a round (blind, takes, informed) is a Merkle batch (RFC 6962 style); the
-root is committed as a Walrus Memory namespace `rcptb1:<round>:<phase>:<root>`. Human single calls use `rcpt1:`.
-Agents keep `arena1:<agent>:episodes` and `arena1:<agent>:lessons` and recall them before buying.
-`/verify` checks a call end to end: forecast hash, Merkle inclusion, namespace tags, the commit transaction's
-inputs on Sui, that it succeeded, the account and owner, that it landed before the market closed (and, for informed
-calls, after the blind seal), and that the blob is still alive. Details and honest limits: [docs/PROOF.md](docs/PROOF.md).
-
-**Tatum.** Prediction API for live 15-minute markets (`tag=15M`, `sort=endingSoon`), league events, per-market
-positions (the Whale advisor) and the resolved feed for settlement. Sui reads (checkpoints, transactions for
-verification) go through Tatum's native Sui gRPC gateway. A daily credit cap keeps it inside the free plan.
-
-**MPP on Sui (`mppx` + `@suimpp/mpp`).** Advisors' takes are sold behind HTTP 402. Each agent pays once per round
-for its whole bundle; the arena holds the money and settles pay-for-lift in one programmable transaction.
-Payments run on Sui **testnet** USDC for now.
-
-## Play it yourself
-On `/play` anyone can make a blind call, read one take and call again. Reading a random take is free; or connect any Sui
-wallet (Slush, Phantom, Suiet…) and **pay for a take over MPP, exactly like the agents**: the wallet signs the USDC transfer
-and the MPP payment proof, the money is escrowed, and after the market settles it goes to the advisor only if the take made
-your call better; otherwise it comes back to the wallet that paid (testnet USDC for now: faucet.circle.com). Every sealed
-call has a share page (`/c/<hash>`) with its own preview image.
-
-## Sell your own advice
-Any web address that answers a POST with a probability can be an advisor. Your takes are sealed before buyers read
-them, and your Sui address is paid every time a take made a buyer's call better. See `/advisors` on the site and
-`scripts/register-advisor.ts`; `examples/` has a working advisor.
-
-## Run it locally (Windows PowerShell or any shell)
-```powershell
-# Node 22+ and pnpm 10 (run: corepack enable)
-pnpm install
-copy .env.example .env.local      # fill it in; MEMWAL_MOCK=1 runs without Walrus
-pnpm db:migrate
-pnpm dev                          # site on http://localhost:3000
-pnpm arena worker                 # the arena loop (run only ONE worker at a time)
+```mermaid
+sequenceDiagram
+    participant T as Tatum
+    participant A as Agent
+    participant W as Walrus Memory
+    participant E as Escrow (Sui)
+    participant V as Advisor
+    T->>A: live markets and prices
+    A->>W: blind call, sealed
+    V->>W: takes, sealed before anyone reads them
+    W-->>A: recall lessons
+    A->>E: pay 1¢ per take over MPP (HTTP 402)
+    E-->>A: the sealed takes
+    A->>W: informed call, sealed
+    T->>A: result
+    E->>V: paid if the take made the call better
+    E->>A: refunded if it didn't
+    A->>W: episode + lesson
 ```
 
-Other commands:
-| command | does |
+1. **Blind call.** Each agent gives P(UP) for every market from price features only. No prices, no tips. Sealed.
+2. **Takes.** Every advisor publishes a take per market. Sealed before any buyer can read them.
+3. **Buy.** Each agent recalls its lessons from Walrus Memory, picks at most one take per market and pays for the bundle in a
+   single MPP request.
+4. **Informed call.** The agent moves toward the take as far as it trusts that advisor. Sealed, linked to the blind call and
+   to the exact take it read.
+5. **Settle.** Tatum reports the result. Both calls get a Brier score, and the difference is the advice's lift.
+6. **Pay for lift.** One Sui transaction per round releases or refunds every cent.
+7. **Remember.** One episode per agent, and a lesson whenever its verdict on an advisor changes.
+
+The markets are Polymarket's 15-minute crypto Up/Down markets (BTC, ETH, SOL, XRP, DOGE, BNB, HYPE, ZEC), plus Premier
+League, LaLiga, Champions League and Bundesliga matches on matchdays.
+
+## Check any call yourself
+
+![Verify: a sealed call checked against Sui mainnet](docs/img/verify.jpg)
+
+Paste a call's hash into [/verify](https://lift-arena.vercel.app/verify) and it's re-checked live against Sui mainnet through
+Tatum's gRPC gateway: the hash, the Merkle proof, the namespace written in the commit transaction, the account, the owner, and
+that it landed before the market closed. Change one number and the check fails.
+
+## Play, or sell your own advice
+
+- **Play.** On [/play](https://lift-arena.vercel.app/play) you make the same blind call the agents make, read one take and call
+  again. A random take is free. Or connect a Sui wallet and pay a cent for one, exactly like the agents; it comes back to your
+  wallet if the take didn't help.
+- **Sell advice.** Any HTTPS endpoint that answers with a probability can be an advisor. Its takes are sealed with the
+  built-ins', the agents find it through fair tests, and its Sui address is paid only for takes that helped.
+  [examples/advisor/server.mjs](examples/advisor/server.mjs) is a complete advisor in 30 lines.
+
+## How each piece is used
+
+| | |
 |---|---|
+| **Walrus Memory** (mainnet) | Each phase of a round is one Merkle root written as a namespace, `rcptb1:<round>:<phase>:<root>`. Agents keep `arena1:<agent>:episodes` and `arena1:<agent>:lessons` and recall their lessons before every purchase. `pnpm arena rebuild` restores every agent from Walrus alone. |
+| **Tatum** | The Prediction API for live 15-minute markets, league events, market positions and resolved outcomes; the native Sui gRPC gateway for checkpoints and transactions when verifying. |
+| **MPP on Sui** | Takes are sold behind HTTP 402 with `mppx` and `@suimpp/mpp`. One payment per agent per round into the clearinghouse, settled pay-for-lift in one programmable transaction. |
+
+The details, from the seal format to the verdict rules: [docs/how-it-works.md](docs/how-it-works.md).
+
+## Run it
+
+You need Node 22 and pnpm 10 (`corepack enable`).
+
+```bash
+pnpm install
+cp .env.example .env.local     # fill it in; MEMWAL_MOCK=1 runs without Walrus
+pnpm db:migrate
+pnpm dev                       # the site, on http://localhost:3000
+pnpm arena worker              # the arena loop (run one worker at a time)
+```
+
+| command | what it does |
+|---|---|
+| `pnpm arena lock-now` | play a round right now |
 | `pnpm arena report` | the ledger: payouts, lessons, how buying changed |
-| `pnpm arena rebuild` | restore agent memory from Walrus Memory |
-| `pnpm arena wallets` / `faucet` / `fund` | show arena wallets, get testnet SUI, move USDC to agents |
-| `pnpm arena lock-now` | play one round immediately |
-| `pnpm arena:sim` | offline simulation with fake markets |
-| `pnpm check` | typecheck + lint + 86 tests |
+| `pnpm arena rebuild` | rebuild every agent from Walrus Memory and compare |
+| `pnpm arena wallets` · `fund` · `faucet` | arena wallets and testnet money |
+| `pnpm arena:sim` | the same brain on simulated markets, offline |
+| `pnpm check` | lint, typecheck and the test suite |
 
-## Deploy
-- **Arena server** (worker + API + example advisor): any small Linux VM. `deploy/ec2-setup.sh` sets up Node, pnpm,
-  systemd services (`receipts-worker`, `receipts-web`, `receipts-advisor`) and Caddy for HTTPS.
-  `deploy/deploy-code.sh` updates the code; `deploy/snapshot.sh` backs up the database.
-- **Vercel (optional front end):** import the repo and set two environment variables to the arena server's address:
-  `ARENA_API_ORIGIN` (all `/api/*` calls are proxied there) and `NEXT_PUBLIC_ARENA_API_ORIGIN` (the live feed
-  connects straight to it). No secrets go on Vercel.
+**Deploying.** The arena runs on one small Linux server: `deploy/ec2-setup.sh` installs Node, the systemd services and Caddy
+for HTTPS, and `deploy/deploy-code.sh` ships updates. The site can also run on Vercel with `ARENA_API_ORIGIN` pointing at
+that server; Vercel never holds a secret.
 
-Secrets (`MEMWAL_PRIVATE_KEY`, `TATUM_API_KEY`, `ARENA_WALLET_SEED`, `AGENT_WALLET_PRIVATE_KEY`) live only in the
-server's `.env.local`, never in the repo or the browser.
+## Layout
 
-## Limits, honestly
-- Agent payments are on Sui **testnet** USDC; seals and memory are on **mainnet**.
-- The seal proves *when* a call was made and that it wasn't changed, not that the player didn't peek somewhere else.
-- Verdicts need at least 8 paired episodes per agent and advisor, so early verdicts are mostly "no clear effect yet".
-- One arena server holds the database; Walrus Memory is the durable copy of what the agents learned.
+```
+src/arena      the arena: rounds, advisors, agents, learning, memory, payments, people
+src/core       seals, Merkle batches, verification, scoring (pure, fully tested)
+src/lib        Walrus Memory, Sui and environment clients
+src/app        the site and its API
+scripts        the arena CLI and smoke tests
+tests          vitest
+examples       an outside advisor
+deploy         server setup
+```
 
-## Stack and credits
-Next.js 16, Drizzle + libSQL, vitest, `@mysten/sui`, MemWal SDK, `mppx`, `@suimpp/mpp`.
-Hero video: "Printing a receipt" from [Mixkit](https://mixkit.co) (Mixkit free license). Fonts: Big Shoulders and
-IBM Plex Mono (SIL Open Font License, see `src/app/fonts/`). Docs: [ARENA](docs/ARENA.md) · [PROOF](docs/PROOF.md) ·
-[SCORING](docs/SCORING.md) · [ARCHITECTURE](docs/ARCHITECTURE.md).
+## Limits
 
-18+. Lift takes no bets and gives no financial advice.
+- Agent payments run on Sui testnet USDC. Seals and memory are on mainnet.
+- A seal proves when a call was made and that it hasn't changed. It doesn't prove the caller didn't look somewhere else.
+- A verdict needs at least 8 paired calls, so early verdicts are mostly "no clear effect yet".
+- One server holds the database. Walrus Memory is the durable copy of what the agents learned.
+
+## Credits
+
+Built for the [Tatum × Walrus Total Recall hackathon](https://tatum.io/hackathon/total-recall). Background footage from
+[Mixkit](https://mixkit.co) (Mixkit free licence). Fonts: Anybody, Schibsted Grotesk, Inter and Geist Mono (SIL Open Font
+Licence). Lift takes no bets and gives no financial advice. 18+.

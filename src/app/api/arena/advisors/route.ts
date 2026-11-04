@@ -9,7 +9,7 @@ import { getDb } from '@/db/client';
 export async function GET() {
   await connection();
   const lb = await leaderboard(getDb());
-  return Response.json({ protocol: PROTOCOL, docs: '/docs/ARENA.md#open-advisor-marketplace', advisors: lb.advisors });
+  return Response.json({ protocol: PROTOCOL, docs: 'https://github.com/miracle352/Lift/blob/main/docs/how-it-works.md#selling-advice', advisors: lb.advisors });
 }
 
 /**

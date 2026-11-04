@@ -3,7 +3,7 @@ import { bytesToHex, hexToBytes } from '@noble/hashes/utils.js';
 
 /**
  * Binary Merkle tree over 32-byte leaves (forecast hashes), used to seal a whole arena round
- * with ONE Walrus Memory write (docs/PROOF.md, "Batch seals").
+ * with ONE Walrus Memory write (docs/how-it-works.md, "Seals").
  *
  * Construction (RFC 6962 style domain separation, no leaf duplication):
  *   leafNode(h)     = sha256(0x00 || h)

@@ -3,7 +3,7 @@ import { RECEIPTS } from './constants';
 import { hashJson, randomSaltHex, sha256Hex } from './hash';
 
 /**
- * A sealed forecast (docs/PROOF.md). Every field is covered by the hash, so the
+ * A sealed forecast (docs/how-it-works.md). Every field is covered by the hash, so the
  * JSON that gets revealed must be byte-for-byte what was sealed (after JCS).
  *
  * kind:

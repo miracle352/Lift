@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { TATUM } from '@/core/constants';
 
 /**
- * Tatum Prediction API client (docs/vendor/tatum-prediction-api.md). Node only (worker + routes).
+ * Tatum Prediction API client (https://docs.tatum.io, Prediction API). Node only (worker + routes).
  *
  * Credits are the scarce resource: the free plan is 100k credits for the LIFETIME of the key and
  * most prediction endpoints cost 100 credits. Every call goes through `tatumGet`, which reports the

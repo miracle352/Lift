@@ -1,5 +1,5 @@
 /**
- * Deterministic scoring (docs/SCORING.md). No LLM ever produces a number shown as a score.
+ * Deterministic scoring (docs/how-it-works.md). No LLM ever produces a number shown as a score.
  *
  * Brier score for one binary forecast: (p - y)^2, p in [0,1], y in {0,1}. Lower is better.
  * Advice delta for one episode: brier(blind) - brier(informed). Positive = the advice helped.

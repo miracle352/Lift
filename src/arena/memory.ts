@@ -7,7 +7,7 @@ import { advisorDirectory, advisorName, type AdvisorInfo } from './registry';
 import { agentNamespaces, type ArenaDeps } from './deps';
 
 /**
- * Agent memory on Walrus Memory (docs/ARENA.md, "Memory").
+ * Agent memory on Walrus Memory (docs/how-it-works.md, "Memory").
  *
  * - episodes namespace: one memory per agent per settled round (what it believed, whose take it bought,
  *   what happened). Enough to rebuild the agent's trust and stats from Walrus alone (`pnpm arena:rebuild`).

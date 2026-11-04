@@ -6,7 +6,7 @@ import { forecastHash } from './forecast';
 import { marketTag, parseSealNamespace, sealNamespaceFor, userTag } from './namespace';
 
 /**
- * Verifies a sealed forecast against Sui history (docs/PROOF.md).
+ * Verifies a sealed forecast against Sui history (docs/how-it-works.md).
  *
  * Inputs are the "core API" shapes returned by @mysten/sui clients
  * (`client.core.getTransaction(...)`, `client.core.getObject(...)`), so the same code

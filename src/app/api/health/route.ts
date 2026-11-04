@@ -11,9 +11,7 @@ export async function GET() {
       walrusMemory: has('MEMWAL_PRIVATE_KEY') && has('MEMWAL_ACCOUNT_ID') && has('MEMWAL_OWNER_ADDRESS'),
       memwalMock: process.env.MEMWAL_MOCK === '1',
       database: has('DATABASE_URL'),
-      session: has('SESSION_SECRET'),
-      cron: has('CRON_SECRET'),
-      payments: has('MPP_SECRET_KEY') && has('AGENT_WALLET_PRIVATE_KEY'),
+      payments: has('MPP_SECRET_KEY') && has('ARENA_WALLET_SEED'),
     },
   });
 }

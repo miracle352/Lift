@@ -6,7 +6,7 @@ import { TATUM } from '@/core/constants';
 /**
  * Sui mainnet client over Tatum's NATIVE gRPC gateway (server/Node only).
  *
- * Why this exact setup (verified 2026-10-22, see docs/vendor/sui-and-tatum-notes.md):
+ * Why this exact setup (verified 2026-10-22):
  * - Sui has deprecated JSON-RPC; public fullnodes return "Method not found" and Tatum's JSON-RPC
  *   gateway returned "No healthy upstream" for every method while gRPC kept working.
  * - Tatum's gRPC endpoint speaks native gRPC (HTTP/2), not gRPC-web, so SuiGrpcClient's default
