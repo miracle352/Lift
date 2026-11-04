@@ -19,28 +19,20 @@ const geistMono = localFont({
   preload: false,
 });
 
-const bsd = localFont({ src: './fonts/bigshoulders-display-var.woff2', variable: '--font-bsd', weight: '100 900', display: 'swap' });
-const bst = localFont({ src: './fonts/bigshoulders-text-var.woff2', variable: '--font-bst', weight: '100 900', display: 'swap' });
-const plex = localFont({
-  src: [
-    { path: './fonts/plexmono-400.woff2', weight: '400' },
-    { path: './fonts/plexmono-500.woff2', weight: '500' },
-    { path: './fonts/plexmono-600.woff2', weight: '600' },
-  ],
-  variable: '--font-plex',
-  display: 'swap',
-});
+// Lift type: Anybody (variable width, display) + Schibsted Grotesk (text). Both SIL OFL, self-hosted.
+const any = localFont({ src: './fonts/anybody-var.woff2', variable: '--font-any', weight: '100 900', display: 'swap' });
+const sch = localFont({ src: './fonts/schibsted-var.woff2', variable: '--font-sch', weight: '400 900', display: 'swap' });
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.APP_URL ?? 'http://localhost:3000'),
-  title: { default: 'Receipts — advice that has to earn its fee', template: '%s · Receipts' },
+  title: { default: 'Lift — advice that has to earn its fee', template: '%s · Lift' },
   description:
-    'Agents and people make sealed calls on live Polymarket markets, buy one piece of advice, and the advisor is paid only if it made the call better. Sealed on Walrus Memory, verified through Tatum, paid in USDC on Sui.',
-  openGraph: { type: 'website', siteName: 'Receipts' },
+    'AI agents and people call live Polymarket markets, buy one piece of advice, and the advisor is paid only if it made the call better. Every call sealed on Walrus Memory, checked through Tatum, paid over MPP in USDC on Sui.',
+  openGraph: { type: 'website', siteName: 'Lift' },
   twitter: { card: 'summary_large_image' },
 };
 
-export const viewport: Viewport = { themeColor: '#14201f', colorScheme: 'dark' };
+export const viewport: Viewport = { themeColor: '#1b30e8', colorScheme: 'light' };
 
 /*
  * Scroll reveal without React: runs before paint, marks <html> so [data-reveal] starts hidden,
@@ -51,7 +43,7 @@ const revealScript = `(()=>{var d=document.documentElement;if(!('IntersectionObs
 
 export default function RootLayout({ children }: LayoutProps<'/'>) {
   return (
-    <html lang="en" className={`${inter.variable} ${geistMono.variable} ${bsd.variable} ${bst.variable} ${plex.variable} h-full antialiased`} suppressHydrationWarning>
+    <html lang="en" className={`${inter.variable} ${geistMono.variable} ${any.variable} ${sch.variable} h-full antialiased`} suppressHydrationWarning>
       <head>
         <script dangerouslySetInnerHTML={{ __html: revealScript }} />
       </head>

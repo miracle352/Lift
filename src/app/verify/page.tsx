@@ -8,7 +8,7 @@ export const metadata: Metadata = { title: 'Verify a call' };
 export default function VerifyPage() {
   return (
     <>
-      <Nav />
+      <Nav light />
       <main className="a-page">
         <div className="a-wrap">
           <h1 className="a-h2">Check any call yourself</h1>

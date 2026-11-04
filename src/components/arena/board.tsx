@@ -4,6 +4,7 @@ import type { CSSProperties } from 'react';
 import { CountUp } from './motion';
 import { advisorName, agentName, usd, VERDICT } from './names';
 
+
 interface Leaderboard {
   agents: { id: string; name: string; episodes: number; advisors: { advisorId: string; n: number; trust: number; verdict: string; meanDelta: number | null }[] }[];
   advisors: { id: string; name: string; pitch: string; kind: string; sold: number; releasedMicros: number; refundedMicros: number; escrowedMicros: number; priceMicros: number }[];
@@ -16,6 +17,7 @@ interface Stats {
   lessonsOnWalrus: number;
   settledRounds: number;
   tatumCalls: number;
+  memoriesOnWalrus: number;
 }
 
 function useJson<T>(url: string, everyMs = 60_000) {
@@ -48,8 +50,8 @@ export function Earnings() {
       <thead>
         <tr>
           <th>Advisor</th>
-          <th>Paid for helping · refunded for not</th>
-          <th style={{ textAlign: 'right' }}>Paid / refunded</th>
+          <th>Gold: paid because it helped. Pink: refunded.</th>
+          <th style={{ textAlign: 'right' }}>Totals</th>
         </tr>
       </thead>
       <tbody>
@@ -69,7 +71,7 @@ export function Earnings() {
               </div>
             </td>
             <td className="a-num">
-              {usd(a.releasedMicros)} / {usd(a.refundedMicros)}
+              <b>{usd(a.releasedMicros)}</b> kept · <em>{usd(a.refundedMicros)}</em> refunded
             </td>
           </tr>
         ))}
@@ -117,26 +119,34 @@ export function VerdictGrid() {
   );
 }
 
-export function Lessons() {
+const LESSON_ORDER: Record<string, number> = { helps_you: 0, makes_you_worse: 0, rarely_moves_you: 1, no_clear_effect: 2, not_enough_evidence: 3 };
+
+/** The latest turning points the agents wrote to their Walrus Memory, in plain words. */
+export function Lessons({ count = 6 }: { count?: number }) {
   const lb = useJson<Leaderboard>('/api/arena/leaderboard');
   if (!lb) return null;
+  const picked = [...lb.lessons].sort((a, b) => (LESSON_ORDER[a.verdict] ?? 3) - (LESSON_ORDER[b.verdict] ?? 3) || b.at.localeCompare(a.at)).slice(0, count);
   return (
-    <ul className="a-lessons" data-m>
-      {lb.lessons.slice(0, 6).map((l, i) => (
-        <li key={`${l.agentId}${l.advisorId}${l.at}`} className="a-lesson" style={{ '--i': i } as CSSProperties}>
-          {l.text.split(' [[')[0]}
-          <small>
-            {new Date(l.at).toUTCString().slice(5, 22)} UTC ·{' '}
-            {l.walrusBlobId ? (
-              <a href={`https://walruscan.com/mainnet/blob/${l.walrusBlobId}`} target="_blank" rel="noreferrer">
-                Walrus blob {l.walrusBlobId.slice(0, 10)}…
-              </a>
-            ) : (
-              'writing to Walrus…'
-            )}
-          </small>
-        </li>
-      ))}
+    <ul className="a-lessons">
+      {picked.map((l) => {
+        const m = /^Lesson for [^:]+: (.*?) \(n=(\d+)/.exec(l.text);
+        const said = m ? m[1] : l.text.split(' [[')[0];
+        return (
+          <li key={`${l.agentId}${l.advisorId}${l.at}`} className="a-lesson">
+            <b>{agentName(l.agentId)}</b> learned: <span className={`v-${l.verdict}`}>{said}</span>.
+            <small>
+              {new Date(l.at).toUTCString().slice(5, 22)} UTC{m ? `, after ${m[2]} calls with this advisor` : ''}.{' '}
+              {l.walrusBlobId ? (
+                <a href={`https://walruscan.com/mainnet/blob/${l.walrusBlobId}`} target="_blank" rel="noreferrer">
+                  Open on Walrus
+                </a>
+              ) : (
+                'Writing to Walrus…'
+              )}
+            </small>
+          </li>
+        );
+      })}
     </ul>
   );
 }
@@ -144,10 +154,10 @@ export function Lessons() {
 export function StatsStrip() {
   const s = useJson<Stats>('/api/arena/stats');
   const items: [number | undefined, string][] = [
-    [s?.sealedForecasts, 'calls sealed on Walrus'],
-    [s?.settledEpisodes, 'calls settled by the market'],
-    [s?.settledRounds, 'rounds played'],
-    [s?.lessonsOnWalrus, 'lessons the agents remember'],
+    [s?.sealedForecasts, 'calls sealed before their market closed'],
+    [s?.settledEpisodes, 'calls scored by the market'],
+    [s?.memoriesOnWalrus, 'memories written to Walrus mainnet'],
+    [s?.lessonsOnWalrus, 'lessons the agents recall before buying'],
   ];
   return (
     <div className="a-stats">

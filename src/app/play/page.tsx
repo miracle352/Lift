@@ -7,7 +7,7 @@ export const metadata: Metadata = { title: 'Play a round' };
 export default function PlayPage() {
   return (
     <>
-      <Nav />
+      <Nav light />
       <main className="a-page">
         <div className="a-wrap">
           <h1 className="a-h2">Call it, read one take, call it again</h1>

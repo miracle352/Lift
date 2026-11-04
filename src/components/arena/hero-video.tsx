@@ -2,7 +2,8 @@
 import { useEffect, useRef } from 'react';
 
 /**
- * Real footage (Mixkit, free licence: a cockpit printer feeding paper), looped seamlessly in code:
+ * Real footage (Mixkit, free licence: a stadium crowd seen through the goal net), duotoned in CSS onto lift blue
+ * and looped seamlessly in code:
  * two <video> elements play the same clip half a cycle apart and crossfade, so the cut never shows.
  * A slow push-in runs in CSS. Off screen or with reduced motion, only the poster frame is shown.
  */
@@ -15,7 +16,10 @@ export function HeroVideo() {
     const va = a.current;
     const vb = b.current;
     if (!el || !va || !vb) return;
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      va.classList.add('is-on'); // still poster frame only
+      return;
+    }
     let front = va;
     let back = vb;
     let timer = 0;
@@ -53,13 +57,12 @@ export function HeroVideo() {
   }, []);
   const src = (
     <>
-      <source src="/media/printer.webm" type="video/webm" />
-      <source src="/media/printer.mp4" type="video/mp4" />
+      <source src="/media/crowd.mp4" type="video/mp4" />
     </>
   );
   return (
-    <div ref={box} className="a-hero-media" style={{ backgroundImage: 'url(/media/printer-poster.jpg)' }} aria-hidden>
-      <video ref={a} muted playsInline preload="auto" poster="/media/printer-poster.jpg">
+    <div ref={box} className="a-hero-media" aria-hidden>
+      <video ref={a} muted playsInline preload="auto" poster="/media/crowd-poster.jpg">
         {src}
       </video>
       <video ref={b} muted playsInline preload="auto">

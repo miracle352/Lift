@@ -1,4 +1,4 @@
-import { and, desc, eq, gt, inArray, lte, sql } from 'drizzle-orm';
+import { and, asc, desc, eq, gt, inArray, like, lte, sql } from 'drizzle-orm';
 import { buildProofs } from '@/core/merkle';
 import type { Db } from '@/db/client';
 import { arenaBatches, arenaEpisodes, arenaEvents, arenaForecasts, arenaLessons, arenaMarkets, arenaPayouts, arenaPurchases, arenaRounds, arenaTakes, tatumCalls } from '@/db/schema';
@@ -224,7 +224,25 @@ export async function memoryTest(db: Db, withMemory = 'rookie', control = 'goldf
     memory: { agentId: withMemory, brier: mean(pairs.map((p) => b(p.m.informedBps, p.m.outcome))), liftPerCall: mean(pairs.map((p) => p.m.deltaMicro / 1e6)), helped: pairs.filter((p) => p.m.deltaMicro > 0).length, ...spend(withMemory) },
     goldfish: { agentId: control, brier: mean(pairs.map((p) => b(p.c.informedBps, p.c.outcome))), liftPerCall: mean(pairs.map((p) => p.c.deltaMicro / 1e6)), helped: pairs.filter((p) => p.c.deltaMicro > 0).length, ...spend(control) },
     series,
+    learning: await learningCurve(db),
   };
+}
+
+/** How much the advice each agent bought cut its error (Brier), in its first vs last quarter of calls. */
+export async function learningCurve(db: Db) {
+  const out = [];
+  for (const f of FORECASTERS.filter((x) => x.memory !== false)) {
+    const rows = await db.select({ b: arenaEpisodes.blindBps, i: arenaEpisodes.informedBps, o: arenaEpisodes.outcome }).from(arenaEpisodes).where(eq(arenaEpisodes.agentId, f.id)).orderBy(asc(arenaEpisodes.settledAt));
+    const q = Math.floor(rows.length / 4);
+    if (q < 10) continue;
+    const cut = (xs: typeof rows) => {
+      const blind = xs.reduce((s, x) => s + (x.b / 10000 - x.o) ** 2, 0);
+      const informed = xs.reduce((s, x) => s + (x.i / 10000 - x.o) ** 2, 0);
+      return Math.round((1000 * (blind - informed)) / blind) / 10;
+    };
+    out.push({ agentId: f.id, name: f.name, calls: rows.length, earlyCutPct: cut(rows.slice(0, q)), lateCutPct: cut(rows.slice(-q)) });
+  }
+  return out;
 }
 
 /** Everything the arena has written to Walrus Memory, newest first (seals, episode memories, lessons). */
@@ -256,4 +274,39 @@ export async function tailStart(db: Db, n: number): Promise<number> {
     .orderBy(desc(arenaEvents.id))
     .limit(n);
   return rows.length ? rows[rows.length - 1].id - 1 : 0;
+}
+
+/** The money in the latest settled crypto round: who bought which take, and where each cent went. */
+export async function roundFlow(db: Db) {
+  const [r] = await db.select().from(arenaRounds).where(and(eq(arenaRounds.status, 'settled'), like(arenaRounds.id, '15m:%'))).orderBy(desc(arenaRounds.closeTime)).limit(1);
+  if (!r) return null;
+  const buys = await db.select().from(arenaPurchases).where(and(eq(arenaPurchases.roundId, r.id), eq(arenaPurchases.action, 'buy')));
+  const declines = await db.select({ n: sql<number>`count(*)` }).from(arenaPurchases).where(and(eq(arenaPurchases.roundId, r.id), eq(arenaPurchases.action, 'decline')));
+  const markets = await db.select({ asset: arenaMarkets.asset, resolution: arenaMarkets.resolution }).from(arenaMarkets).where(eq(arenaMarkets.roundId, r.id));
+  const [payout] = await db.select().from(arenaPayouts).where(eq(arenaPayouts.roundId, r.id));
+  const dir = await advisorDirectory(db);
+  return {
+    roundId: r.id,
+    closeTime: r.closeTime.toISOString(),
+    markets,
+    declines: Number(declines[0]?.n ?? 0),
+    flows: buys.map((p) => ({ agentId: p.agentId, advisorId: p.advisorId!, advisor: dir.get(p.advisorId!)?.name ?? p.advisorId, micros: p.priceMicros, status: p.payStatus, network: p.payNetwork, escrowDigest: p.escrowDigest })),
+    payout: payout ? { digest: payout.digest, network: payout.network, releasedMicros: payout.releasedMicros, refundedMicros: payout.refundedMicros } : null,
+  };
+}
+
+/** How each agent's buying changed: share of purchases per advisor, first third vs last third. */
+export async function buyingShift(db: Db) {
+  const all = await db.select({ agentId: arenaPurchases.agentId, advisorId: arenaPurchases.advisorId, action: arenaPurchases.action }).from(arenaPurchases).orderBy(asc(arenaPurchases.createdAt));
+  const share = (list: { advisorId: string | null }[]) => {
+    const out: Record<string, number> = {};
+    for (const p of list) out[p.advisorId!] = (out[p.advisorId!] ?? 0) + 1;
+    for (const k of Object.keys(out)) out[k] = Math.round((1000 * out[k]) / list.length) / 10;
+    return out;
+  };
+  return FORECASTERS.filter((f) => f.memory !== false).map((f) => {
+    const mine = all.filter((p) => p.agentId === f.id && p.action === 'buy');
+    const third = Math.max(1, Math.floor(mine.length / 3));
+    return { agentId: f.id, name: f.name, style: f.style, buys: mine.length, first: share(mine.slice(0, third)), last: share(mine.slice(-third)) };
+  });
 }

@@ -170,7 +170,7 @@ export function PlayApp() {
         <p className="a-p">Playing as @{me.handle}. Pick a market:</p>
         <div className="a-matches">
           {open === null && <p className="a-p">Loading markets…</p>}
-          {open && picks.length === 0 && <p className="a-p">Nothing open right now. A new crypto round opens at minute 51 of every hour.</p>}
+          {open && picks.length === 0 && <p className="a-p">Nothing open right now. A new crypto round opens every two hours.</p>}
           {picks.map((p) => (
             <button key={`${p.roundId}${p.asset}`} className="a-match" aria-pressed={pick?.roundId === p.roundId && pick?.asset === p.asset} onClick={() => choose(p)}>
               <span>

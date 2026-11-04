@@ -1,4 +1,4 @@
-# Receipts — advice that has to earn its fee
+# Lift — advice that has to earn its fee
 
 **Live:** https://34.254.189.94.sslip.io (arena server) · Built for the [Tatum × Walrus "Total Recall" hackathon](https://tatum.io/hackathon/total-recall)
 — Markets & Sports Prediction track, Best Walrus Memory, Agent Payments.
@@ -11,19 +11,31 @@ learn about each advisor to their own Walrus Memory, recall it before they buy, 
 
 No LLM produces any number in the arena. Advisors, agents and scoring are plain code, so every result is reproducible.
 
-## Numbers so far (live, from `/api/arena/stats`, Oct 30 2026)
+## Numbers so far (live, from `/api/arena/stats`, Nov 4 2026)
 | | |
 |---|---|
-| Forecasts sealed on Walrus (Merkle batches) | **2,059** |
-| Batch seals verified on Sui | **63** |
-| Settled episodes (blind call → advice → informed call → result) | **506** |
-| Lessons written to Walrus Memory | **30** |
-| Rounds settled | **16** |
-| Tatum API calls / credits | 52 / ~5,200 |
+| Forecasts sealed on Walrus (Merkle batches) | **14,156** |
+| Batch seals verified on Sui | **380** |
+| Settled episodes (blind call → advice → informed call → result) | **3,443** |
+| Lessons written to Walrus Memory | **82** |
+| Rounds settled | **149** |
 
 `pnpm arena report` prints the full ledger: who got paid, every lesson with its Walrus blob id, and how each agent's buying changed.
 
 ## How it learned
+How much of each agent's forecasting error the advice it bought removed, first quarter of its calls vs last quarter:
+
+| agent | first quarter | last quarter |
+|---|---|---|
+| Rookie | 8.0% | **21.5%** |
+| Chartist | 1.5% | **19.1%** |
+| Cautious Quant | advice made it 8.7% worse | **2.6% better** |
+| Gambler | 16.3% | **17.8%** |
+
+**The memory test.** Since Nov 4 a fifth agent, the **Goldfish**, plays every round: Rookie's identical twin (same blind
+call, same advisors, same markets) that never reads or writes memory. The gap between Rookie and the Goldfish on the same
+markets is what Walrus Memory is worth; the site shows it live (`/api/arena/memory-test`).
+
 Each agent starts out buying from all seven advisors more or less evenly. After every settled round it updates a
 per-advisor verdict from its own paired Brier scores (`helps_you`, `makes_you_worse`, `rarely_moves_you`,
 `no_clear_effect`, with a 95% interval). When a verdict changes, it writes a **lesson** to Walrus Memory, and it
@@ -115,4 +127,4 @@ Hero video: "Printing a receipt" from [Mixkit](https://mixkit.co) (Mixkit free l
 IBM Plex Mono (SIL Open Font License, see `src/app/fonts/`). Docs: [ARENA](docs/ARENA.md) · [PROOF](docs/PROOF.md) ·
 [SCORING](docs/SCORING.md) · [ARCHITECTURE](docs/ARCHITECTURE.md).
 
-18+. Receipts takes no bets and gives no financial advice.
+18+. Lift takes no bets and gives no financial advice.

@@ -1,15 +1,26 @@
 import Link from 'next/link';
 
-export function Nav() {
+/** Mark: a line that rises after a dip — the shape of a forecast getting better after advice. */
+function Mark() {
   return (
-    <header className="a-nav">
+    <svg viewBox="0 0 24 24" aria-hidden fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M2 15 L8 18 L22 5" />
+      <circle cx="22" cy="5" r="1.2" fill="currentColor" />
+    </svg>
+  );
+}
+
+export function Nav({ light = false }: { light?: boolean }) {
+  return (
+    <header className={`a-nav ${light ? 'is-light' : ''}`}>
       <div className="a-wrap">
-        <Link className="a-mark" href="/">
-          <i aria-hidden /> Receipts
+        <Link className="a-mark" href="/" aria-label="Lift, home">
+          <Mark />
+          Lift
         </Link>
         <nav className="a-links" aria-label="Main">
           <Link href="/play">Play</Link>
-          <Link href="/#paid">Leaderboard</Link>
+          <Link href="/#memory">Memory</Link>
           <Link className="a-hide-sm" href="/advisors">
             Sell advice
           </Link>
@@ -24,8 +35,11 @@ export function Foot() {
   return (
     <footer className="a-foot">
       <div className="a-wrap">
-        <span>Receipts, for the Tatum × Walrus Total Recall hackathon. Calls are sealed on Walrus Memory (Sui mainnet) and checked through Tatum.</span>
-        <span>18+. Receipts takes no bets and gives no financial advice. Agent payments run on Sui testnet.</span>
+        <span>
+          Lift, built for the Tatum × Walrus Total Recall hackathon. Calls are sealed on Walrus Memory (Sui mainnet) and checked through Tatum.{' '}
+          <Link href="/memory">Everything we’ve written to Walrus</Link>.
+        </span>
+        <span>18+. Lift takes no bets and gives no financial advice. Agent payments run on Sui testnet.</span>
       </div>
     </footer>
   );

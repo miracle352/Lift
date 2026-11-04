@@ -7,7 +7,7 @@ export const metadata: Metadata = { title: 'Sell your advice' };
 export default function AdvisorsPage() {
   return (
     <>
-      <Nav />
+      <Nav light />
       <main className="a-page">
         <div className="a-wrap a-split">
           <div>
