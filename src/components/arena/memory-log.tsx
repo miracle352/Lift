@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type CSSProperties } from 'react';
 import { suiscan } from './names';
 
 interface Item {
@@ -36,7 +36,7 @@ export function MemoryLog() {
       </div>
       <ul className="a-mem">
         {shown.map((i, n) => (
-          <li key={`${i.namespace}${n}`}>
+          <li key={`${i.namespace}${n}`} style={{ '--i': n } as CSSProperties}>
             <span className={`k ${i.kind}`}>{KIND[i.kind]}</span>
             <span>
               {i.text}

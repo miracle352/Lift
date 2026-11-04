@@ -87,7 +87,7 @@ export function Twins() {
   const y = (v: number) => H - 24 - ((v - lo) / (hi - lo || 1)) * (H - 48);
   const line = (k: 'memory' | 'goldfish') => d.series.map((s, i) => `${i ? 'L' : 'M'}${x(i).toFixed(1)},${y(s[k]).toFixed(1)}`).join(' ');
   return (
-    <div className="a-twins">
+    <div className="a-twins" data-m>
       <div className="a-twin mem">
         <h3>Rookie, with memory</h3>
         <p>Recalls its lessons and past calls from Walrus Memory before it buys.</p>

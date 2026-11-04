@@ -127,12 +127,12 @@ export function Lessons({ count = 6 }: { count?: number }) {
   if (!lb) return null;
   const picked = [...lb.lessons].sort((a, b) => (LESSON_ORDER[a.verdict] ?? 3) - (LESSON_ORDER[b.verdict] ?? 3) || b.at.localeCompare(a.at)).slice(0, count);
   return (
-    <ul className="a-lessons">
-      {picked.map((l) => {
+    <ul className="a-lessons" data-m>
+      {picked.map((l, i) => {
         const m = /^Lesson for [^:]+: (.*?) \(n=(\d+)/.exec(l.text);
         const said = m ? m[1] : l.text.split(' [[')[0];
         return (
-          <li key={`${l.agentId}${l.advisorId}${l.at}`} className="a-lesson">
+          <li key={`${l.agentId}${l.advisorId}${l.at}`} className="a-lesson" style={{ '--i': i } as CSSProperties}>
             <b>{agentName(l.agentId)}</b> learned: <span className={`v-${l.verdict}`}>{said}</span>.
             <small>
               {new Date(l.at).toUTCString().slice(5, 22)} UTC{m ? `, after ${m[2]} calls with this advisor` : ''}.{' '}
@@ -160,7 +160,7 @@ export function StatsStrip() {
     [s?.lessonsOnWalrus, 'lessons the agents recall before buying'],
   ];
   return (
-    <div className="a-stats">
+    <div className="a-stats" data-m>
       {items.map(([n, label]) => (
         <div key={label} className="a-stat">
           <b>{n === undefined ? '—' : <CountUp to={n} />}</b>

@@ -82,6 +82,7 @@ export function MoneyFlow() {
   const [still, setStill] = useState(false);
   const narrow = useNarrow();
   const coins = useRef<(SVGCircleElement | null)[]>([]);
+  const trails = useRef<(SVGCircleElement | null)[]>([]);
   const box = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -155,6 +156,15 @@ export function MoneyFlow() {
     }
     let raf = 0;
     let visible = true;
+    let lastT = 0;
+    const arrived = new Set<string>();
+    const hit = (key: string) => {
+      const el = box.current?.querySelector(`[data-node="${key}"]`);
+      if (!el) return;
+      el.classList.remove('hit');
+      void (el as SVGGraphicsElement).getBBox();
+      el.classList.add('hit');
+    };
     const t0 = performance.now();
     let last = 0;
     const io = new IntersectionObserver(([e]) => (visible = e.isIntersecting));
@@ -168,11 +178,38 @@ export function MoneyFlow() {
         last = ph;
         setPhase(ph);
       }
+      if (t < lastT) arrived.clear(); // new loop
+      lastT = t;
       for (let i = 0; i < n; i++) {
         const { p, cls } = pos(i, t);
         const el = coins.current[i];
         if (el && el.getAttribute('class') !== `coin ${cls}`) el.setAttribute('class', `coin ${cls}`);
         place(el, p); // settled coins rest on their destination until the loop restarts
+        // a short trail behind each moving coin
+        for (let k = 0; k < 2; k++) {
+          const tr = trails.current[i * 2 + k];
+          const q = pos(i, Math.max(0, t - (k + 1) * 55)).p;
+          const moving = p && q && (Math.abs(q.x - p.x) > 0.5 || Math.abs(q.y - p.y) > 0.5);
+          if (tr) {
+            if (tr.getAttribute('class') !== `coin trail ${cls}`) tr.setAttribute('class', `coin trail ${cls}`);
+            place(tr, moving ? q : null);
+            if (moving) tr.setAttribute('r', String(4 - k * 1.2));
+          }
+        }
+        // the node pulses when money lands on it
+        const f = shown[i];
+        const inKey = `in:${i}`;
+        const outKey = `out:${i}`;
+        const delay = (i / n) * (BUY - TRAVEL);
+        if (t >= delay + TRAVEL && t < BUY && !arrived.has(inKey)) {
+          arrived.add(inKey);
+          hit('vault');
+        }
+        const s2 = t - BUY - HOLD - (i / n) * (SETTLE - TRAVEL);
+        if (s2 >= TRAVEL && !arrived.has(outKey)) {
+          arrived.add(outKey);
+          hit(f.status === 'released' ? `adv-${f.advisorId}` : `ag-${f.agentId}`);
+        }
       }
     };
     raf = requestAnimationFrame(frame);
@@ -201,7 +238,7 @@ export function MoneyFlow() {
               return <path key={`out-${id}`} className={`lane ${totals.paid.get(id) ? 'paid' : ''}`} d={`M${L.vault.x},${L.vault.y} Q${c.x},${c.y} ${b.x},${b.y}`} />;
             })}
             <circle className="vault-ring" cx={L.vault.x} cy={L.vault.y} r={40} />
-            <circle className="vault" cx={L.vault.x} cy={L.vault.y} r={40} />
+            <circle className="vault node-v" data-node="vault" cx={L.vault.x} cy={L.vault.y} r={40} />
             <text className="sub" x={L.vault.x} y={L.vault.y + 72} textAnchor="middle">
               escrow
             </text>
@@ -212,7 +249,7 @@ export function MoneyFlow() {
               const name = L.narrow ? (SHORT[id] ?? agentName(id)) : agentName(id);
               return (
                 <g key={id}>
-                  <circle className="node" cx={p.x} cy={p.y} r={9} />
+                  <circle className="node" data-node={`ag-${id}`} cx={p.x} cy={p.y} r={9} />
                   <text className="lbl" x={lb.x} y={lb.y - (L.narrow ? 0 : 4)} textAnchor={lb.anchor}>
                     {name}
                   </text>
@@ -236,7 +273,7 @@ export function MoneyFlow() {
               const name = L.narrow ? (SHORT[id] ?? id) : (shown.find((f) => f.advisorId === id)?.advisor ?? id);
               return (
                 <g key={id}>
-                  <circle className="node" cx={p.x} cy={p.y} r={9} style={paid ? { fill: '#ffce3a', stroke: '#ffce3a' } : undefined} />
+                  <circle className="node" data-node={`adv-${id}`} cx={p.x} cy={p.y} r={9} style={paid ? { fill: '#ffce3a', stroke: '#ffce3a' } : undefined} />
                   <text className="lbl" x={lb.x} y={lb.y + (L.narrow ? 0 : 6)} textAnchor={lb.anchor} style={L.narrow ? { fontSize: 17 } : undefined}>
                     {name}
                   </text>
@@ -246,6 +283,7 @@ export function MoneyFlow() {
                 </g>
               );
             })}
+            {shown.flatMap((f, i) => [0, 1].map((k) => <circle key={`t${i}-${k}`} ref={(el) => void (trails.current[i * 2 + k] = el)} className="coin trail out" r={4} opacity={0} />))}
             {shown.map((f, i) => (
               <circle key={i} ref={(el) => void (coins.current[i] = el)} className="coin out" r={6} opacity={0} />
             ))}

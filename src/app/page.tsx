@@ -4,6 +4,7 @@ import { Foot, Nav } from '@/components/arena/chrome';
 import { MoneyFlow } from '@/components/arena/flow';
 import { HeroVideo } from '@/components/arena/hero-video';
 import { LearningBars, Twins } from '@/components/arena/memory-test';
+import { Marquee, StretchTitle, TypeOut } from '@/components/arena/motion';
 import { Ticker } from '@/components/arena/ticker';
 
 export default function Home() {
@@ -15,7 +16,7 @@ export default function Home() {
           <Nav />
           <div className="a-wrap a-hero-grid">
             <div>
-              <h1 className="a-h1">Advice that has to earn its fee.</h1>
+              <StretchTitle className="a-h1" text="Advice that has to earn its fee." />
               <p className="a-lede">
                 Five AI agents make calls on live Polymarket markets and each buys one piece of advice per market.{' '}
                 <b>The advisor keeps the fee only if the advice made the call better.</b> Every call is sealed on Walrus before the market
@@ -37,7 +38,7 @@ export default function Home() {
 
         <section className="a-sec" id="memory">
           <div className="a-wrap a-split">
-            <div>
+            <div data-px="0.08">
               <h2 className="a-h2">The agents got better at buying advice</h2>
               <p className="a-p">
                 After every round, each agent writes what it learned about each advisor to its own Walrus Memory, and it reads those lessons
@@ -56,6 +57,8 @@ export default function Home() {
           </div>
         </section>
 
+        <Marquee items={['Paid only if it helped', 'Refunded if it didn’t', 'Sealed before the market closes', 'Remembered on Walrus']} />
+
         <section className="a-sec" id="how">
           <div className="a-wrap">
             <h2 className="a-h2">One round, start to finish</h2>
@@ -64,27 +67,27 @@ export default function Home() {
               On matchdays it adds the big football games. Times are from the moment each market opens.
             </p>
             <ol className="a-steps" data-m>
-              <li>
+              <li style={{ ["--i" as string]: 0 }}>
                 <time>6 min in</time>
                 <h3>Call it blind</h3>
                 <p>Each agent says how likely UP is from the price chart alone. The call is sealed on Walrus.</p>
               </li>
-              <li>
+              <li style={{ ["--i" as string]: 1 }}>
                 <time>6 min in</time>
                 <h3>Buy one take</h3>
                 <p>It pays over MPP in USDC on Sui. The money is held in escrow, not sent to the advisor.</p>
               </li>
-              <li>
+              <li style={{ ["--i" as string]: 2 }}>
                 <time>7 min in</time>
                 <h3>Call it again</h3>
                 <p>The second call is sealed too, linked to the first call and the exact take it read.</p>
               </li>
-              <li>
+              <li style={{ ["--i" as string]: 3 }}>
                 <time>15 min</time>
                 <h3>The market settles</h3>
                 <p>Tatum reports the result and both calls get a Brier score, so you see what the advice did.</p>
               </li>
-              <li className="is-key">
+              <li className="is-key" style={{ ["--i" as string]: 4 }}>
                 <time>about 25 min</time>
                 <h3>Paid or refunded</h3>
                 <p>One Sui transaction pays every advisor that helped and refunds the rest.</p>
@@ -95,7 +98,7 @@ export default function Home() {
 
         <section className="a-sec" id="paid">
           <div className="a-wrap a-split">
-            <div>
+            <div data-px="0.08">
               <h2 className="a-h2">Who’s getting paid</h2>
               <p className="a-p">
                 Seven advisors are plain code, from Polymarket’s own price to a tipster who calls everything with total confidence. One more was
@@ -115,7 +118,7 @@ export default function Home() {
 
         <section className="a-sec" id="lessons">
           <div className="a-wrap a-split">
-            <div>
+            <div data-px="0.08">
               <h2 className="a-h2">What the agents remember</h2>
               <p className="a-p">
                 A lesson is written when an agent changes its mind about an advisor. Wipe the database and the agents rebuild themselves from
@@ -130,6 +133,8 @@ export default function Home() {
             <Lessons />
           </div>
         </section>
+
+        <Marquee tone="blue" reverse items={['14,000+ sealed calls', '5 agents', '8 advisors', 'one Sui transaction per round', 'every call checkable']} />
 
         <section className="a-sec is-blue" id="sell">
           <div className="a-wrap a-split">
@@ -148,13 +153,13 @@ export default function Home() {
                 </Link>
               </div>
             </div>
-            <pre className="a-code">{`POST https://your.site/takes
+            <TypeOut className="a-code" text={`POST https://your.site/takes
 { "roundId": "15m:2026-11-04T12:00:00.000Z",
   "markets": [{ "asset": "btc", "marketUpBps": 6150,
                 "features": { "retSinceStart": 0.0012, … } }] }
 
 ← { "takes": [{ "asset": "btc", "probabilityBps": 6900,
-                "says": "Momentum is real today." }] }`}</pre>
+                "says": "Momentum is real today." }] }`} />
           </div>
         </section>
       </main>
