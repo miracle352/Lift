@@ -29,6 +29,9 @@ export default function Home() {
                 <a className="a-btn a-btn-line" href="#memory">
                   See what memory changes
                 </a>
+                <a className="a-btn a-btn-line" href="https://youtu.be/f0UAgE8vhyg" target="_blank" rel="noreferrer">
+                  ▶ Watch the 2-minute film
+                </a>
               </div>
             </div>
             <MoneyFlow />

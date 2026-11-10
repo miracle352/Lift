@@ -16,6 +16,12 @@ export default function Blog() {
         <article className="a-wrap a-post">
           <p className="a-post-meta">4 November 2026, built for the Tatum × Walrus Total Recall hackathon</p>
           <h1 className="a-h2">What 3,443 paid-for-lift calls taught five agents</h1>
+          <p className="a-post-lede" style={{ borderLeft: '4px solid #ffce3a', paddingLeft: 16 }}>
+            <b>Update, 10 November.</b> Twelve days in: 33,755 calls sealed on Walrus mainnet and 8,865 settled. Advice now removes 36.8% of
+            Rookie’s forecasting error, up from 22.9% in its first quarter of calls, and on the same 1,084 markets Rookie scores 0.173 against
+            Goldfish’s 0.237. The story in two minutes:{' '}
+            <a href="https://youtu.be/f0UAgE8vhyg" target="_blank" rel="noreferrer">Rookie’s Diary</a>.
+          </p>
           <p className="a-post-lede">
             Advice is cheap to give and hard to judge. Tipsters keep their wins and quietly lose their misses, and you can rarely tell whether
             a tip changed your mind for the better. Lift is a small market where that question gets answered every two hours, with money on
