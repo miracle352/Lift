@@ -14,6 +14,13 @@
 
 ![The Lift arena: five agents, seven advisors and the escrow between them](docs/img/home.jpg)
 
+<p align="center"><a href="https://youtu.be/f0UAgE8vhyg"><b>▶ Watch Rookie's Diary, the 2-minute film</b></a></p>
+
+> **Check it in a minute.** Open [a sealed call](https://lift-arena.vercel.app/verify?hash=0995065f7f601dac8173d3ee315c34d8b62336cfe8367779dde29a7ae66d626b)
+> and watch it verify live against Sui mainnet, then press "Try changing it to 20%" and watch it fail.
+> Rookie's 17:10 lesson is [blob 94YPnH2a… on Walruscan](https://walruscan.com/mainnet/blob/94YPnH2afIJSfn6i2gcV9LT24UFXNGq0TbgVGdBBnr8). The memory test
+> is one call: [`/api/arena/memory-test`](https://lift-arena.vercel.app/api/arena/memory-test). Or [play a round](https://lift-arena.vercel.app/play).
+
 Tips are free to give and cost nothing to get wrong. A tipster who shouts "UP, 88%" every single time loses nothing when
 the market goes down. The person who listened does.
 
@@ -32,33 +39,37 @@ on the site can be traced to a sealed call.
 
 ## What happened when we let it run
 
-The arena has played a round every hour or two since October 29. As of November 4:
+The arena has played live rounds since October 29: every hour or two through the build, and every four hours after the
+deadline so it stays up through judging. As of November 10:
 
-- **15,020** calls sealed on Walrus mainnet, in 398 batches verified on Sui
-- **953** memories written to Walrus: seals, one episode per agent per round, and 85 lessons
-- **3,685** settled calls with a before-and-after score
-- **381** MPP payments; $20.24 paid to advisors whose advice helped, $16.60 refunded
+- **33,755** calls sealed on Walrus mainnet, in 823 Merkle batches verified on Sui
+- **1,931** memories written to Walrus: seals, episodes and 110 lessons
+- **8,865** settled calls with a before-and-after score
+- **506** MPP payments: $50.26 released to advisors whose advice helped, $38.38 refunded to the agents
 
 The agents learned whom to pay. Here's how much of each agent's forecasting error the advice it bought removed, in its first
 quarter of calls and in its latest quarter:
 
 | agent | first quarter | latest quarter |
 |---|---|---|
-| Rookie | 8.2% | **17.7%** |
-| Chartist | 2.2% | **15.2%** |
-| Cautious Quant | made it 8.1% worse | **4.0% better** |
-| Gambler | 16.8% | **21.1%** |
+| Rookie | 22.9% | **36.8%** |
+| Chartist | 14.3% | **27.5%** |
+| Cautious Quant | made it 1.3% worse | **6.4% better** |
+| Gambler | 12.6% | 4.5% |
+
+Gambler went backwards. It's overconfident by design, and the advisor it settled on is Fence Sitter, who always says 50%:
+the advice still helps, just less than it did at the start. We left it in because it's real.
 
 On its first day Rookie paid The Fader three times and got all three cents back. At 17:10 it wrote its first lesson,
-*"reading The Fader has made my forecasts worse — stop buying"*, and sealed it on Walrus. Now six of its eight cents a
-round go to The Crowd, and it buys the Loud Tipster only in its random fair tests, about 3% of the time.
+*"reading The Fader has made my forecasts worse — stop buying"*, and sealed it on Walrus. Now most of its cents go to The
+Crowd, and it buys the Loud Tipster only in its random fair tests.
 
 ### The Goldfish test
 
 To see what memory is actually worth, Rookie has a twin called **Goldfish**: the same blind calls, the same advisors, the same
-markets, but no memory at all. It picks an advisor at random every round. On the same 48 markets, Rookie's forecast error
-(Brier score) is **0.217**; Goldfish's is **0.251**, worse than flipping a coin. The live comparison is on the
-[home page](https://lift-arena.vercel.app/#memory).
+markets, but no memory at all. It picks an advisor at random every round. On the same **1,084 markets**, Rookie's forecast
+error (Brier score) is **0.173**; Goldfish's is **0.237**. Same everything, except one of them remembers. The live comparison
+is on the [home page](https://lift-arena.vercel.app/#memory).
 
 ## One round
 
