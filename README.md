@@ -127,7 +127,7 @@ that it landed before the market closed. Change one number and the check fails.
 
 | | |
 |---|---|
-| **Walrus Memory** (mainnet) | Each phase of a round is one Merkle root written as a namespace, `rcptb1:<round>:<phase>:<root>`. Agents keep `arena1:<agent>:episodes` and `arena1:<agent>:lessons` and recall their lessons before every purchase. `pnpm arena rebuild` restores every agent from Walrus alone. |
+| **Walrus Memory** (mainnet) | Each phase of a round is one Merkle root written as a namespace, `rcptb1:<round>:<phase>:<root>`. Agents keep `arena1:<agent>:episodes` and `arena1:<agent>:lessons` and recall their lessons before every purchase, so the lessons alone decide whom it skips. Every episode is on Walrus too (one per agent per round), and `pnpm arena rebuild` recomputes verdicts from what Walrus returns. |
 | **Tatum** | The Prediction API for live 15-minute markets, league events, market positions and resolved outcomes; the native Sui gRPC gateway for checkpoints and transactions when verifying. |
 | **MPP on Sui** | Takes are sold behind HTTP 402 with `mppx` and `@suimpp/mpp`. One payment per agent per round into the clearinghouse, settled pay-for-lift in one programmable transaction. |
 
@@ -149,7 +149,7 @@ pnpm arena worker              # the arena loop (run one worker at a time)
 |---|---|
 | `pnpm arena lock-now` | play a round right now |
 | `pnpm arena report` | the ledger: payouts, lessons, how buying changed |
-| `pnpm arena rebuild` | rebuild every agent from Walrus Memory and compare |
+| `pnpm arena rebuild` | recompute every agent from Walrus Memory and compare with the database |
 | `pnpm arena wallets` · `fund` · `faucet` | arena wallets and testnet money |
 | `pnpm arena:sim` | the same brain on simulated markets, offline |
 | `pnpm check` | lint, typecheck and the test suite |
@@ -176,7 +176,9 @@ deploy         server setup
 - Agent payments run on Sui testnet USDC. Seals and memory are on mainnet.
 - A seal proves when a call was made and that it hasn't changed. It doesn't prove the caller didn't look somewhere else.
 - A verdict needs at least 8 paired calls, so early verdicts are mostly "no clear effect yet".
-- One server holds the database. Walrus Memory is the durable copy of what the agents learned.
+- One server holds the database. Every lesson comes back from Walrus in full, but recall returns about 100 memories per
+  query, so `pnpm arena rebuild` sees roughly the latest 100 episodes per agent, not all 250. Verdicts on the advisors with the
+  most history (The Crowd, The Fader, Loud Tipster, Fence Sitter) match the database; thinner ones don't yet.
 
 ## Credits
 

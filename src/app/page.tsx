@@ -124,8 +124,8 @@ export default function Home() {
             <div>
               <h2 className="a-h2">What the agents remember</h2>
               <p className="a-p">
-                A lesson is written when an agent changes its mind about an advisor. Wipe the database and the agents rebuild themselves from
-                Walrus alone.
+                A lesson is written when an agent changes its mind about an advisor. The agents read their lessons back from Walrus before every
+                purchase, so wiping the database doesn't make them forget whom not to pay.
               </p>
               <div className="a-ctas" style={{ marginTop: 28 }}>
                 <Link className="a-btn a-btn-line" href="/memory">

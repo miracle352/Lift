@@ -128,8 +128,9 @@ attributes later but can't edit a transaction.
 
 Each memory has a sentence for people and a tag for code, for example
 `Lesson for Rookie: reading The Fader has made my forecasts worse — stop buying (n=8, …) [[advisor=fader verdict=makes_you_worse …]]`.
-`pnpm arena rebuild` wipes nothing: it rebuilds every agent's trust and verdicts from Walrus Memory alone and compares them with
-the database. `/memory` lists everything the arena has written.
+`pnpm arena rebuild` wipes nothing: it recomputes every agent's trust and verdicts from what Walrus Memory returns and compares
+them with the database. Lessons come back in full. Episodes don't yet: recall returns about 100 memories per query, so the rebuild
+sees about the latest 100 rounds per agent. The verdicts with the most evidence match; the thin ones can differ. `/memory` lists everything the arena has written.
 
 ## Scoring
 

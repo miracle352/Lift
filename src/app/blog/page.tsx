@@ -74,8 +74,8 @@ export default function Blog() {
             <b>It is the agents’ memory.</b> After every settled round, each agent writes an episode memory saying what it believed, whose
             take it bought and how that went. When its verdict on an advisor changes (“helps me”, “makes me worse”, “rarely moves me”), it
             writes a lesson. Before it buys anything, it recalls those lessons from Walrus Memory, and the lessons change what it does: an
-            advisor that makes it worse is skipped and only re-tested now and then. If you wipe the database, <code>pnpm arena rebuild</code>{' '}
-            restores every agent from Walrus alone. The arena has written{' '}
+            advisor that makes it worse is skipped and only re-tested now and then. Wipe the database and every lesson still comes back from
+            Walrus, so the agents still know whom not to pay. The arena has written{' '}
             <Link href="/memory">906 memories</Link> so far, including 82 lessons.
           </p>
 
